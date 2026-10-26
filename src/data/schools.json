@@ -1,0 +1,26 @@
+{
+  "season": "2026",
+  "note": "2026 시범 운영 공식 참가 학교 20개 (PRD 4.4). region은 운영팀 제공 지역 구분, province는 지도 표시용 시·도.",
+  "schools": [
+    { "id": "convention", "name": "컨벤션고", "region": "서울", "province": "seoul" },
+    { "id": "seongnam", "name": "성남고", "region": "서울", "province": "seoul" },
+    { "id": "kyunggi-commercial", "name": "경기상고", "region": "서울", "province": "seoul" },
+    { "id": "yushin", "name": "유신고", "region": "수원", "province": "gyeonggi", "city": "수원" },
+    { "id": "incheon", "name": "인천고", "region": "인천", "province": "incheon" },
+    { "id": "seoul", "name": "서울고", "region": "서울", "province": "seoul" },
+    { "id": "whimoon", "name": "휘문고", "region": "서울", "province": "seoul" },
+    { "id": "jeonju", "name": "전주고", "region": "전라북도", "province": "jeonbuk" },
+    { "id": "deoksu", "name": "덕수고", "region": "서울", "province": "seoul" },
+    { "id": "busan", "name": "부산고", "region": "부산", "province": "busan" },
+    { "id": "gaesung", "name": "개성고", "region": "부산", "province": "busan" },
+    { "id": "kyungnam", "name": "경남고", "region": "부산", "province": "busan" },
+    { "id": "masan-yongma", "name": "마산용마고", "region": "경상남도", "province": "gyeongnam" },
+    { "id": "gangneung", "name": "강릉고", "region": "강원도", "province": "gangwon" },
+    { "id": "yatap", "name": "야탑고", "region": "경기도", "province": "gyeonggi" },
+    { "id": "daejeon", "name": "대전고", "region": "대전", "province": "daejeon" },
+    { "id": "choongam", "name": "충암고", "region": "서울", "province": "seoul" },
+    { "id": "gwangju-first", "name": "광주일고", "region": "전남", "province": "jeonnam" },
+    { "id": "daegu", "name": "대구고", "region": "대구", "province": "daegu" },
+    { "id": "bugil", "name": "북일고", "region": "대전", "province": "daejeon" }
+  ]
+}

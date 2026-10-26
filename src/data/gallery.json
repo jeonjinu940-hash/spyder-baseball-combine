@@ -1,0 +1,4 @@
+{
+  "note": "공개 동의·권한이 확인된 사진만 추가. 이미지는 public/gallery/ 에 저장. category: field(측정 현장) | player(선수) | school(학교별). playerId는 별도 공개 승인 시에만 연결.",
+  "items": []
+}
