@@ -47,7 +47,6 @@ export default function BaseDiagram({ event }) {
       {event === 'sprint' && (
         <text x={OUTFIELD[0] - 4} y={OUTFIELD[1] - 12} textAnchor="end" className="strong">OUTFIELD</text>
       )}
-      <text x="8" y="18" className="strong">55M</text>
     </svg>
   );
 }

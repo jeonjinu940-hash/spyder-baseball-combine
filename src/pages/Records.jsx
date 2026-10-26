@@ -8,6 +8,7 @@ import SearchBar from '../components/SearchBar.jsx';
 import RecordList from '../components/RecordList.jsx';
 import EmptyState from '../components/EmptyState.jsx';
 import UpdatedAt from '../components/UpdatedAt.jsx';
+import PageBanner from '../components/PageBanner.jsx';
 
 const PAGE = 30;
 const SORTS = [
@@ -104,11 +105,9 @@ export default function Records() {
 
   return (
     <>
-      <section className="container page-hero" style={{ paddingBottom: 24 }}>
-        <p className="eyebrow">Player Records</p>
-        <h1>PLAYER<br />RECORDS</h1>
-        <p>선수명 또는 학교명으로 검색하고 지역·포지션·종목으로 기록을 좁혀보세요.</p>
-        <div className="notice notice-strong mt-24" role="note">
+      <PageBanner title="선수 기록">이름 검색과 지역·포지션·종목 필터를 함께 사용할 수 있습니다.</PageBanner>
+      <section className="container" style={{ marginBottom: 40 }}>
+        <div className="notice notice-strong" role="note">
           <span className="i" aria-hidden="true">!</span>
           <span><strong>학교별 상위 5명의 기록만 공개됩니다.</strong></span>
         </div>

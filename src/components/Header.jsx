@@ -1,17 +1,25 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
+// 측정 종목·갤러리는 홈 안의 섹션이므로 홈에 있을 때 홈과 함께 밝게 표시
 const NAV = [
-  { to: '/', label: '홈', end: true },
-  { to: '/schools', label: '참가 학교' },
-  { to: '/records', label: '선수 기록' },
+  { to: { pathname: '/' }, label: '홈', home: true },
+  { to: { pathname: '/', hash: '#events' }, label: '측정 종목', home: true },
+  { to: { pathname: '/', hash: '#gallery' }, label: '갤러리', home: true },
+  { to: { pathname: '/schools' }, label: '참가 학교', match: '/schools' },
+  { to: { pathname: '/records' }, label: '선수 기록', match: ['/records', '/players'] },
 ];
+
+function isActive(item, pathname) {
+  if (item.home) return pathname === '/';
+  return [].concat(item.match).some((m) => pathname.startsWith(m));
+}
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
-  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => setOpen(false), [pathname, hash]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -39,11 +47,28 @@ export default function Header() {
           <span />
         </button>
         <nav id="site-nav" className={`nav${open ? ' open' : ''}`} aria-label="주요 메뉴">
-          {NAV.map((n) => (
-            <NavLink key={n.to} to={n.to} end={n.end} className={({ isActive }) => (isActive ? 'active' : undefined)}>
-              {n.label}
-            </NavLink>
-          ))}
+          {NAV.map((n) => {
+            const active = isActive(n, pathname);
+            const current = active && (n.to.hash ?? '') === hash;
+            return (
+              <Link
+                key={n.label}
+                to={n.to}
+                className={active ? 'active' : undefined}
+                aria-current={current ? 'page' : undefined}
+                onClick={() => {
+                  // 이미 같은 위치면 다시 스크롤
+                  if (current) {
+                    const el = n.to.hash && document.getElementById(n.to.hash.slice(1));
+                    if (el) el.scrollIntoView();
+                    else window.scrollTo(0, 0);
+                  }
+                }}
+              >
+                {n.label}
+              </Link>
+            );
+          })}
         </nav>
       </div>
     </header>

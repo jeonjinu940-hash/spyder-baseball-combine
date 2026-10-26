@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
 import { countByProvince, provinceLabel, schoolRegionLabel } from '../lib/regions.js';
 import KoreaMap from '../components/KoreaMap.jsx';
+import PageBanner from '../components/PageBanner.jsx';
 
 export default function Schools() {
   const { schools, players } = useData();
@@ -31,14 +32,9 @@ export default function Schools() {
 
   return (
     <>
-      <section className="container page-hero">
-        <p className="eyebrow">School Explorer · 2026 시범 운영</p>
-        <h1>SCHOOLS</h1>
-        <p>
-          2026 시범 운영에 참가하는 전국 {schools.length}개 고교 야구팀입니다. 지도나 지역 목록에서 지역을 선택하면 해당 지역 학교를 볼 수 있고,
-          학교를 선택하면 학교별 선수 기록으로 이동합니다.
-        </p>
-      </section>
+      <PageBanner title="참가 학교">
+        2026 시범 운영 참가 {schools.length}개교 — 지역을 선택하면 학교 목록을, 학교를 선택하면 선수 기록을 볼 수 있습니다.
+      </PageBanner>
 
       <section className="container map-layout">
         <div className="map-panel glass">
