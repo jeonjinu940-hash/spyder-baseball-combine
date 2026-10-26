@@ -33,7 +33,7 @@ export default function Schools() {
   return (
     <>
       <PageBanner title="참가 학교">
-        2026 시범 운영 참가 {schools.length}개교 — 지역을 선택하면 학교 목록을, 학교를 선택하면 선수 기록을 볼 수 있습니다.
+        2026 시범 운영 참가 {schools.length}개교 | 지역을 선택하면 학교 목록을, 학교를 선택하면 선수 기록을 볼 수 있습니다.
       </PageBanner>
 
       <section className="container map-layout">
