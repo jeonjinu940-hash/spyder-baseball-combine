@@ -1,29 +1,21 @@
 import { Link } from 'react-router-dom';
 import { EVENTS } from '../lib/records.js';
-import BaseDiagram from '../components/BaseDiagram.jsx';
+import BaseDiagram from './BaseDiagram.jsx';
 
-const FLOW = ['현장 도착', '측정 구간 세팅', '장비 점검', '선수 준비', '55M 직선 스프린트 측정', '55M 베이스러닝 측정', '측정 종료'];
-const KEY_STEPS = new Set([4, 5]);
-
-export default function About() {
+export default function AboutContent() {
   return (
     <>
-      <section className="container page-hero">
-        <p className="eyebrow">About Combine</p>
-        <h1>WHAT IS<br />THE COMBINE</h1>
-        <p>
-          SPYDER BASEBALL COMBINE은 선수의 신체 능력과 경기력을 데이터로 측정하는 선수 평가 프로그램입니다.
-          전국 고교 야구팀 중 선정된 참가 학교의 선수들을 대상으로 동일한 기준의 스프린트 기록을 측정합니다.
-        </p>
-      </section>
-
-      <section className="section">
+      <section className="section" id="about" aria-labelledby="about-title">
         <div className="container">
           <div className="section-head">
             <div>
-              <p className="eyebrow">Purpose</p>
-              <h2>운영 목적</h2>
+              <p className="eyebrow">About Combine</p>
+              <h2 id="about-title">컴바인이란?</h2>
             </div>
+            <p className="lead">
+              SPYDER BASEBALL COMBINE은 선수의 신체 능력과 경기력을 데이터로 측정하는 선수 평가 프로그램입니다.
+              전국 고교 야구팀 중 선정된 참가 학교의 선수들을 대상으로 동일한 기준의 스프린트 기록을 측정합니다.
+            </p>
           </div>
           <div className="stat-row">
             <div className="glass card">
@@ -52,12 +44,12 @@ export default function About() {
         </div>
       </section>
 
-      <section className="section" id="events">
+      <section className="section" id="events" aria-labelledby="events-title">
         <div className="container">
           <div className="section-head">
             <div>
               <p className="eyebrow">Measurement Events</p>
-              <h2>측정 종목과 방식</h2>
+              <h2 id="events-title">측정 종목과 방식</h2>
             </div>
             <p className="lead">두 종목 모두 거리는 55M이며, 종목별로 선수 1인당 2회 측정합니다. 1차·2차 기록은 모두 보존됩니다.</p>
           </div>
@@ -75,45 +67,7 @@ export default function About() {
               </article>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <div className="section-head">
-            <div>
-              <p className="eyebrow">Field Process</p>
-              <h2>현장 운영 프로세스</h2>
-            </div>
-          </div>
-          <ol className="timeline">
-            {FLOW.map((f, i) => (
-              <li key={f} className={KEY_STEPS.has(i) ? 'key' : undefined}>{f}</li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container two-col">
-          <div className="glass card">
-            <p className="eyebrow">Check-in</p>
-            <h3 className="mt-16" style={{ fontSize: 24 }}>측정 전 본인 확인</h3>
-            <ul className="check-list">
-              <li>선수는 홈 플레이트 앞에서 본인 확인을 진행합니다.</li>
-              <li>배번 → 포지션 → 이름 순으로 확인합니다.</li>
-            </ul>
-          </div>
-          <div className="glass card">
-            <p className="eyebrow">Dress Code</p>
-            <h3 className="mt-16" style={{ fontSize: 24 }}>복장 기준</h3>
-            <ul className="check-list">
-              <li>참가 선수 전원 본인 소유 야구화를 착용합니다.</li>
-            </ul>
-          </div>
-        </div>
-        <div className="container mt-24">
-          <div className="notice">
+          <div className="notice mt-24">
             <span className="i" aria-hidden="true">i</span>
             <span>
               공식 기록의 최종 산정 방식(대표 기록), 순위·동률 처리, 기록 단위 표기 및 정정 정책은 운영팀 확인 후 확정되며,

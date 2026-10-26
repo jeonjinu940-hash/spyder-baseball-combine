@@ -14,10 +14,10 @@ export default function Footer() {
           <div>
             <h3>EXPLORE</h3>
             <ul>
-              <li><Link to="/about">프로그램 소개</Link></li>
-              <li><Link to="/records">선수 기록</Link></li>
+              <li><Link to={{ pathname: '/', hash: '#about' }}>컴바인 소개</Link></li>
+              <li><Link to={{ pathname: '/', hash: '#gallery' }}>현장 갤러리</Link></li>
               <li><Link to="/schools">참가 학교</Link></li>
-              <li><Link to="/gallery">갤러리</Link></li>
+              <li><Link to="/records">선수 기록</Link></li>
             </ul>
           </div>
           <div>

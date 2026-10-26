@@ -332,15 +332,16 @@ main:focus {
   gap: 4px;
 }
 .nav a {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 16px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.01em;
   text-decoration: none;
   color: var(--text-2);
-  padding: 8px 12px;
+  padding: 8px 16px;
   border-radius: 8px;
   position: relative;
+  transition: color 0.25s var(--ease);
 }
 .nav a:hover {
   color: var(--text);
@@ -348,14 +349,48 @@ main:focus {
 .nav a.active {
   color: var(--text);
 }
-.nav a.active::after {
+/* 탭 밑줄: 선택 시 가운데에서 펼쳐지는 애니메이션 */
+.nav a::after {
   content: '';
   position: absolute;
-  left: 12px;
-  right: 12px;
+  left: 16px;
+  right: 16px;
   bottom: 2px;
   height: 2px;
   background: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.35s var(--ease);
+}
+.nav a.active::after {
+  transform: scaleX(1);
+}
+
+/* 탭 이동 시 화면 전환 */
+.page-transition {
+  animation: page-in 0.45s var(--ease) both;
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 홈 메인 이미지: 원본 비율(1672:941) 유지 */
+.hero-image {
+  position: relative;
+  background: #000;
+  border-bottom: 1px solid var(--divider);
+}
+.hero-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1672 / 941;
+  margin: 0 auto;
 }
 
 .menu-toggle {
@@ -426,7 +461,7 @@ main:focus {
     border-bottom: 1px solid var(--divider);
     border-radius: 0;
   }
-  .nav a.active::after {
+  .nav a::after {
     left: auto;
     right: 4px;
     top: 50%;
@@ -434,7 +469,10 @@ main:focus {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-50%) scale(0);
+  }
+  .nav a.active::after {
+    transform: translateY(-50%) scale(1);
   }
   .brand .spyder,
   .brand .divider {
@@ -794,6 +832,18 @@ main:focus {
   font-size: 14px;
 }
 .notice strong {
+  color: var(--text);
+}
+.notice-strong {
+  border-style: solid;
+  border-color: var(--accent);
+  background: var(--glass);
+  color: var(--text);
+  font-size: 16px;
+  max-width: 640px;
+}
+.notice-strong .i {
+  border-color: var(--accent);
   color: var(--text);
 }
 .notice .i {
@@ -1623,6 +1673,9 @@ main:focus {
   }
   .diagram .run {
     stroke-dashoffset: 0;
+    animation: none;
+  }
+  .page-transition {
     animation: none;
   }
 }

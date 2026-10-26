@@ -79,24 +79,24 @@ portal\
 
 ### Main navigation
 
-1.  **HOME**
-2.  **ABOUT COMBINE**
-3.  **PLAYER RECORDS**
-4.  **SCHOOLS**
-5.  **GALLERY**
+탭 명칭은 모두 한글로 표기하며, 아래 순서로 배치한다.
+
+1.  **홈** — 메인 이미지 + 컴바인 소개(ABOUT COMBINE) + 현장 갤러리(GALLERY)
+2.  **참가 학교** — 독립 탭 (SCHOOLS)
+3.  **선수 기록** — 독립 탭 (PLAYER RECORDS)
+
+-   ABOUT COMBINE, GALLERY는 별도 탭 없이 홈에 통합한다. (기존 `/about`, `/gallery` 주소는 홈의 해당 섹션으로 이동)
+-   탭을 누르면 화면이 부드럽게 전환된다(페이드 인 + 탭 밑줄 애니메이션). `prefers-reduced-motion` 설정 시 애니메이션 생략.
 
 관리자 로그인 사용자는 별도 **ADMIN** 메뉴에 접근할 수 있다.
 
-### Recommended homepage flow
+### Homepage flow
 
-1.  Hero section
-2.  핵심 기록 요약 지표
-3.  기록 검색 바로가기
-4.  주요 기록 / 최신 업데이트 기록
-5.  참가 학교 지도 및 지역별 학교 수
-6.  프로그램 소개 및 측정 종목
-7.  현장 사진 갤러리
-8.  Footer: SPYDER Korea / 운영 및 개인정보 안내
+1.  메인 이미지 (`메인 페이지.png`, 원본 비율 1672:941 유지, 전체 폭)
+2.  컴바인 소개 (컴바인이란? / 운영 목적)
+3.  측정 종목과 방식
+4.  현장 갤러리
+5.  Footer: SPYDER Korea / 운영 및 개인정보 안내
 
 ------------------------------------------------------------------------
 
@@ -106,12 +106,12 @@ portal\
 
 **Purpose:** 프로그램의 정체성을 전달하고 핵심 기능으로 빠르게 연결한다.
 
-**Components** - Hero title: `SPYDER BASEBALL COMBINE` - Supporting
-line: `NEXT UP BASEBALL` - Short description: 고교 야구 선수의 스프린트
-퍼포먼스를 데이터로 기록하는 프로그램 - Primary CTA: `선수 기록 확인` -
-Secondary CTA: `참가 학교 보기` - Summary metrics: - 참가 학교 수 - 등록
-선수 수 - 측정 종목 수 - 기록 업데이트 일자 - Featured records: 운영팀이
-지정한 기록 또는 최신 기록 - School map preview - Gallery preview
+**Components**
+- 메인 이미지: `메인 페이지.png`(NEXT UP BASEBALL 비주얼)를 원본 비율(1672:941)에 맞춰 화면 전체 폭으로 배치
+- 히어로 텍스트(`SPYDER KOREA · 2026 시범 운영`, `SPYDER BASEBALL COMBINE` 타이틀)는 표시하지 않는다
+- 컴바인 소개(4.2) 섹션
+- 현장 갤러리(4.5) 섹션
+- 요약 지표·기록 검색·최신 업데이트 기록·학교 지도는 홈에 두지 않고 각각 **선수 기록** / **참가 학교** 탭에서 제공한다
 
 **Rules** - 숫자 지표는 실제 데이터에서 자동 집계한다. - 데이터가 없으면
 0 또는 임의의 샘플 수치를 공식 데이터처럼 표시하지 않는다. - 최신
@@ -122,8 +122,12 @@ Secondary CTA: `참가 학교 보기` - Summary metrics: - 참가 학교 수 - �
 **Purpose:** 처음 방문한 사용자도 프로그램과 측정 방식을 쉽게 이해하도록
 한다.
 
+**위치:** 별도 탭 없이 **홈** 탭에 포함한다.
+
 **Content sections** - 컴바인이란? - 프로그램 운영 목적 - 측정 종목 -
-측정 방식 및 횟수 - 현장 운영 프로세스 - 측정 시 참고 사항
+측정 방식 및 횟수
+
+-   ~~현장 운영 프로세스~~, ~~측정 전 본인 확인~~, ~~복장 기준~~은 웹사이트에 노출하지 않는다 (2026-10-26 삭제 요청).
 
 **Measurement cards** - **55M 직선 스프린트 SPRINT** --- HOME → 1ST BASE - **55M 베이스러닝
 SPRINT** --- HOME → 1ST BASE → 2ND BASE - 각 종목은 1인당 2회 측정
@@ -135,6 +139,10 @@ SPRINT** --- HOME → 1ST BASE → 2ND BASE - 각 종목은 1인당 2회 측정
 ### 4.3 Player Records
 
 **Purpose:** 선수 기록을 빠르게 검색하고 비교할 수 있게 한다.
+
+**공개 범위 안내:** 페이지 상단에 `학교별 상위 5명의 기록만 공개됩니다.` 문구를 눈에 띄게 표시한다.
+
+**최신 업데이트 기록:** 홈이 아닌 이 탭에서만 제공한다. 측정일 기준 최신 기록 카드(최대 6개)를 검색 영역 위에 표시하며, 공개 기록이 없으면 섹션을 숨긴다.
 
 **Search and filters** - 선수명 검색 - 학교명 검색 - 지역 필터 - 포지션
 필터 - 측정 종목 필터 - 기록 정렬: 빠른 기록순 / 느린 기록순 / 이름순 /
@@ -203,6 +211,8 @@ SPRINT** --- HOME → 1ST BASE → 2ND BASE - 각 종목은 1인당 2회 측정
 ### 4.5 Gallery
 
 **Purpose:** 현장의 분위기와 프로그램 운영 모습을 시각적으로 전달한다.
+
+**위치:** 별도 탭 없이 **홈** 탭 하단에 포함한다.
 
 **Features** - 사진 그리드 - 사진 상세 보기 - 카테고리 필터: 측정 현장 /
 선수 / 학교별(선택 사항) - 촬영일 또는 행사 회차(데이터가 제공되는
@@ -468,8 +478,9 @@ ID, 미등록 학교 ID를 검증한다. - 기록이 비어 있는 경우와 기
 
 개발 착수 전 아래 항목을 운영팀과 확정해야 한다.
 
-1.  **기록 공개 범위:** 전체 참가 선수 공개인지, 공개 동의한 선수만
-    공개인지
+1.  **기록 공개 범위:** ✅ 학교별 상위 5명의 기록만 공개 (2026-10-26 확정).
+    상위 5명 선정 기준(종목·대표 기록 기준)은 2번 항목과 함께 확정 필요.
+    현재는 운영팀이 상위 5명만 엑셀에 담아 제공하는 것을 전제로 한다.
 2.  **대표 기록 기준:** 1·2차 중 최고 기록인지, 별도 공식 기준인지
 3.  **순위 산정:** 종목별 순위 공개 여부, 동률 처리, 기록 미측정 시 처리
 4.  **엑셀 포맷:** 현재 운영팀이 사용하는 최종 엑셀 양식과 필드명
@@ -486,20 +497,19 @@ ID, 미등록 학교 ID를 검증한다. - 기록이 비어 있는 경우와 기
 
 ### Home
 
-`[HEADER / LOGO / NAV]`\
-`[HERO: SPYDER BASEBALL COMBINE / NEXT UP BASEBALL]`\
-`[CTA: VIEW PLAYER RECORDS] [CTA: EXPLORE SCHOOLS]`\
-`[SUMMARY METRICS: SCHOOLS / PLAYERS / EVENTS / UPDATED]`\
-`[SEARCH PLAYER OR SCHOOL]`\
-`[FEATURED RECORDS]`\
-`[KOREA MAP + REGION SCHOOL COUNTS]`\
-`[ABOUT: 55M 직선 스프린트 SPRINT / 55M 베이스러닝 SPRINT]`\
+`[HEADER / LOGO / NAV: 홈 · 참가 학교 · 선수 기록]`\
+`[MAIN IMAGE: 메인 페이지.png (1672:941)]`\
+`[ABOUT: 컴바인이란? / 운영 목적]`\
+`[MEASUREMENT EVENTS: 55M 직선 스프린트 / 55M 베이스러닝]`\
 `[FIELD GALLERY]`\
 `[FOOTER: PRIVACY / CONTACT / SPYDER KOREA]`
 
 ### Player Records
 
-`[PAGE TITLE + SEARCH]`\
+`[PAGE TITLE]`\
+`[NOTICE: 학교별 상위 5명의 기록만 공개됩니다.]`\
+`[LATEST RECORDS]`\
+`[SEARCH]`\
 `[FILTERS: REGION / SCHOOL / POSITION / EVENT]`\
 `[SORT: FASTEST / SCHOOL / NAME]`\
 `[RECORD TABLE OR MOBILE CARDS]`\
@@ -551,6 +561,12 @@ ID, 미등록 학교 ID를 검증한다. - 기록이 비어 있는 경우와 기
 
 | 날짜 | 구분 | 내용 | 관련 섹션 |
 |---|---|---|---|
+| 2026-10-26 | 수정 요청 · 선수 기록 | 상단에 `학교별 상위 5명의 기록만 공개됩니다.` 문구 추가. 기록 공개 범위 확정(13장 1번). | 4.3, 13 |
+| 2026-10-26 | 수정 요청 · 컴바인 소개 | 현장 운영 프로세스, 측정 전 본인 확인, 복장 기준 섹션 삭제. | 4.2 |
+| 2026-10-26 | 수정 요청 · 탭 | 탭 명칭 전부 한글화. 순서: 홈 → 참가 학교 → 선수 기록. 탭 전환 시 부드러운 화면 전환(페이드 인, 밑줄 애니메이션). | 3 |
+| 2026-10-26 | 수정 요청 · 홈 | 홈은 메인 이미지 + 컴바인 소개 + 현장 갤러리만 구성. ABOUT/GALLERY 별도 탭 폐지(홈에 통합), 학교·기록은 독립 탭. | 3, 4.1, 4.2, 4.5, 14 |
+| 2026-10-26 | 수정 요청 · 홈 | `최신 업데이트 기록`을 홈에서 제거하고 선수 기록 탭으로 이동. | 4.1, 4.3 |
+| 2026-10-26 | 수정 요청 · 홈 | 히어로 텍스트(`SPYDER KOREA · 2026 시범 운영`, `SPYDER BASEBALL COMBINE`) 제거, `메인 페이지.png`를 원본 비율(1672:941)로 전체 폭 배치. | 4.1 |
 | 2026-10-26 | 운영 방식 | 작업 완료 시마다 확인 링크(로컬 미리보기 / Render 배포 URL)를 공유하고, 수정 요청은 이 PRD에 즉시 반영한다. | 16 |
 | 2026-10-26 | 구현 결정 | 1차 배포는 **정적 사이트**(Vite + React)로 진행. 관리자 로그인·웹 업로드(Admin CMS)는 후속 단계로 보류. | 4.6, 8, 11 |
 | 2026-10-26 | 구현 결정 | 엑셀 반영은 `npm run import` 스크립트로 대체: 미리보기 → 검증(오류 시 전체 중단, 기존 데이터 보존) → `--confirm` 반영 → GitHub push 시 Render 자동 배포. 업로드 이력은 `import-history.json`에 기록. | 4.6, 5 |

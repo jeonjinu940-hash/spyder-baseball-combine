@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
-import { EVENTS, filterPlayers, sortPlayers } from '../lib/records.js';
+import { EVENTS, filterPlayers, formatDate, formatTime, sortPlayers, trialValue } from '../lib/records.js';
 import { provinceLabel } from '../lib/regions.js';
 import { RECORD_UNIT } from '../config.js';
 import SearchBar from '../components/SearchBar.jsx';
@@ -16,6 +16,46 @@ const SORTS = [
   { key: 'name', label: '이름순' },
   { key: 'school', label: '학교순' },
 ];
+
+function LatestRecords({ players, schoolsById }) {
+  const latest = [...players]
+    .sort((a, b) => (b.measuredAt ?? '').localeCompare(a.measuredAt ?? '') || a.name.localeCompare(b.name, 'ko'))
+    .slice(0, 6);
+  if (!latest.length) return null;
+  return (
+    <section className="container" aria-labelledby="latest-title" style={{ marginBottom: 48 }}>
+      <div className="section-head" style={{ marginBottom: 20 }}>
+        <div>
+          <p className="eyebrow">Latest Records</p>
+          <h2 id="latest-title" style={{ fontSize: 'clamp(28px, 4vw, 40px)' }}>최신 업데이트 기록</h2>
+        </div>
+        <UpdatedAt />
+      </div>
+      <div className="grid-3">
+        {latest.map((p) => (
+          <Link key={p.id} to={`/players/${encodeURIComponent(p.id)}`} className="feat-card glass">
+            <div className="nm">{p.name}</div>
+            <div className="sc">
+              {schoolsById[p.schoolId].name}
+              {p.position ? ` · ${p.position}` : ''}
+              {p.measuredAt ? ` · ${formatDate(p.measuredAt)}` : ''}
+            </div>
+            <div className="vals">
+              {EVENTS.map((e) => (
+                <div key={e.key}>
+                  <small>{e.short} 1차 / 2차</small>
+                  <b>{formatTime(trialValue(p, e.key, 1))}</b>
+                  <span className="muted"> / </span>
+                  <b>{formatTime(trialValue(p, e.key, 2))}</b>
+                </div>
+              ))}
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 function Chip({ pressed, onClick, children }) {
   return (
@@ -68,9 +108,15 @@ export default function Records() {
         <p className="eyebrow">Player Records</p>
         <h1>PLAYER<br />RECORDS</h1>
         <p>선수명 또는 학교명으로 검색하고 지역·포지션·종목으로 기록을 좁혀보세요.</p>
+        <div className="notice notice-strong mt-24" role="note">
+          <span className="i" aria-hidden="true">!</span>
+          <span><strong>학교별 상위 5명의 기록만 공개됩니다.</strong></span>
+        </div>
       </section>
 
-      <section className="container">
+      <LatestRecords players={players} schoolsById={schoolsById} />
+
+      <section className="container" aria-label="전체 선수 기록">
         <SearchBar id="records-search" value={q} onChange={(v) => update('q', v)} />
 
         <div className="filters glass mt-16" role="group" aria-label="기록 필터">

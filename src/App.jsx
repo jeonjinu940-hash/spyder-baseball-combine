@@ -1,22 +1,38 @@
 import { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { DataProvider, useData } from './lib/data.jsx';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Home from './pages/Home.jsx';
-import About from './pages/About.jsx';
 import Records from './pages/Records.jsx';
 import PlayerDetail from './pages/PlayerDetail.jsx';
 import Schools from './pages/Schools.jsx';
-import Gallery from './pages/Gallery.jsx';
 import NotFound from './pages/NotFound.jsx';
 
-function ScrollToTop() {
-  const { pathname } = useLocation();
+// 경로가 바뀌면 맨 위로, #앵커가 있으면 해당 섹션으로 이동
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
   useEffect(() => {
+    if (hash) {
+      const el = document.getElementById(decodeURIComponent(hash.slice(1)));
+      if (el) {
+        el.scrollIntoView();
+        return;
+      }
+    }
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, hash]);
   return null;
+}
+
+// 탭 이동 시 화면을 부드럽게 전환 (경로가 바뀔 때마다 페이드 인)
+function PageTransition({ children }) {
+  const { pathname } = useLocation();
+  return (
+    <div key={pathname} className="page-transition">
+      {children}
+    </div>
+  );
 }
 
 function DemoBanner() {
@@ -33,20 +49,23 @@ function DemoBanner() {
 export default function App() {
   return (
     <DataProvider>
-      <ScrollToTop />
+      <ScrollManager />
       <a className="skip-link" href="#main">본문 바로가기</a>
       <DemoBanner />
       <Header />
       <main id="main" tabIndex={-1}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/records" element={<Records />} />
-          <Route path="/players/:id" element={<PlayerDetail />} />
-          <Route path="/schools" element={<Schools />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <PageTransition>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/schools" element={<Schools />} />
+            <Route path="/records" element={<Records />} />
+            <Route path="/players/:id" element={<PlayerDetail />} />
+            {/* 기존 주소 호환: 소개·갤러리는 홈으로 통합 */}
+            <Route path="/about" element={<Navigate to={{ pathname: '/', hash: '#about' }} replace />} />
+            <Route path="/gallery" element={<Navigate to={{ pathname: '/', hash: '#gallery' }} replace />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </PageTransition>
       </main>
       <Footer />
     </DataProvider>

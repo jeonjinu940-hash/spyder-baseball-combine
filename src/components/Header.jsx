@@ -2,11 +2,9 @@ import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 const NAV = [
-  { to: '/', label: 'HOME', end: true },
-  { to: '/about', label: 'ABOUT COMBINE' },
-  { to: '/records', label: 'PLAYER RECORDS' },
-  { to: '/schools', label: 'SCHOOLS' },
-  { to: '/gallery', label: 'GALLERY' },
+  { to: '/', label: '홈', end: true },
+  { to: '/schools', label: '참가 학교' },
+  { to: '/records', label: '선수 기록' },
 ];
 
 export default function Header() {

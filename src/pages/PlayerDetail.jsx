@@ -29,7 +29,7 @@ export default function PlayerDetail() {
   return (
     <div className="container">
       <nav className="breadcrumb" aria-label="현재 위치">
-        <Link to="/records">PLAYER RECORDS</Link> / <Link to={`/records?school=${school.id}`}>{school.name}</Link> / <span aria-current="page">{player.name}</span>
+        <Link to="/records">선수 기록</Link> / <Link to={`/records?school=${school.id}`}>{school.name}</Link> / <span aria-current="page">{player.name}</span>
       </nav>
 
       <header className="player-head">
