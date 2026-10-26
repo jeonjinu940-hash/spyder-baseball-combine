@@ -15,6 +15,8 @@
   --accent: #ffffff;
   --accent-ink: #080808;
   --focus: #ffffff;
+  /* 메인 이미지(NEXT UP BASEBALL)와 맞춘 어두운 레드 */
+  --red-deep: #140507;
 
   /* Type */
   --font-display: 'Barlow Condensed', 'Pretendard Variable', Pretendard, system-ui, sans-serif;

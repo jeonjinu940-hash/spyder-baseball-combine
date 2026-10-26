@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { EVENTS } from '../lib/records.js';
 import BaseDiagram from './BaseDiagram.jsx';
+import PageBanner from './PageBanner.jsx';
 
 const PURPOSES = [
   { tag: '01 · Data', title: '데이터로 보는 경기력', body: '감각이 아닌 측정값으로 선수의 스피드를 기록하고, 같은 조건에서 비교할 수 있게 합니다.' },
@@ -11,14 +12,9 @@ const PURPOSES = [
 export default function AboutContent() {
   return (
     <>
-      <section className="section glass-stage" id="about" aria-labelledby="about-title">
+      <section className="home-section glass-stage" id="about" aria-labelledby="about-title">
+        <PageBanner as="h2" id="about-title" title="컴바인이란?" />
         <div className="container">
-          <div className="section-head">
-            <div>
-              <p className="eyebrow">About Combine</p>
-              <h2 id="about-title">컴바인이란?</h2>
-            </div>
-          </div>
           <div className="stat-row">
             {PURPOSES.map((p) => (
               <div key={p.tag} className="glass card glass-hover">
@@ -38,15 +34,11 @@ export default function AboutContent() {
         </div>
       </section>
 
-      <section className="section glass-stage" id="events" aria-labelledby="events-title">
+      <section className="home-section glass-stage" id="events" aria-labelledby="events-title">
+        <PageBanner as="h2" id="events-title" title="측정 종목">
+          두 종목 모두 거리는 55M이며, 종목별 1인당 1회씩 측정합니다.
+        </PageBanner>
         <div className="container">
-          <div className="section-head">
-            <div>
-              <p className="eyebrow">Measurement Events</p>
-              <h2 id="events-title">측정 종목</h2>
-            </div>
-            <p className="lead lead-nowrap">두 종목 모두 거리는 55M이며, 종목별 1인당 1회씩 측정합니다.</p>
-          </div>
           <div className="event-grid">
             {EVENTS.map((e) => (
               <article key={e.key} className="event-card glass glass-strong">

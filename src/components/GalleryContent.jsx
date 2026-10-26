@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useData } from '../lib/data.jsx';
 import { formatDate } from '../lib/records.js';
 import EmptyState from './EmptyState.jsx';
+import PageBanner from './PageBanner.jsx';
 
 const CATEGORIES = [
   { key: '', label: '전체' },
@@ -26,15 +27,11 @@ export default function GalleryContent() {
   }, [open]);
 
   return (
-    <section className="section" id="gallery" aria-labelledby="gallery-title">
+    <section className="home-section" id="gallery" aria-labelledby="gallery-title">
+      <PageBanner as="h2" id="gallery-title" title="현장 갤러리">
+        SPYDER BASEBALL COMBINE 측정 현장의 분위기와 운영 모습을 전합니다.
+      </PageBanner>
       <div className="container">
-        <div className="section-head">
-          <div>
-            <p className="eyebrow">Field Gallery</p>
-            <h2 id="gallery-title">현장 갤러리</h2>
-          </div>
-          <p className="lead">SPYDER BASEBALL COMBINE 측정 현장의 분위기와 운영 모습을 전합니다.</p>
-        </div>
 
         {gallery.length > 0 && (
           <div className="chips" role="group" aria-label="사진 카테고리" style={{ marginBottom: 24 }}>
