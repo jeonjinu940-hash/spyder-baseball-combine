@@ -19,6 +19,9 @@ export const EVENTS = [
   },
 ];
 
+// 선수 기록 탭·선수 상세에 공개하는 종목 (55M 직선 스프린트만 공개)
+export const RECORD_EVENTS = EVENTS.filter((e) => e.key === 'sprint');
+
 export const TRIALS = [1, 2];
 
 // 기록이 없으면 '—' (0.00 등으로 대체하지 않음)

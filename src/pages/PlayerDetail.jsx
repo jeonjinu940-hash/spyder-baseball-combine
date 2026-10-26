@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
-import { EVENTS, TRIALS, formatDate, formatTime, trialValue } from '../lib/records.js';
+import { RECORD_EVENTS, TRIALS, formatDate, formatTime, trialValue } from '../lib/records.js';
 import { schoolRegionLabel } from '../lib/regions.js';
 import { RECORD_UNIT } from '../config.js';
 import BaseDiagram from '../components/BaseDiagram.jsx';
@@ -49,8 +49,8 @@ export default function PlayerDetail() {
         <UpdatedAt />
       </header>
 
-      <div className="event-grid">
-        {EVENTS.map((e) => (
+      <div className="event-grid" style={{ gridTemplateColumns: `repeat(${RECORD_EVENTS.length}, 1fr)` }}>
+        {RECORD_EVENTS.map((e) => (
           <section key={e.key} className="glass card" aria-labelledby={`h-${e.key}`}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
               <div>

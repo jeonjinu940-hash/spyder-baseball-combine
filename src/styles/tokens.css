@@ -19,7 +19,9 @@
   --red-deep: #140507;
 
   /* Type */
-  --font-display: 'Barlow Condensed', 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+  /* 사이트 전체 Pretendard로 통일 */
+  --font-display: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+    'Malgun Gothic', system-ui, sans-serif;
   --font-body: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
     'Malgun Gothic', system-ui, sans-serif;
 

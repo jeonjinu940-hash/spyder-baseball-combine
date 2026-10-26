@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
-import { EVENTS, filterPlayers, formatDate, formatTime, sortPlayers, trialValue } from '../lib/records.js';
+import { RECORD_EVENTS, filterPlayers, formatDate, formatTime, sortPlayers, trialValue } from '../lib/records.js';
 import { provinceLabel } from '../lib/regions.js';
 import { RECORD_UNIT } from '../config.js';
 import SearchBar from '../components/SearchBar.jsx';
@@ -42,7 +42,7 @@ function LatestRecords({ players, schoolsById }) {
               {p.measuredAt ? ` · ${formatDate(p.measuredAt)}` : ''}
             </div>
             <div className="vals">
-              {EVENTS.map((e) => (
+              {RECORD_EVENTS.map((e) => (
                 <div key={e.key}>
                   <small>{e.short} 1차 / 2차</small>
                   <b>{formatTime(trialValue(p, e.key, 1))}</b>
@@ -74,7 +74,6 @@ export default function Records() {
   const q = params.get('q') ?? '';
   const province = params.get('region') ?? '';
   const position = params.get('position') ?? '';
-  const event = params.get('event') ?? '';
   const school = params.get('school') ?? '';
   const sort = SORTS.some((s) => s.key === params.get('sort')) ? params.get('sort') : 'fastest';
 
@@ -86,7 +85,7 @@ export default function Records() {
     setParams(next, { replace: true });
   };
 
-  useEffect(() => setLimit(PAGE), [q, province, position, event, school, sort]);
+  useEffect(() => setLimit(PAGE), [q, province, position, school, sort]);
 
   const provinces = useMemo(() => [...new Set(schools.map((s) => s.province))], [schools]);
   const positions = useMemo(() => [...new Set(players.map((p) => p.position).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'ko')), [players]);
@@ -95,17 +94,16 @@ export default function Records() {
     [schools, province],
   );
 
-  const shownEvents = event ? EVENTS.filter((e) => e.key === event) : EVENTS;
   const results = useMemo(() => {
-    const filtered = filterPlayers(players, { q, province, position, event, school }, schoolsById);
-    return sortPlayers(filtered, sort, shownEvents.map((e) => e.key), schoolsById);
-  }, [players, q, province, position, event, school, sort, schoolsById, shownEvents]);
+    const filtered = filterPlayers(players, { q, province, position, school }, schoolsById);
+    return sortPlayers(filtered, sort, RECORD_EVENTS.map((e) => e.key), schoolsById);
+  }, [players, q, province, position, school, sort, schoolsById]);
 
-  const activeFilters = Boolean(q || province || position || event || school);
+  const activeFilters = Boolean(q || province || position || school);
 
   return (
     <>
-      <PageBanner title="선수 기록">이름 검색과 지역·포지션·종목 필터를 함께 사용할 수 있습니다.</PageBanner>
+      <PageBanner title="선수 기록">55M 직선 스프린트 기록 · 이름 검색과 지역·학교·포지션 필터를 함께 사용할 수 있습니다.</PageBanner>
       <section className="container" style={{ marginBottom: 40 }}>
         <div className="notice notice-strong" role="note">
           <span className="i" aria-hidden="true">!</span>
@@ -151,15 +149,6 @@ export default function Records() {
               {!positions.length && <span className="muted small" style={{ paddingTop: 8 }}>기록 공개 후 표시됩니다</span>}
             </div>
           </div>
-          <div className="filter-row">
-            <span className="filter-label" id="f-ev">측정 종목</span>
-            <div className="chips scroll-x" role="group" aria-labelledby="f-ev">
-              <Chip pressed={!event} onClick={() => update('event', '')}>전체 종목</Chip>
-              {EVENTS.map((e) => (
-                <Chip key={e.key} pressed={event === e.key} onClick={() => update('event', event === e.key ? '' : e.key)}>{e.label}</Chip>
-              ))}
-            </div>
-          </div>
         </div>
 
         <div className="toolbar">
@@ -188,7 +177,7 @@ export default function Records() {
           <span className="i" aria-hidden="true">i</span>
           <span>
             기록 단위: {RECORD_UNIT}. 공식 순위와 대표 기록은 <strong>산정 기준 확정 후 공개</strong>됩니다.
-            기록순 정렬은 선택 종목의 1·2차 측정값 중 빠른 값을 기준으로 한 단순 정렬이며 공식 순위가 아닙니다.
+            기록순 정렬은 55M 직선 스프린트 1·2차 측정값 중 빠른 값을 기준으로 한 단순 정렬이며 공식 순위가 아닙니다.
             측정되지 않은 기록은 —로 표시합니다.
           </span>
         </div>
@@ -211,7 +200,7 @@ export default function Records() {
           </EmptyState>
         ) : (
           <>
-            <RecordList players={results.slice(0, limit)} schoolsById={schoolsById} events={shownEvents} />
+            <RecordList players={results.slice(0, limit)} schoolsById={schoolsById} events={RECORD_EVENTS} />
             {results.length > limit && (
               <div className="load-more">
                 <button type="button" className="btn btn-ghost" onClick={() => setLimit((l) => l + PAGE)}>

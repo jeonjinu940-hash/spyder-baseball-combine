@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { EVENTS, TRIALS, formatTime, trialValue } from '../lib/records.js';
+import { RECORD_EVENTS, TRIALS, formatTime, trialValue } from '../lib/records.js';
 import { schoolRegionLabel } from '../lib/regions.js';
 
 // 데스크톱: 고정 헤더 테이블 / 모바일: 카드 (CSS로 전환)
-export default function RecordList({ players, schoolsById, events = EVENTS }) {
+export default function RecordList({ players, schoolsById, events = RECORD_EVENTS }) {
   return (
     <>
       <div className="table-wrap" tabIndex={0} role="region" aria-label="선수 기록 표 (가로 스크롤 가능)">
