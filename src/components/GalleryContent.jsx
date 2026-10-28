@@ -5,7 +5,7 @@ import PageBanner from './PageBanner.jsx';
 const COLS = 3;
 
 // 앨범(학교) 사진 크게 보기: 이전/다음, 키보드 ←/→, Esc 닫기
-function AlbumViewer({ album, onClose }) {
+function AlbumViewer({ album, startIndex = 0, onClose }) {
   const ref = useRef(null);
   const [i, setI] = useState(0);
   const total = album?.photos.length ?? 0;
@@ -14,10 +14,10 @@ function AlbumViewer({ album, onClose }) {
     const d = ref.current;
     if (!d) return;
     if (album) {
-      setI(0);
+      setI(Math.min(Math.max(startIndex, 0), album.photos.length - 1));
       if (!d.open) d.showModal();
     } else if (d.open) d.close();
-  }, [album]);
+  }, [album, startIndex]);
 
   const go = useCallback((delta) => setI((v) => (v + delta + total) % total), [total]);
 
@@ -79,7 +79,12 @@ function AlbumViewer({ album, onClose }) {
 
 export default function GalleryContent() {
   const { galleryAlbums } = useData();
-  const [open, setOpen] = useState(null);
+  // 공유용: ?album=<앨범 id>&photo=<번호> 로 접속하면 해당 사진이 바로 열림
+  const [start] = useState(() => {
+    const p = new URLSearchParams(window.location.search);
+    return { album: galleryAlbums.find((a) => a.id === p.get('album')) ?? null, index: Math.max(Number(p.get('photo')) - 1 || 0, 0) };
+  });
+  const [open, setOpen] = useState(start.album);
 
   // 3칸 그리드를 채우도록 빈 칸은 COMING SOON으로 표시
   const placeholders = Math.max(COLS - galleryAlbums.length, (COLS - (galleryAlbums.length % COLS)) % COLS);
@@ -111,7 +116,7 @@ export default function GalleryContent() {
         </ul>
         <p className="muted small mt-16">측정 현장 사진은 공개 동의와 권한 확인을 마친 자료만 게시됩니다.</p>
       </div>
-      <AlbumViewer album={open} onClose={() => setOpen(null)} />
+      <AlbumViewer album={open} startIndex={open === start.album ? start.index : 0} onClose={() => setOpen(null)} />
     </section>
   );
 }
