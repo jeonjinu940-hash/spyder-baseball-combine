@@ -23,20 +23,17 @@ const COLUMNS = [
   { key: 'region', required: true, desc: '지역' },
   { key: 'position', required: false, desc: '포지션' },
   { key: 'uniform_number', required: false, desc: '배번 (공개 승인된 경우만 입력)' },
-  { key: 'sprint_27m_trial_1', required: true, blankOk: true, desc: '55M 직선 스프린트 1차 기록' },
-  { key: 'sprint_27m_trial_2', required: true, blankOk: true, desc: '55M 직선 스프린트 2차 기록' },
-  { key: 'sprint_54m_trial_1', required: true, blankOk: true, desc: '55M 베이스러닝 1차 기록' },
-  { key: 'sprint_54m_trial_2', required: true, blankOk: true, desc: '55M 베이스러닝 2차 기록' },
+  // 종목별 1인 1회 측정 → 종목당 기록 1개
+  { key: 'sprint_55m', required: true, blankOk: true, desc: '55M 직선 스프린트 기록' },
+  { key: 'baserun_55m', required: true, blankOk: true, desc: '55M 베이스러닝 기록' },
   { key: 'measured_at', required: false, desc: '측정 일자 (YYYY-MM-DD)' },
   { key: 'publish_status', required: false, desc: '공개 / 비공개' },
   { key: 'photo_id', required: false, desc: '관련 사진 연결용 식별자' },
 ];
 
 const TIME_COLS = [
-  ['sprint', 0, 'sprint_27m_trial_1'],
-  ['sprint', 1, 'sprint_27m_trial_2'],
-  ['baserun', 0, 'sprint_54m_trial_1'],
-  ['baserun', 1, 'sprint_54m_trial_2'],
+  ['sprint', 'sprint_55m'],
+  ['baserun', 'baserun_55m'],
 ];
 
 const readJson = (url) => JSON.parse(readFileSync(url, 'utf8'));
@@ -45,7 +42,7 @@ const isBlank = (v) => v == null || String(v).trim() === '';
 function writeTemplate() {
   const { schools } = readJson(SCHOOLS);
   const header = COLUMNS.map((c) => c.key);
-  const example = ['P2026-0001', '홍길동', schools[0].id, schools[0].name, schools[0].region, '내야수', '', '', '', '', '', '2026-05-01', '비공개', ''];
+  const example = ['P2026-0001', '홍길동', schools[0].id, schools[0].name, schools[0].region, '내야수', '', '', '', '2026-05-01', '비공개', ''];
 
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([header, example]), 'records');
@@ -167,11 +164,11 @@ function main() {
       err(`school_name "${r.school_name}"이(가) school_id "${school.id}"의 학교명 "${school.name}"과 다름`);
     }
 
-    const records = { sprint: [null, null], baserun: [null, null] };
-    for (const [ev, idx, col] of TIME_COLS) {
+    const records = { sprint: null, baserun: null };
+    for (const [ev, col] of TIME_COLS) {
       const t = parseTime(r[col]);
       if (t.error) err(`${col}: ${t.error}`);
-      else records[ev][idx] = t.value;
+      else records[ev] = t.value;
     }
     const date = parseDate(r.measured_at);
     if (date.error) err(`measured_at: ${date.error}`);
@@ -225,10 +222,8 @@ function main() {
       id: p.id,
       name: p.name,
       school: schoolsById[p.schoolId].name,
-      '직선1': p.records.sprint[0] ?? '—',
-      '직선2': p.records.sprint[1] ?? '—',
-      '베러1': p.records.baserun[0] ?? '—',
-      '베러2': p.records.baserun[1] ?? '—',
+      '직선 스프린트': p.records.sprint ?? '—',
+      '베이스러닝': p.records.baserun ?? '—',
     })),
   );
 

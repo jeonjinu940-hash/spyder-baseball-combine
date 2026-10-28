@@ -25,13 +25,13 @@ const SCENES = {
     lens: [BASE, 55 - BASE],
     gates: [
       { d: 0, label: 'START' },
-      { d: 10, label: '10M' },
+      { d: 5, label: '5M' },
       { d: BASE, label: '27M', sub: '1루' },
       { d: 55, label: '55M', sub: '도착' },
     ],
     segments: [
-      { from: 0, to: 10, title: '1 구간', lines: ['거리: 5M'], at: [470, 610] },
-      { from: 10, to: BASE, title: '2 구간', lines: ['위치: 홈 → 1루', '거리: 약 27M', '1루 지점 자동 측정'], at: [455, 262] },
+      { from: 0, to: 5, title: '1 구간', lines: ['거리: 5M'], at: [470, 610] },
+      { from: 5, to: BASE, title: '2 구간', lines: ['위치: 홈 → 1루', '거리: 약 27M', '1루 지점 자동 측정'], at: [455, 262] },
       { from: BASE, to: 55, title: '3 구간', lines: ['위치: 1루 → 외야', '거리: 약 27M (누적 55M)'], at: [790, 70] },
     ],
     showMeter: true,

@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
-import { RECORD_EVENTS, filterPlayers, formatDate, formatTime, sortPlayers, trialValue } from '../lib/records.js';
+import { RECORD_EVENTS, filterPlayers, formatDate, formatTime, sortPlayers, recordValue } from '../lib/records.js';
 import { provinceLabel } from '../lib/regions.js';
 import { RECORD_UNIT } from '../config.js';
 import SearchBar from '../components/SearchBar.jsx';
@@ -44,10 +44,8 @@ function LatestRecords({ players, schoolsById }) {
             <div className="vals">
               {RECORD_EVENTS.map((e) => (
                 <div key={e.key}>
-                  <small>{e.short} 1차 / 2차</small>
-                  <b>{formatTime(trialValue(p, e.key, 1))}</b>
-                  <span className="muted"> / </span>
-                  <b>{formatTime(trialValue(p, e.key, 2))}</b>
+                  <small>{e.label}</small>
+                  <b>{formatTime(recordValue(p, e.key))}</b>
                 </div>
               ))}
             </div>
@@ -176,8 +174,8 @@ export default function Records() {
         <div className="notice" style={{ marginBottom: 16 }}>
           <span className="i" aria-hidden="true">i</span>
           <span>
-            기록 단위: {RECORD_UNIT}. 공식 순위와 대표 기록은 <strong>산정 기준 확정 후 공개</strong>됩니다.
-            기록순 정렬은 55M 직선 스프린트 1·2차 측정값 중 빠른 값을 기준으로 한 단순 정렬이며 공식 순위가 아닙니다.
+            기록 단위: {RECORD_UNIT}. 공식 순위는 <strong>산정 기준 확정 후 공개</strong>됩니다.
+            종목별 1인 1회 측정 기록이며, 기록순 정렬은 55M 직선 스프린트 기록 기준의 단순 정렬로 공식 순위가 아닙니다.
             측정되지 않은 기록은 —로 표시합니다.
           </span>
         </div>

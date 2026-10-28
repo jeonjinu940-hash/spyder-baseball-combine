@@ -22,32 +22,29 @@ export const EVENTS = [
 // 선수 기록 탭·선수 상세에 공개하는 종목 (55M 직선 스프린트만 공개)
 export const RECORD_EVENTS = EVENTS.filter((e) => e.key === 'sprint');
 
-export const TRIALS = [1, 2];
-
 // 기록이 없으면 '—' (0.00 등으로 대체하지 않음)
 export function formatTime(v) {
   return typeof v === 'number' && Number.isFinite(v) ? v.toFixed(RECORD_DECIMALS) : '—';
 }
 
-export function trialValue(player, eventKey, trial) {
-  const v = player.records?.[eventKey]?.[trial - 1];
+// 종목별 1인 1회 측정 → 종목당 기록 1개
+export function recordValue(player, eventKey) {
+  const v = player.records?.[eventKey];
   return typeof v === 'number' ? v : null;
 }
 
-// 정렬용 값: 선택 종목의 측정값 중 가장 빠른 값 (공식 대표 기록·순위 아님)
+// 정렬용 값: 선택 종목 기록 중 가장 빠른 값 (공식 순위 아님)
 export function sortValue(player, eventKeys) {
   let best = null;
   for (const e of eventKeys) {
-    for (const t of TRIALS) {
-      const v = trialValue(player, e, t);
-      if (v != null && (best == null || v < best)) best = v;
-    }
+    const v = recordValue(player, e);
+    if (v != null && (best == null || v < best)) best = v;
   }
   return best;
 }
 
 export function hasEvent(player, eventKey) {
-  return TRIALS.some((t) => trialValue(player, eventKey, t) != null);
+  return recordValue(player, eventKey) != null;
 }
 
 export function filterPlayers(players, { q, province, position, event, school }, schoolsById) {

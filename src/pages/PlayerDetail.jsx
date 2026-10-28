@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
-import { RECORD_EVENTS, TRIALS, formatDate, formatTime, trialValue } from '../lib/records.js';
+import { RECORD_EVENTS, formatDate, formatTime, recordValue } from '../lib/records.js';
 import { schoolRegionLabel } from '../lib/regions.js';
 import { RECORD_UNIT } from '../config.js';
 import BaseDiagram from '../components/BaseDiagram.jsx';
@@ -54,17 +54,18 @@ export default function PlayerDetail() {
           <section key={e.key} className="glass card" aria-labelledby={`h-${e.key}`}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
               <div>
-                <p className="eyebrow">{e.route}</p>
+                <p className="eyebrow">{e.routeKo}</p>
                 <h2 id={`h-${e.key}`} style={{ fontSize: 24, marginTop: 8 }}>{e.label}</h2>
               </div>
               <div className="diagram" style={{ width: 96, flex: '0 0 auto' }}><BaseDiagram event={e.key} /></div>
             </div>
-            <div className="trial-grid">
-              {TRIALS.map((t) => {
-                const v = trialValue(player, e.key, t);
+            {/* 종목별 1인 1회 측정 → 기록 1개 */}
+            <div className="trial-grid" style={{ gridTemplateColumns: '1fr' }}>
+              {(() => {
+                const v = recordValue(player, e.key);
                 return (
-                  <div key={t}>
-                    <small>{t}차 측정</small>
+                  <div>
+                    <small>측정 기록</small>
                     <div className={`v${v == null ? ' empty' : ''}`}>
                       {formatTime(v)}
                       {v != null && <span className="u">{RECORD_UNIT}</span>}
@@ -72,7 +73,7 @@ export default function PlayerDetail() {
                     {v == null && <small>측정 기록 없음</small>}
                   </div>
                 );
-              })}
+              })()}
             </div>
           </section>
         ))}
@@ -80,7 +81,7 @@ export default function PlayerDetail() {
 
       <div className="notice mt-24">
         <span className="i" aria-hidden="true">i</span>
-        <span>대표 기록과 순위는 공식 산정 기준이 확정된 후 표시됩니다. 기록 정정이 필요한 경우 운영팀에 문의해 주세요.</span>
+        <span>종목별 1인 1회 측정 기록입니다. 순위는 공식 산정 기준이 확정된 후 표시됩니다. 기록 정정이 필요한 경우 운영팀에 문의해 주세요.</span>
       </div>
 
       {photos.length > 0 && (

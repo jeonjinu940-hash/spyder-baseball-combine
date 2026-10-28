@@ -53,8 +53,8 @@ DEMO 데이터는 `src/data/demo-players.json`에 분리되어 있으며 실제 
 | region | Yes | 지역 |
 | position | Recommended | 포지션 |
 | uniform_number | Optional | 배번 (공개 승인된 경우만) |
-| sprint_27m_trial_1 / _2 | Yes, 빈칸 허용 | 55M 직선 스프린트 1·2차 |
-| sprint_54m_trial_1 / _2 | Yes, 빈칸 허용 | 55M 베이스러닝 1·2차 |
+| sprint_55m | Yes, 빈칸 허용 | 55M 직선 스프린트 기록 (종목별 1인 1회 측정) |
+| baserun_55m | Yes, 빈칸 허용 | 55M 베이스러닝 기록 (종목별 1인 1회 측정) |
 | measured_at | Recommended | 측정 일자 YYYY-MM-DD |
 | publish_status | Recommended | 공개 / 비공개 (빈칸 = 공개) |
 | photo_id | Optional | 사진 연결 ID |
@@ -72,7 +72,7 @@ DEMO 데이터는 `src/data/demo-players.json`에 분리되어 있으며 실제 
 
 ## 미확정 정책 (PRD 13장)
 
-다음 항목이 확정되기 전까지 사이트는 1·2차 측정값만 표시하고 **순위·대표 기록은 표시하지 않습니다.**
+다음 항목이 확정되기 전까지 사이트는 종목별 측정 기록(1인 1회)만 표시하고 **순위는 표시하지 않습니다.**
 기록 공개 범위, 대표 기록 기준, 순위·동률 처리, 기록 단위/소수점, 학교 좌표 사용 여부, 사진 공개 승인 절차.
 
 ## 향후 확장: 관리자 CMS

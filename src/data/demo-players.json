@@ -7,95 +7,65 @@
    "id": "DEMO-001",
    "name": "DEMO 선수 01",
    "schoolId": "convention",
-   "position": "포수",
+   "position": "내야수",
    "uniformNumber": null,
    "measuredAt": "2026-06-11",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.45,
-     6.43
-    ],
-    "baserun": [
-     8.16,
-     8.11
-    ]
+    "sprint": 6.61,
+    "baserun": 7.27
    }
   },
   {
    "id": "DEMO-002",
    "name": "DEMO 선수 02",
    "schoolId": "convention",
-   "position": "투수",
+   "position": "내야수",
    "uniformNumber": null,
    "measuredAt": "2026-07-12",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.34,
-     7.37
-    ],
-    "baserun": [
-     7.94,
-     7.99
-    ]
+    "sprint": 7.04,
+    "baserun": 7.97
    }
   },
   {
    "id": "DEMO-003",
    "name": "DEMO 선수 03",
    "schoolId": "seongnam",
-   "position": "외야수",
+   "position": "포수",
    "uniformNumber": null,
    "measuredAt": "2026-05-13",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.96,
-     6.8
-    ],
-    "baserun": [
-     7.9,
-     7.84
-    ]
+    "sprint": 7.29,
+    "baserun": 7.92
    }
   },
   {
    "id": "DEMO-004",
    "name": "DEMO 선수 04",
    "schoolId": "seongnam",
-   "position": "내야수",
+   "position": "포수",
    "uniformNumber": null,
    "measuredAt": "2026-06-14",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.39,
-     7.49
-    ],
-    "baserun": [
-     7.19,
-     7.18
-    ]
+    "sprint": 7.33,
+    "baserun": 7.11
    }
   },
   {
    "id": "DEMO-005",
    "name": "DEMO 선수 05",
    "schoolId": "kyunggi-commercial",
-   "position": "투수",
+   "position": "외야수",
    "uniformNumber": null,
    "measuredAt": "2026-07-15",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.47,
-     7.46
-    ],
-    "baserun": [
-     8.17,
-     8.05
-    ]
+    "sprint": 7.59,
+    "baserun": 7.15
    }
   },
   {
@@ -107,52 +77,34 @@
    "measuredAt": "2026-05-16",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.78,
-     6.94
-    ],
-    "baserun": [
-     7.53,
-     7.57
-    ]
+    "sprint": 7.29,
+    "baserun": 7.8
    }
   },
   {
    "id": "DEMO-007",
    "name": "DEMO 선수 07",
    "schoolId": "yushin",
-   "position": "외야수",
+   "position": "투수",
    "uniformNumber": null,
    "measuredAt": "2026-06-17",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.58,
-     6.57
-    ],
-    "baserun": [
-     7.31,
-     7.25
-    ]
+    "sprint": 6.87,
+    "baserun": 7.96
    }
   },
   {
    "id": "DEMO-008",
    "name": "DEMO 선수 08",
    "schoolId": "yushin",
-   "position": "투수",
+   "position": "내야수",
    "uniformNumber": null,
    "measuredAt": "2026-07-18",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.52,
-     6.6
-    ],
-    "baserun": [
-     7.54,
-     7.44
-    ]
+    "sprint": 6.81,
+    "baserun": 7.46
    }
   },
   {
@@ -164,33 +116,21 @@
    "measuredAt": "2026-05-10",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.91,
-     6.93
-    ],
-    "baserun": [
-     7.3,
-     null
-    ]
+    "sprint": 7.4,
+    "baserun": null
    }
   },
   {
    "id": "DEMO-010",
    "name": "DEMO 선수 10",
    "schoolId": "incheon",
-   "position": "내야수",
+   "position": "투수",
    "uniformNumber": null,
    "measuredAt": "2026-06-11",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.75,
-     6.85
-    ],
-    "baserun": [
-     8.12,
-     8.12
-    ]
+    "sprint": 7.04,
+    "baserun": 7.33
    }
   },
   {
@@ -202,109 +142,73 @@
    "measuredAt": "2026-07-12",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.17,
-     7.03
-    ],
-    "baserun": [
-     7.88,
-     7.76
-    ]
+    "sprint": 6.86,
+    "baserun": 7.9
    }
   },
   {
    "id": "DEMO-012",
    "name": "DEMO 선수 12",
    "schoolId": "seoul",
-   "position": "외야수",
+   "position": "포수",
    "uniformNumber": null,
    "measuredAt": "2026-05-13",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.86,
-     6.96
-    ],
-    "baserun": [
-     7.49,
-     7.3
-    ]
+    "sprint": 6.66,
+    "baserun": 7.31
    }
   },
   {
    "id": "DEMO-013",
    "name": "DEMO 선수 13",
    "schoolId": "whimoon",
-   "position": "내야수",
+   "position": "외야수",
    "uniformNumber": null,
    "measuredAt": "2026-06-14",
    "photoId": null,
    "records": {
-    "sprint": [
-     null,
-     6.48
-    ],
-    "baserun": [
-     7.61,
-     7.42
-    ]
+    "sprint": null,
+    "baserun": 7.67
    }
   },
   {
    "id": "DEMO-014",
    "name": "DEMO 선수 14",
    "schoolId": "whimoon",
-   "position": "외야수",
+   "position": "내야수",
    "uniformNumber": null,
    "measuredAt": "2026-07-15",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.68,
-     6.57
-    ],
-    "baserun": [
-     7.65,
-     7.64
-    ]
+    "sprint": 7.09,
+    "baserun": 7.8
    }
   },
   {
    "id": "DEMO-015",
    "name": "DEMO 선수 15",
    "schoolId": "jeonju",
-   "position": "투수",
+   "position": "내야수",
    "uniformNumber": null,
    "measuredAt": "2026-05-16",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.54,
-     7.42
-    ],
-    "baserun": [
-     7.97,
-     8.03
-    ]
+    "sprint": 7.1,
+    "baserun": 8.1
    }
   },
   {
    "id": "DEMO-016",
    "name": "DEMO 선수 16",
    "schoolId": "jeonju",
-   "position": "투수",
+   "position": "포수",
    "uniformNumber": null,
    "measuredAt": "2026-06-17",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.43,
-     6.56
-    ],
-    "baserun": [
-     7.74,
-     7.79
-    ]
+    "sprint": 6.8,
+    "baserun": 7.38
    }
   },
   {
@@ -316,33 +220,21 @@
    "measuredAt": "2026-07-18",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.44,
-     7.57
-    ],
-    "baserun": [
-     7.19,
-     7.28
-    ]
+    "sprint": 7.47,
+    "baserun": 7.21
    }
   },
   {
    "id": "DEMO-018",
    "name": "DEMO 선수 18",
    "schoolId": "deoksu",
-   "position": "외야수",
+   "position": "투수",
    "uniformNumber": null,
    "measuredAt": "2026-05-10",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.61,
-     7.38
-    ],
-    "baserun": [
-     7.86,
-     null
-    ]
+    "sprint": 6.86,
+    "baserun": null
    }
   },
   {
@@ -354,14 +246,8 @@
    "measuredAt": "2026-06-11",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.06,
-     7.05
-    ],
-    "baserun": [
-     7.74,
-     7.83
-    ]
+    "sprint": 7.11,
+    "baserun": 7.57
    }
   },
   {
@@ -373,33 +259,21 @@
    "measuredAt": "2026-07-12",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.4,
-     7.35
-    ],
-    "baserun": [
-     7.72,
-     7.74
-    ]
+    "sprint": 7.61,
+    "baserun": 8.16
    }
   },
   {
    "id": "DEMO-021",
    "name": "DEMO 선수 21",
    "schoolId": "gaesung",
-   "position": "외야수",
+   "position": "투수",
    "uniformNumber": null,
    "measuredAt": "2026-05-13",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.74,
-     6.53
-    ],
-    "baserun": [
-     7.92,
-     7.92
-    ]
+    "sprint": 7.28,
+    "baserun": 6.95
    }
   },
   {
@@ -411,33 +285,21 @@
    "measuredAt": "2026-06-14",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.53,
-     7.49
-    ],
-    "baserun": [
-     7.97,
-     8.01
-    ]
+    "sprint": 6.53,
+    "baserun": 7.34
    }
   },
   {
    "id": "DEMO-023",
    "name": "DEMO 선수 23",
    "schoolId": "kyungnam",
-   "position": "내야수",
+   "position": "포수",
    "uniformNumber": null,
    "measuredAt": "2026-07-15",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.85,
-     6.77
-    ],
-    "baserun": [
-     7.45,
-     7.52
-    ]
+    "sprint": 7.19,
+    "baserun": 7.99
    }
   },
   {
@@ -449,33 +311,21 @@
    "measuredAt": "2026-05-16",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.85,
-     6.79
-    ],
-    "baserun": [
-     7.82,
-     7.99
-    ]
+    "sprint": 7.39,
+    "baserun": 7.46
    }
   },
   {
    "id": "DEMO-025",
    "name": "DEMO 선수 25",
    "schoolId": "masan-yongma",
-   "position": "포수",
+   "position": "투수",
    "uniformNumber": null,
    "measuredAt": "2026-06-17",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.3,
-     7.12
-    ],
-    "baserun": [
-     8.08,
-     7.96
-    ]
+    "sprint": 7.31,
+    "baserun": 7.13
    }
   },
   {
@@ -487,52 +337,34 @@
    "measuredAt": "2026-07-18",
    "photoId": null,
    "records": {
-    "sprint": [
-     null,
-     7.11
-    ],
-    "baserun": [
-     7.85,
-     7.91
-    ]
+    "sprint": null,
+    "baserun": 7.76
    }
   },
   {
    "id": "DEMO-027",
    "name": "DEMO 선수 27",
    "schoolId": "gangneung",
-   "position": "외야수",
+   "position": "내야수",
    "uniformNumber": null,
    "measuredAt": "2026-05-10",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.24,
-     7.23
-    ],
-    "baserun": [
-     7.69,
-     null
-    ]
+    "sprint": 6.75,
+    "baserun": null
    }
   },
   {
    "id": "DEMO-028",
    "name": "DEMO 선수 28",
    "schoolId": "gangneung",
-   "position": "투수",
+   "position": "외야수",
    "uniformNumber": null,
    "measuredAt": "2026-06-11",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.54,
-     6.45
-    ],
-    "baserun": [
-     7.41,
-     7.31
-    ]
+    "sprint": 7.29,
+    "baserun": 6.94
    }
   },
   {
@@ -544,71 +376,47 @@
    "measuredAt": "2026-07-12",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.12,
-     7.29
-    ],
-    "baserun": [
-     7.6,
-     7.62
-    ]
+    "sprint": 6.69,
+    "baserun": 7.96
    }
   },
   {
    "id": "DEMO-030",
    "name": "DEMO 선수 30",
    "schoolId": "yatap",
-   "position": "외야수",
+   "position": "포수",
    "uniformNumber": null,
    "measuredAt": "2026-05-13",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.13,
-     7.31
-    ],
-    "baserun": [
-     8.18,
-     8.21
-    ]
+    "sprint": 7.57,
+    "baserun": 8.21
    }
   },
   {
    "id": "DEMO-031",
    "name": "DEMO 선수 31",
    "schoolId": "daejeon",
-   "position": "내야수",
+   "position": "투수",
    "uniformNumber": null,
    "measuredAt": "2026-06-14",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.44,
-     6.44
-    ],
-    "baserun": [
-     7.06,
-     7.04
-    ]
+    "sprint": 6.83,
+    "baserun": 8.03
    }
   },
   {
    "id": "DEMO-032",
    "name": "DEMO 선수 32",
    "schoolId": "daejeon",
-   "position": "포수",
+   "position": "내야수",
    "uniformNumber": null,
    "measuredAt": "2026-07-15",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.45,
-     7.47
-    ],
-    "baserun": [
-     7.27,
-     7.17
-    ]
+    "sprint": 7.04,
+    "baserun": 7.63
    }
   },
   {
@@ -620,52 +428,34 @@
    "measuredAt": "2026-05-16",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.64,
-     7.66
-    ],
-    "baserun": [
-     7.48,
-     7.49
-    ]
+    "sprint": 7.27,
+    "baserun": 7.85
    }
   },
   {
    "id": "DEMO-034",
    "name": "DEMO 선수 34",
    "schoolId": "choongam",
-   "position": "투수",
+   "position": "외야수",
    "uniformNumber": null,
    "measuredAt": "2026-06-17",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.87,
-     6.67
-    ],
-    "baserun": [
-     8.08,
-     7.97
-    ]
+    "sprint": 6.96,
+    "baserun": 8.23
    }
   },
   {
    "id": "DEMO-035",
    "name": "DEMO 선수 35",
    "schoolId": "gwangju-first",
-   "position": "내야수",
+   "position": "포수",
    "uniformNumber": null,
    "measuredAt": "2026-07-18",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.65,
-     6.63
-    ],
-    "baserun": [
-     7.67,
-     7.76
-    ]
+    "sprint": 7.44,
+    "baserun": 7.68
    }
   },
   {
@@ -677,71 +467,47 @@
    "measuredAt": "2026-05-10",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.92,
-     7.01
-    ],
-    "baserun": [
-     8.15,
-     null
-    ]
+    "sprint": 7.18,
+    "baserun": null
    }
   },
   {
    "id": "DEMO-037",
    "name": "DEMO 선수 37",
    "schoolId": "daegu",
-   "position": "포수",
+   "position": "내야수",
    "uniformNumber": null,
    "measuredAt": "2026-06-11",
    "photoId": null,
    "records": {
-    "sprint": [
-     6.89,
-     7.06
-    ],
-    "baserun": [
-     7.18,
-     7.18
-    ]
+    "sprint": 6.91,
+    "baserun": 7.8
    }
   },
   {
    "id": "DEMO-038",
    "name": "DEMO 선수 38",
    "schoolId": "daegu",
-   "position": "포수",
+   "position": "투수",
    "uniformNumber": null,
    "measuredAt": "2026-07-12",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.52,
-     7.48
-    ],
-    "baserun": [
-     8.17,
-     8.12
-    ]
+    "sprint": 7.12,
+    "baserun": 7.5
    }
   },
   {
    "id": "DEMO-039",
    "name": "DEMO 선수 39",
    "schoolId": "bugil",
-   "position": "내야수",
+   "position": "포수",
    "uniformNumber": null,
    "measuredAt": "2026-05-13",
    "photoId": null,
    "records": {
-    "sprint": [
-     null,
-     7.1
-    ],
-    "baserun": [
-     7.64,
-     7.63
-    ]
+    "sprint": null,
+    "baserun": 7.3
    }
   },
   {
@@ -753,14 +519,8 @@
    "measuredAt": "2026-06-14",
    "photoId": null,
    "records": {
-    "sprint": [
-     7.6,
-     7.46
-    ],
-    "baserun": [
-     8.01,
-     8.13
-    ]
+    "sprint": 6.8,
+    "baserun": 7.41
    }
   }
  ]
