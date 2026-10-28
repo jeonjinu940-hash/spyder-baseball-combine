@@ -1,4 +1,147 @@
 {
-  "note": "공개 동의·권한이 확인된 사진만 추가. 이미지는 public/gallery/ 에 저장. category: field(측정 현장) | player(선수) | school(학교별). playerId는 별도 공개 승인 시에만 연결.",
-  "items": []
+  "note": "자동 생성 파일 — 직접 수정하지 말고 `현장 갤러리/` 폴더에 사진을 넣은 뒤 `npm run gallery` 실행. 공개 동의·권한이 확인된 사진만 넣을 것.",
+  "albums": [
+    {
+      "id": "20261028-jeonju",
+      "schoolId": "jeonju",
+      "schoolName": "전주고등학교",
+      "date": "2026-10-28",
+      "dateLabel": "2026.10.28.",
+      "cover": {
+        "src": "/gallery/20261028-jeonju/01.jpg",
+        "thumb": "/gallery/20261028-jeonju/01-thumb.jpg",
+        "width": 900,
+        "height": 1600,
+        "alt": "2026.10.28. 전주고등학교 측정 현장 사진 1"
+      },
+      "photos": [
+        {
+          "src": "/gallery/20261028-jeonju/01.jpg",
+          "thumb": "/gallery/20261028-jeonju/01-thumb.jpg",
+          "width": 900,
+          "height": 1600,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 1"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/02.jpg",
+          "thumb": "/gallery/20261028-jeonju/02-thumb.jpg",
+          "width": 900,
+          "height": 1600,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 2"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/03.jpg",
+          "thumb": "/gallery/20261028-jeonju/03-thumb.jpg",
+          "width": 1600,
+          "height": 1200,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 3"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/04.jpg",
+          "thumb": "/gallery/20261028-jeonju/04-thumb.jpg",
+          "width": 1600,
+          "height": 900,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 4"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/05.jpg",
+          "thumb": "/gallery/20261028-jeonju/05-thumb.jpg",
+          "width": 1600,
+          "height": 900,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 5"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/06.jpg",
+          "thumb": "/gallery/20261028-jeonju/06-thumb.jpg",
+          "width": 1600,
+          "height": 900,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 6"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/07.jpg",
+          "thumb": "/gallery/20261028-jeonju/07-thumb.jpg",
+          "width": 1200,
+          "height": 1600,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 7"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/08.jpg",
+          "thumb": "/gallery/20261028-jeonju/08-thumb.jpg",
+          "width": 1200,
+          "height": 1600,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 8"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/09.jpg",
+          "thumb": "/gallery/20261028-jeonju/09-thumb.jpg",
+          "width": 1600,
+          "height": 900,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 9"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/10.jpg",
+          "thumb": "/gallery/20261028-jeonju/10-thumb.jpg",
+          "width": 1600,
+          "height": 900,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 10"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/11.jpg",
+          "thumb": "/gallery/20261028-jeonju/11-thumb.jpg",
+          "width": 1600,
+          "height": 900,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 11"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/12.jpg",
+          "thumb": "/gallery/20261028-jeonju/12-thumb.jpg",
+          "width": 1600,
+          "height": 900,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 12"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/13.jpg",
+          "thumb": "/gallery/20261028-jeonju/13-thumb.jpg",
+          "width": 1600,
+          "height": 900,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 13"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/14.jpg",
+          "thumb": "/gallery/20261028-jeonju/14-thumb.jpg",
+          "width": 1600,
+          "height": 900,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 14"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/15.jpg",
+          "thumb": "/gallery/20261028-jeonju/15-thumb.jpg",
+          "width": 1600,
+          "height": 1200,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 15"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/16.jpg",
+          "thumb": "/gallery/20261028-jeonju/16-thumb.jpg",
+          "width": 1600,
+          "height": 1200,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 16"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/17.jpg",
+          "thumb": "/gallery/20261028-jeonju/17-thumb.jpg",
+          "width": 1600,
+          "height": 1200,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 17"
+        },
+        {
+          "src": "/gallery/20261028-jeonju/18.jpg",
+          "thumb": "/gallery/20261028-jeonju/18-thumb.jpg",
+          "width": 1600,
+          "height": 1200,
+          "alt": "2026.10.28. 전주고등학교 측정 현장 사진 18"
+        }
+      ]
+    }
+  ]
 }

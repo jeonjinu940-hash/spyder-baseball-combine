@@ -9,7 +9,7 @@ import NotFound from './NotFound.jsx';
 
 export default function PlayerDetail() {
   const { id } = useParams();
-  const { players, playersById, schoolsById, gallery, demo } = useData();
+  const { players, playersById, schoolsById, galleryAlbums, demo } = useData();
   const player = playersById[id];
 
   // 비공개 선수는 목록에서 이미 제외되어 있으므로 404
@@ -24,7 +24,8 @@ export default function PlayerDetail() {
   const idx = ordered.findIndex((p) => p.id === player.id);
   const prev = ordered[idx - 1];
   const next = ordered[idx + 1];
-  const photos = gallery.filter((g) => g.playerId === player.id);
+  // 선수 이름을 연결한 사진은 별도 공개 승인 시에만 (photos[].playerId)
+  const photos = galleryAlbums.flatMap((a) => a.photos).filter((g) => g.playerId === player.id);
 
   return (
     <div className="container">
@@ -89,7 +90,7 @@ export default function PlayerDetail() {
           <h2 id="h-photos" className="eyebrow" style={{ marginBottom: 14 }}>Field Photos</h2>
           <div className="gallery-grid">
             {photos.map((g) => (
-              <figure key={g.id} className="gallery-item" style={{ margin: 0, cursor: 'default' }}>
+              <figure key={g.src} className="gallery-item" style={{ margin: 0, cursor: 'default' }}>
                 <img src={g.thumb ?? g.src} alt={g.alt} loading="lazy" />
                 {g.caption && <figcaption className="cap">{g.caption}</figcaption>}
               </figure>

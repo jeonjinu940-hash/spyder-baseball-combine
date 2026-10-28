@@ -56,7 +56,8 @@ export function DataProvider({ children }) {
       players,
       playersById: Object.fromEntries(players.map((p) => [p.id, p])),
       updatedAt: source.updatedAt,
-      gallery: galleryData.items.filter(isPublic),
+      // 학교별 현장 사진 앨범 (scripts/build-gallery.mjs가 생성)
+      galleryAlbums: galleryData.albums ?? [],
     };
   }, [demo]);
 

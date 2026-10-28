@@ -1957,6 +1957,240 @@ main:focus {
   letter-spacing: 0.03em;
   background: repeating-linear-gradient(-45deg, transparent 0 14px, rgba(255, 255, 255, 0.02) 14px 28px);
 }
+
+/* ---------- 현장 갤러리: 학교별 앨범 (한 칸 = 학교 하나) ---------- */
+.album-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.album-tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--surface);
+  cursor: pointer;
+}
+.album-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+/* 커서를 올리면 어두운 레드 그라데이션 위에 날짜·학교명 두 줄 */
+.album-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: clamp(16px, 2.4vw, 26px);
+  text-align: left;
+  color: #fff;
+  background: linear-gradient(180deg, rgba(20, 5, 7, 0.15) 0%, rgba(74, 8, 13, 0.72) 55%, rgba(30, 4, 7, 0.94) 100%);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease);
+}
+.album-date {
+  font-size: clamp(15px, 1.5vw, 18px);
+  font-weight: 600;
+  opacity: 0.88;
+  transform: translateY(8px);
+  transition: transform 0.35s var(--ease);
+}
+.album-school {
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+  transform: translateY(8px);
+  transition: transform 0.35s var(--ease) 0.04s;
+}
+.album-count {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  min-width: 34px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(8, 8, 8, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  backdrop-filter: blur(6px);
+}
+.album-count::before {
+  content: '▣ ';
+  opacity: 0.7;
+}
+.album-tile:hover img,
+.album-tile:focus-visible img {
+  transform: scale(1.05);
+}
+.album-tile:hover .album-overlay,
+.album-tile:focus-visible .album-overlay {
+  opacity: 1;
+}
+.album-tile:hover .album-date,
+.album-tile:hover .album-school,
+.album-tile:focus-visible .album-date,
+.album-tile:focus-visible .album-school {
+  transform: none;
+}
+/* 터치 기기(커서 없음)에서는 날짜·학교명을 항상 표시 */
+@media (hover: none) {
+  .album-overlay {
+    opacity: 1;
+    background: linear-gradient(180deg, transparent 40%, rgba(74, 8, 13, 0.7) 75%, rgba(30, 4, 7, 0.94) 100%);
+  }
+  .album-date,
+  .album-school {
+    transform: none;
+  }
+}
+@media (max-width: 860px) {
+  .album-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 520px) {
+  .album-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.album-viewer {
+  width: min(1200px, 96vw);
+  max-width: none;
+  max-height: 96vh;
+  padding: clamp(12px, 2vw, 20px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  background: #0b0b0b;
+  color: var(--text);
+  overflow: auto;
+}
+.album-viewer::backdrop {
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(6px);
+}
+.av-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.av-date {
+  font-size: 14px;
+  color: var(--text-2);
+  font-weight: 600;
+}
+.av-school {
+  font-size: clamp(20px, 2.4vw, 26px);
+  font-weight: 800;
+}
+.av-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  height: min(70vh, 720px);
+}
+.av-stage img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  animation: av-fade 0.3s var(--ease);
+}
+@keyframes av-fade {
+  from {
+    opacity: 0;
+  }
+}
+.av-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(8, 8, 8, 0.55);
+  color: #fff;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+.av-nav:hover {
+  background: rgba(142, 18, 25, 0.85);
+}
+.av-nav.prev {
+  left: 12px;
+}
+.av-nav.next {
+  right: 12px;
+}
+.av-foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 12px;
+}
+.av-foot > .num {
+  flex: 0 0 auto;
+  font-size: 14px;
+  color: var(--text-2);
+  min-width: 52px;
+}
+.av-thumbs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+.av-thumb {
+  flex: 0 0 auto;
+  width: 72px;
+  height: 54px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #111;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+.av-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.av-thumb:hover {
+  opacity: 0.85;
+}
+.av-thumb[aria-current='true'] {
+  opacity: 1;
+  border-color: #c41e2a;
+}
 .lightbox {
   border: 0;
   padding: 0;

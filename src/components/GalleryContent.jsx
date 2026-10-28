@@ -1,30 +1,88 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useData } from '../lib/data.jsx';
-import { formatDate } from '../lib/records.js';
-import EmptyState from './EmptyState.jsx';
 import PageBanner from './PageBanner.jsx';
 
-const CATEGORIES = [
-  { key: '', label: '전체' },
-  { key: 'field', label: '측정 현장' },
-  { key: 'player', label: '선수' },
-  { key: 'school', label: '학교별' },
-];
+const COLS = 3;
 
-export default function GalleryContent() {
-  const { gallery, schoolsById } = useData();
-  const [cat, setCat] = useState('');
-  const [open, setOpen] = useState(null);
-  const dialogRef = useRef(null);
-
-  const items = gallery.filter((g) => !cat || g.category === cat);
+// 앨범(학교) 사진 크게 보기: 이전/다음, 키보드 ←/→, Esc 닫기
+function AlbumViewer({ album, onClose }) {
+  const ref = useRef(null);
+  const [i, setI] = useState(0);
+  const total = album?.photos.length ?? 0;
 
   useEffect(() => {
-    const d = dialogRef.current;
+    const d = ref.current;
     if (!d) return;
-    if (open && !d.open) d.showModal();
-    if (!open && d.open) d.close();
-  }, [open]);
+    if (album) {
+      setI(0);
+      if (!d.open) d.showModal();
+    } else if (d.open) d.close();
+  }, [album]);
+
+  const go = useCallback((delta) => setI((v) => (v + delta + total) % total), [total]);
+
+  const onKey = (e) => {
+    if (e.key === 'ArrowRight') go(1);
+    if (e.key === 'ArrowLeft') go(-1);
+  };
+
+  const photo = album?.photos[i];
+  return (
+    <dialog
+      ref={ref}
+      className="album-viewer"
+      onClose={onClose}
+      onKeyDown={onKey}
+      onClick={(e) => e.target === ref.current && onClose()}
+      aria-label={album ? `${album.dateLabel} ${album.schoolName} 현장 사진` : undefined}
+    >
+      {album && (
+        <>
+          <div className="av-head">
+            <div>
+              <div className="av-date num">{album.dateLabel}</div>
+              <div className="av-school">{album.schoolName}</div>
+            </div>
+            <button type="button" className="btn btn-ghost btn-sm" onClick={onClose}>닫기 ✕</button>
+          </div>
+          <div className="av-stage">
+            <img key={photo.src} src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} />
+            {total > 1 && (
+              <>
+                <button type="button" className="av-nav prev" onClick={() => go(-1)} aria-label="이전 사진">‹</button>
+                <button type="button" className="av-nav next" onClick={() => go(1)} aria-label="다음 사진">›</button>
+              </>
+            )}
+          </div>
+          <div className="av-foot">
+            <span className="num" aria-live="polite">{i + 1} / {total}</span>
+            <div className="av-thumbs">
+              {album.photos.map((p, k) => (
+                <button
+                  key={p.thumb}
+                  type="button"
+                  className="av-thumb"
+                  aria-current={k === i ? 'true' : undefined}
+                  aria-label={`${k + 1}번 사진 보기`}
+                  onClick={() => setI(k)}
+                >
+                  <img src={p.thumb} alt="" loading="lazy" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </dialog>
+  );
+}
+
+export default function GalleryContent() {
+  const { galleryAlbums } = useData();
+  const [open, setOpen] = useState(null);
+
+  // 3칸 그리드를 채우도록 빈 칸은 COMING SOON으로 표시
+  const placeholders = Math.max(COLS - galleryAlbums.length, (COLS - (galleryAlbums.length % COLS)) % COLS);
 
   return (
     <section className="home-section" id="gallery" aria-labelledby="gallery-title">
@@ -32,60 +90,28 @@ export default function GalleryContent() {
         SPYDER BASEBALL COMBINE 측정 현장의 분위기와 운영 모습을 전합니다.
       </PageBanner>
       <div className="container">
-
-        {gallery.length > 0 && (
-          <div className="chips" role="group" aria-label="사진 카테고리" style={{ marginBottom: 24 }}>
-            {CATEGORIES.map((c) => (
-              <button key={c.key} type="button" className="chip" aria-pressed={cat === c.key} onClick={() => setCat(c.key)}>
-                {c.label}
+        <ul className="album-grid">
+          {galleryAlbums.map((a) => (
+            <li key={a.id}>
+              <button type="button" className="album-tile" onClick={() => setOpen(a)} aria-label={`${a.dateLabel} ${a.schoolName} 현장 사진 ${a.photos.length}장 보기`}>
+                <img src={a.cover.thumb} alt="" loading="lazy" />
+                <span className="album-overlay" aria-hidden="true">
+                  <span className="album-date num">{a.dateLabel}</span>
+                  <span className="album-school">{a.schoolName}</span>
+                </span>
+                <span className="album-count" aria-hidden="true">{a.photos.length}</span>
               </button>
-            ))}
-          </div>
-        )}
-
-        {!gallery.length ? (
-          <>
-            <div className="grid-3" aria-hidden="true">
-              {['FIELD', 'PLAYERS', 'SCHOOLS'].map((t) => (
-                <div key={t} className="gallery-placeholder">{t} · COMING SOON</div>
-              ))}
-            </div>
-            <p className="muted small mt-16">측정 현장 사진은 공개 동의와 권한 확인을 마친 자료만 게시됩니다.</p>
-          </>
-        ) : !items.length ? (
-          <EmptyState title="이 카테고리에 사진이 없습니다" icon="◎" />
-        ) : (
-          <div className="gallery-grid">
-            {items.map((g) => (
-              <button key={g.id} type="button" className="gallery-item" onClick={() => setOpen(g)} aria-label={`${g.alt} 크게 보기`}>
-                <img src={g.thumb ?? g.src} alt={g.alt} loading="lazy" />
-                {(g.caption || g.date) && (
-                  <span className="cap" style={{ display: 'block' }}>
-                    {g.caption}
-                    {g.date && <span className="num"> · {formatDate(g.date)}</span>}
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-        )}
+            </li>
+          ))}
+          {Array.from({ length: placeholders }, (_, k) => (
+            <li key={`ph-${k}`} aria-hidden="true">
+              <div className="gallery-placeholder">COMING SOON</div>
+            </li>
+          ))}
+        </ul>
+        <p className="muted small mt-16">측정 현장 사진은 공개 동의와 권한 확인을 마친 자료만 게시됩니다.</p>
       </div>
-
-      <dialog ref={dialogRef} className="lightbox" onClose={() => setOpen(null)} aria-label={open?.alt}>
-        {open && (
-          <>
-            <img src={open.src} alt={open.alt} />
-            <div className="lb-bar">
-              <span className="muted">
-                {open.caption}
-                {open.schoolId && schoolsById[open.schoolId] && ` · ${schoolsById[open.schoolId].name}`}
-                {open.date && ` · ${formatDate(open.date)}`}
-              </span>
-              <button type="button" className="btn btn-ghost btn-sm" onClick={() => setOpen(null)}>닫기 ✕</button>
-            </div>
-          </>
-        )}
-      </dialog>
+      <AlbumViewer album={open} onClose={() => setOpen(null)} />
     </section>
   );
 }
