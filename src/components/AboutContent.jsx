@@ -6,9 +6,9 @@ import BaseDiagram from './BaseDiagram.jsx';
 import PageBanner from './PageBanner.jsx';
 
 const PURPOSES = [
-  { tag: '01 · Data', title: '데이터로 보는 경기력', body: '감각이 아닌 측정값으로 선수의 스피드를 기록하고, 같은 조건에서 비교할 수 있게 합니다.' },
-  { tag: '02 · Standard', title: '동일한 측정 기준', body: '모든 참가 학교에서 같은 거리·같은 경로·같은 횟수로 측정해 기록의 신뢰도를 높입니다.' },
-  { tag: '03 · Next Up', title: '다음 세대를 위한 기록', body: '고교 유망 선수의 기록을 누구나 확인할 수 있도록 공개해 선수의 성장을 함께 응원합니다.' },
+  { tag: '01 | DATA', title: '데이터로 보는 경기력', body: '감각이 아닌 측정값으로 선수의 스피드를 기록하고, 같은 조건에서 비교할 수 있게 합니다.' },
+  { tag: '02 | STANDARD', title: '동일한 측정 기준', body: '모든 참가 학교에서 같은 거리·같은 경로·같은 횟수로 측정해 기록의 신뢰도를 높입니다.' },
+  { tag: '03 | NEXT UP', title: '다음 세대를 위한 기록', body: '고교 유망 선수의 기록을 누구나 확인할 수 있도록 공개해 선수의 성장을 함께 응원합니다.' },
 ];
 
 export default function AboutContent() {

@@ -1655,15 +1655,18 @@ main:focus {
 }
 .region-btn .bar {
   width: 80px;
-  height: 4px;
-  background: var(--divider);
-  border-radius: 2px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
   overflow: hidden;
 }
+/* 홈 메인 이미지·배너와 같은 어두운 레드 그라데이션 */
 .region-btn .bar i {
   display: block;
   height: 100%;
-  background: var(--accent);
+  border-radius: inherit;
+  background: linear-gradient(90deg, #4a080d 0%, #8e1219 55%, #c41e2a 100%);
+  box-shadow: 0 0 8px rgba(196, 30, 42, 0.35);
 }
 .region-btn .sel {
   font-size: 12px;

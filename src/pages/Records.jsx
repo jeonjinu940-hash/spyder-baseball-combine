@@ -101,7 +101,7 @@ export default function Records() {
 
   return (
     <>
-      <PageBanner title="선수 기록">55M 직선 스프린트 기록 · 이름 검색과 지역·학교·포지션 필터를 함께 사용할 수 있습니다.</PageBanner>
+      <PageBanner title="선수 기록">55M 직선 스프린트 기록 | 이름 검색과 지역·학교·포지션 필터를 함께 사용할 수 있습니다.</PageBanner>
       <section className="container" style={{ marginBottom: 40 }}>
         <div className="notice notice-strong" role="note">
           <span className="i" aria-hidden="true">!</span>
