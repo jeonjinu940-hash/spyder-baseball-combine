@@ -30,25 +30,28 @@ const SCENES = {
       { d: 55, label: '55M', sub: '도착' },
     ],
     segments: [
-      { from: 0, to: 10, title: '1 구간', lines: ['출발 → 10M', '스타트 가속'], at: [470, 596] },
-      { from: 10, to: BASE, title: '2 구간', lines: ['위치: 홈 → 1루', '거리: 27M', '1루 지점 자동 측정'], at: [455, 262] },
-      { from: BASE, to: 55, title: '3 구간', lines: ['위치: 1루 → 외야', '거리: 27M (누적 55M)'], at: [790, 70] },
+      { from: 0, to: 10, title: '1 구간', lines: ['거리: 5M'], at: [470, 610] },
+      { from: 10, to: BASE, title: '2 구간', lines: ['위치: 홈 → 1루', '거리: 약 27M', '1루 지점 자동 측정'], at: [455, 262] },
+      { from: BASE, to: 55, title: '3 구간', lines: ['위치: 1루 → 외야', '거리: 약 27M (누적 55M)'], at: [790, 70] },
     ],
+    showMeter: true,
   },
   baserun: {
     title: '55M 베이스러닝',
     route: '② 홈 플레이트 → 1루 → 2루',
     path: [H, F, S],
     lens: [BASE, 55 - BASE],
+    // 거리 표기는 좌측 패널의 55M만 유지하고, 게이트·구간에는 베이스 이름만 표기
     gates: [
       { d: 0, label: 'START' },
-      { d: BASE, label: '27M', sub: '1루' },
-      { d: 55, label: '55M', sub: '2루 도착' },
+      { d: BASE, label: '1루' },
+      { d: 55, label: '2루' },
     ],
     segments: [
-      { from: 0, to: BASE, title: '1 구간', lines: ['위치: 홈 → 1루', '거리: 27M', '1루 지점 자동 측정'], at: [640, 470] },
-      { from: BASE, to: 55, title: '2 구간', lines: ['위치: 1루 → 2루', '거리: 27M (누적 55M)'], at: [560, 80] },
+      { from: 0, to: BASE, title: '1 구간', lines: ['위치: 홈 → 1루', '1루 지점 자동 측정'], at: [640, 470] },
+      { from: BASE, to: 55, title: '2 구간', lines: ['위치: 1루 → 2루'], at: [560, 100] },
     ],
+    showMeter: false,
   },
 };
 
@@ -232,15 +235,17 @@ export default function MeasureVideo({ event }) {
         </g>
 
         {/* 누적 거리 */}
-        <g className="mv-meter">
-          <text x="1236" y="640" className="mv-meter-label">누적 거리</text>
-          <text x="1236" y="694" className="mv-meter-value">{Math.round(d)}M</text>
-        </g>
+        {scene.showMeter && (
+          <g className="mv-meter">
+            <text x="1236" y="640" className="mv-meter-label">누적 거리</text>
+            <text x="1236" y="694" className="mv-meter-value">{Math.round(d)}M</text>
+          </g>
+        )}
 
         {done && (
           <g className="mv-done">
             <rect x="490" y="12" width="300" height="48" rx="24" />
-            <text x="640" y="43">측정 완료 · 총 55M</text>
+            <text x="640" y="43">{scene.showMeter ? '측정 완료 · 총 55M' : '측정 완료'}</text>
           </g>
         )}
         <text x="20" y="704" className="mv-caption">* 측정 방법 이해를 돕기 위한 그래픽입니다.</text>
@@ -270,7 +275,7 @@ export default function MeasureVideo({ event }) {
             setT(Number(e.target.value));
           }}
         />
-        <span className="mv-time num">{Math.round(d)}M / 55M</span>
+        <span className="mv-time num">0:{String(Math.floor(t)).padStart(2, '0')} / 0:{String(TOTAL).padStart(2, '0')}</span>
       </div>
     </div>
   );
