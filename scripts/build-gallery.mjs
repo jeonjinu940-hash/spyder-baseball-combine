@@ -15,6 +15,7 @@ const ROOT = fileURLToPath(new URL('../', import.meta.url));
 const SRC = join(ROOT, '현장 갤러리');
 const OUT = join(ROOT, 'public', 'gallery');
 const DATA = join(ROOT, 'src', 'data', 'gallery.json');
+const MANIFEST = join(ROOT, 'scripts', 'gallery-sources.json'); // 앨범별 순서 번호 ↔ 원본 파일명
 const { season, schools } = JSON.parse(readFileSync(join(ROOT, 'src', 'data', 'schools.json'), 'utf8'));
 
 const FULL_MAX = 1600; // 크게 보기
@@ -45,6 +46,8 @@ async function main() {
   }
   const albums = [];
   const keep = new Set();
+  const manifest = existsSync(MANIFEST) ? JSON.parse(readFileSync(MANIFEST, 'utf8')) : {};
+  const nextManifest = {};
 
   for (const dir of readdirSync(SRC, { withFileTypes: true }).filter((e) => e.isDirectory())) {
     const info = parseFolder(dir.name);
@@ -74,12 +77,24 @@ async function main() {
     const schoolName = fullSchoolName(info.school);
     const photos = [];
 
+    // 순서 번호(01, 02…)별로 어떤 원본에서 만들었는지 기록 — 파일 순서를 바꾸면 해당 번호를 다시 만든다
+    // (원본 파일명이 공개되지 않도록 public/ 밖에 저장)
+    const prevSources = manifest[id] ?? {};
+    const sources = {};
+    // 사진 수가 줄었을 때 남는 이전 번호 파일 정리
+    for (const f of readdirSync(outDir)) {
+      const m = f.match(/^(\d+)(-thumb)?\.jpg$/);
+      if (m && Number(m[1]) > files.length) rmSync(join(outDir, f));
+    }
+
     for (const [i, f] of files.entries()) {
       const n = String(i + 1).padStart(2, '0');
       const src = join(SRC, dir.name, f);
       const full = join(outDir, `${n}.jpg`);
       const thumb = join(outDir, `${n}-thumb.jpg`);
-      const fresh = existsSync(full) && existsSync(thumb) && statSync(full).mtimeMs >= statSync(src).mtimeMs;
+      sources[n] = f;
+      const fresh =
+        prevSources[n] === f && existsSync(full) && existsSync(thumb) && statSync(full).mtimeMs >= statSync(src).mtimeMs;
       if (!fresh) {
         // rotate(): EXIF 방향 적용. sharp는 기본적으로 메타데이터를 출력에 포함하지 않음
         await sharp(src).rotate().resize(FULL_MAX, FULL_MAX, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 80, mozjpeg: true }).toFile(full);
@@ -94,6 +109,8 @@ async function main() {
         alt: `${dateLabel} ${schoolName} 측정 현장 사진 ${i + 1}`,
       });
     }
+
+    nextManifest[id] = sources;
 
     albums.push({
       id,
@@ -113,6 +130,8 @@ async function main() {
       if (e.isDirectory() && !keep.has(e.name)) rmSync(join(OUT, e.name), { recursive: true, force: true });
     }
   }
+
+  writeFileSync(MANIFEST, JSON.stringify(nextManifest, null, 2) + '\n');
 
   albums.sort((a, b) => b.date.localeCompare(a.date) || a.schoolName.localeCompare(b.schoolName, 'ko'));
   writeFileSync(

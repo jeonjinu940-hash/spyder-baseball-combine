@@ -9,5 +9,7 @@ dist/
 /메인 페이지.png
 # 현장 사진 원본(대용량·메타데이터 포함)은 올리지 않음 — `npm run gallery`가 만든 public/gallery/ 웹용 사본만 공개
 /현장 갤러리/
+# 갤러리 순서 번호 ↔ 원본 파일명 기록 (로컬 전용)
+/scripts/gallery-sources.json
 # 원본 업로드 엑셀은 개인정보가 포함될 수 있어 저장소에 올리지 않음
 imports/
