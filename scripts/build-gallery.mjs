@@ -8,6 +8,7 @@
 // 사진은 EXIF 방향대로 회전한 뒤 메타데이터(촬영 위치·기기 정보 등)를 제거하고 웹 크기로 줄인다.
 import { readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync, statSync, rmSync } from 'node:fs';
 import { join, extname, basename } from 'node:path';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
@@ -101,9 +102,11 @@ async function main() {
         await sharp(src).rotate().resize(THUMB_MAX, THUMB_MAX, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 76, mozjpeg: true }).toFile(thumb);
       }
       const meta = await sharp(full).metadata();
+      // 내용 기반 버전(?v=) — 같은 번호에 다른 사진이 들어가도 CDN·브라우저 캐시가 옛 사진을 보여주지 않도록
+      const v = (p) => createHash('sha1').update(readFileSync(p)).digest('hex').slice(0, 8);
       photos.push({
-        src: `/gallery/${id}/${n}.jpg`,
-        thumb: `/gallery/${id}/${n}-thumb.jpg`,
+        src: `/gallery/${id}/${n}.jpg?v=${v(full)}`,
+        thumb: `/gallery/${id}/${n}-thumb.jpg?v=${v(thumb)}`,
         width: meta.width,
         height: meta.height,
         alt: `${dateLabel} ${schoolName} 측정 현장 사진 ${i + 1}`,
