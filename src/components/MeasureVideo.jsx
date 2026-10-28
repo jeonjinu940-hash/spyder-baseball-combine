@@ -10,9 +10,11 @@ const BASE = 27.4; // 베이스 간 거리(M)
 const O = [H[0] + (F[0] - H[0]) * (55 / BASE), H[1] + (F[1] - H[1]) * (55 / BASE)]; // 직선 55M 지점
 const C = [(H[0] + S[0]) / 2, (H[1] + S[1]) / 2];
 
-const INTRO = 0.8;
-const RUN = 4.6;
-const TOTAL = 8;
+// 재생 속도: 기본 타임라인(인트로 0.8s · 달리기 4.6s · 전체 8s) 대비 1.3배 빠르게
+const SPEED = 1.3;
+const INTRO = 0.8 / SPEED;
+const RUN = 4.6 / SPEED;
+const TOTAL = 8 / SPEED;
 
 // 화면 문구의 측정 횟수 (사이트 측정 종목 문구와 동일하게 유지)
 const COUNT_LABEL = '인당 1회 측정';
@@ -275,7 +277,7 @@ export default function MeasureVideo({ event }) {
             setT(Number(e.target.value));
           }}
         />
-        <span className="mv-time num">0:{String(Math.floor(t)).padStart(2, '0')} / 0:{String(TOTAL).padStart(2, '0')}</span>
+        <span className="mv-time num">0:{String(Math.floor(t)).padStart(2, '0')} / 0:{String(Math.ceil(TOTAL)).padStart(2, '0')}</span>
       </div>
     </div>
   );
