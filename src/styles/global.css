@@ -1178,18 +1178,283 @@ main:focus {
 }
 .event-card {
   display: grid;
-  grid-template-columns: 1fr 200px;
+  grid-template-columns: minmax(0, 1fr) 190px;
   gap: 20px;
   align-items: center;
   padding: clamp(20px, 3vw, 32px);
 }
+/* 두 카드의 라벨·제목·설명이 같은 위치에서 시작하도록 위쪽·왼쪽 기준 정렬 */
+.event-card .event-text {
+  align-self: start;
+  display: grid;
+  justify-items: start;
+  text-align: left;
+  padding-top: 8px;
+}
+.event-card .event-text > * {
+  margin-left: 0;
+}
 .event-card .en {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(28px, 3.4vw, 40px);
-  line-height: 1;
+  font-size: clamp(26px, 2.8vw, 36px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
-  margin: 8px 0 6px;
+  margin: 10px 0 0 -0.04em; /* 큰 글자의 좌측 여백을 보정해 작은 글자와 시각적으로 맞춤 */
+}
+
+/* 측정 방법 영상을 여는 다이어그램 버튼 */
+.diagram-btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 6px 6px 34px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.diagram-btn:hover,
+.diagram-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+}
+.play-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px 4px 8px;
+  border-radius: 999px;
+  background: rgba(224, 36, 47, 0.9);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(224, 36, 47, 0.35);
+}
+.play-hint svg {
+  flex: 0 0 12px;
+  width: 12px;
+  height: 12px;
+  max-width: none; /* 전역 svg max-width:100%가 축소폭 배지 안에서 0으로 계산되는 것 방지 */
+  fill: currentColor;
+}
+
+/* ---------- 측정 방법 영상(애니메이션) ---------- */
+.mv-dialog {
+  width: min(1100px, 94vw);
+  max-width: none;
+  max-height: 94vh;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  background: #0c0c0c;
+  color: var(--text);
+  overflow: auto;
+}
+.mv-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(6px);
+}
+.mv-dialog-inner {
+  padding: clamp(12px, 2vw, 20px);
+}
+.mv-dialog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.mv-dialog-head h3 {
+  font-size: clamp(18px, 2.2vw, 22px);
+  font-weight: 800;
+}
+.mv-stage {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  background: #1d3a19;
+  font-family: var(--font-body);
+}
+.mv-route {
+  fill: none;
+  stroke: #fff;
+  stroke-opacity: 0.35;
+  stroke-width: 3;
+  stroke-dasharray: 10 10;
+}
+.mv-trail {
+  fill: none;
+  stroke: #ffd43b;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mv-gate line {
+  stroke: #cfcfcf;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.mv-gate rect {
+  fill: #1a1a1a;
+  stroke: #cfcfcf;
+  stroke-width: 2;
+  transition: fill 0.2s;
+}
+.mv-gate.on rect {
+  fill: #e0242f;
+  stroke: #fff;
+}
+.mv-gate-label {
+  fill: #ffd43b;
+  font-size: 26px;
+  font-weight: 800;
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: rgba(0, 0, 0, 0.55);
+  stroke-width: 4px;
+  opacity: 0.45;
+  transition: opacity 0.25s;
+}
+.mv-gate.on .mv-gate-label {
+  opacity: 1;
+}
+.mv-gate-sub {
+  fill: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: rgba(0, 0, 0, 0.55);
+  stroke-width: 4px;
+  opacity: 0.5;
+}
+.mv-gate.on .mv-gate-sub {
+  opacity: 1;
+}
+.mv-card {
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+.mv-card.show {
+  opacity: 1;
+}
+.mv-card > rect:first-child {
+  fill: rgba(20, 20, 20, 0.62);
+  stroke: rgba(255, 255, 255, 0.25);
+}
+.mv-card.active > rect:first-child {
+  stroke: #ffd43b;
+  stroke-width: 2;
+}
+.mv-card-pill {
+  fill: rgba(255, 255, 255, 0.28);
+}
+.mv-card-title {
+  fill: #fff;
+  font-size: 16px;
+  font-weight: 800;
+}
+.mv-card-line {
+  fill: #f0f0f0;
+  font-size: 17px;
+  font-weight: 600;
+}
+.mv-panel {
+  fill: rgba(255, 255, 255, 0.2);
+}
+.mv-panel-route {
+  fill: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+.mv-panel-big {
+  fill: #fff;
+  font-size: 42px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+.mv-panel-count {
+  fill: #fff;
+  font-size: 24px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+.mv-meter-label {
+  fill: #fff;
+  opacity: 0.75;
+  font-size: 16px;
+  font-weight: 700;
+  text-anchor: end;
+}
+.mv-meter-value {
+  fill: #ffd43b;
+  font-size: 52px;
+  font-weight: 800;
+  text-anchor: end;
+  font-variant-numeric: tabular-nums;
+}
+.mv-done rect {
+  fill: rgba(224, 36, 47, 0.92);
+}
+.mv-done text {
+  fill: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+.mv-caption {
+  fill: #fff;
+  opacity: 0.6;
+  font-size: 13px;
+}
+.mv-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+.mv-btn {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--divider-strong);
+  background: var(--glass);
+  color: var(--text);
+  cursor: pointer;
+}
+.mv-btn:hover {
+  background: var(--glass-strong);
+}
+.mv-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+.mv-seek {
+  flex: 1;
+  min-width: 0;
+  accent-color: #e0242f;
+  height: 44px;
+}
+.mv-time {
+  flex: 0 0 auto;
+  font-size: 14px;
+  color: var(--text-2);
+  min-width: 84px;
+  text-align: right;
 }
 .event-card .route {
   font-family: var(--font-display);
@@ -1222,7 +1487,7 @@ main:focus {
     grid-template-columns: 1fr;
   }
   .event-card .diagram {
-    max-width: 220px;
+    max-width: 240px;
   }
 }
 

@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import MeasureVideoDialog from './MeasureVideoDialog.jsx';
 import { EVENTS } from '../lib/records.js';
 import BaseDiagram from './BaseDiagram.jsx';
 import PageBanner from './PageBanner.jsx';
@@ -10,6 +12,8 @@ const PURPOSES = [
 ];
 
 export default function AboutContent() {
+  // ?video=sprint | baserun 으로 접속하면 해당 측정 방법 영상을 바로 연다 (공유용)
+  const [video, setVideo] = useState(() => EVENTS.find((e) => e.key === new URLSearchParams(window.location.search).get('video')) ?? null);
   return (
     <>
       <section className="home-section glass-stage" id="about" aria-labelledby="about-title">
@@ -42,16 +46,28 @@ export default function AboutContent() {
           <div className="event-grid">
             {EVENTS.map((e) => (
               <article key={e.key} className="event-card glass glass-strong">
-                <div>
+                <div className="event-text">
                   <p className="eyebrow">{e.label}</p>
                   <h3 className="en">{e.en}</h3>
                   <p className="ko">{e.routeKo}</p>
                 </div>
-                <div className="diagram"><BaseDiagram event={e.key} /></div>
+                <button
+                  type="button"
+                  className="diagram diagram-btn"
+                  onClick={() => setVideo(e)}
+                  aria-label={`${e.label} 측정 방법 영상 보기`}
+                >
+                  <BaseDiagram event={e.key} />
+                  <span className="play-hint" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="12" height="12"><path d="M8 5l11 7-11 7z" fill="#fff" /></svg>
+                    측정 방법 보기
+                  </span>
+                </button>
               </article>
             ))}
           </div>
         </div>
+        <MeasureVideoDialog event={video} onClose={() => setVideo(null)} />
       </section>
     </>
   );
