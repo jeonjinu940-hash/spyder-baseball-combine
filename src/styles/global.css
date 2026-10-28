@@ -2114,6 +2114,29 @@ main:focus {
   border-radius: 12px;
   overflow: hidden;
 }
+/* 사진 띠: 사진 한 장 = 무대 폭 100%, translate로 부드럽게 밀어 넘김 */
+.av-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  touch-action: pan-y; /* 가로 스와이프는 직접 처리, 세로 스크롤은 브라우저에 맡김 */
+  cursor: grab;
+  user-select: none;
+}
+.av-track:active {
+  cursor: grabbing;
+}
+.av-track.animate {
+  transition: transform 0.55s cubic-bezier(0.22, 0.8, 0.2, 1);
+}
+.av-slide {
+  flex: 0 0 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .av-stage img {
   display: block;
   width: auto;
@@ -2121,11 +2144,14 @@ main:focus {
   max-width: 100%;
   max-height: var(--av-h);
   object-fit: contain;
-  animation: av-fade 0.3s var(--ease);
+  -webkit-user-drag: none;
 }
-@keyframes av-fade {
-  from {
-    opacity: 0;
+.av-thumbs {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  .av-track.animate {
+    transition: none;
   }
 }
 .av-nav {

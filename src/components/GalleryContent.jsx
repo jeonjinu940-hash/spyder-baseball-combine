@@ -4,20 +4,43 @@ import PageBanner from './PageBanner.jsx';
 
 const COLS = 3;
 
-// 앨범(학교) 사진 크게 보기: 이전/다음, 키보드 ←/→, Esc 닫기
+const PRELOAD = 2; // 현재 사진 앞뒤로 미리 불러올 장수
+const SWIPE_PX = 50; // 이 거리 이상 끌면 다음/이전 사진으로
+
+// 앨범(학교) 사진 크게 보기: 사진들을 가로로 이어 붙인 띠를 부드럽게 밀어 넘김
+// 이전/다음 버튼, 키보드 ←/→, 터치 스와이프, 썸네일, Esc 닫기
 function AlbumViewer({ album, startIndex = 0, onClose }) {
   const ref = useRef(null);
+  const stageRef = useRef(null);
+  const thumbsRef = useRef(null);
+  const drag = useRef(null);
   const [i, setI] = useState(0);
+  const [dragPx, setDragPx] = useState(0);
+  const [animate, setAnimate] = useState(false); // 처음 열 때는 미끄러지지 않고 바로 해당 사진 표시
   const total = album?.photos.length ?? 0;
 
   useEffect(() => {
     const d = ref.current;
-    if (!d) return;
+    if (!d) return undefined;
     if (album) {
+      setAnimate(false);
       setI(Math.min(Math.max(startIndex, 0), album.photos.length - 1));
       if (!d.open) d.showModal();
-    } else if (d.open) d.close();
+      const raf = requestAnimationFrame(() => requestAnimationFrame(() => setAnimate(true)));
+      return () => cancelAnimationFrame(raf);
+    }
+    if (d.open) d.close();
+    return undefined;
   }, [album, startIndex]);
+
+  // 현재 사진의 썸네일이 보이도록 썸네일 줄을 부드럽게 스크롤
+  useEffect(() => {
+    const strip = thumbsRef.current;
+    const cur = strip?.children[i];
+    if (!strip || !cur) return;
+    const target = cur.offsetLeft - strip.clientWidth / 2 + cur.clientWidth / 2;
+    strip.scrollTo({ left: target, behavior: animate ? 'smooth' : 'auto' });
+  }, [i, animate]);
 
   const go = useCallback((delta) => setI((v) => (v + delta + total) % total), [total]);
 
@@ -26,7 +49,26 @@ function AlbumViewer({ album, startIndex = 0, onClose }) {
     if (e.key === 'ArrowLeft') go(-1);
   };
 
-  const photo = album?.photos[i];
+  const onPointerDown = (e) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    if (e.target.closest('.av-nav')) return;
+    drag.current = { x: e.clientX, id: e.pointerId };
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+  const onPointerMove = (e) => {
+    if (drag.current?.id === e.pointerId) setDragPx(e.clientX - drag.current.x);
+  };
+  const endDrag = (e) => {
+    if (drag.current?.id !== e.pointerId) return;
+    const dx = e.clientX - drag.current.x;
+    drag.current = null;
+    setDragPx(0);
+    if (Math.abs(dx) > SWIPE_PX) go(dx < 0 ? 1 : -1);
+  };
+
+  const width = stageRef.current?.clientWidth || 1;
+  const offset = -i * 100 + (dragPx / width) * 100;
+
   return (
     <dialog
       ref={ref}
@@ -45,8 +87,26 @@ function AlbumViewer({ album, startIndex = 0, onClose }) {
             </div>
             <button type="button" className="btn btn-ghost btn-sm" onClick={onClose}>닫기 ✕</button>
           </div>
-          <div className="av-stage">
-            <img key={photo.src} src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} />
+          <div
+            ref={stageRef}
+            className="av-stage"
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+          >
+            <div
+              className={`av-track${animate && !dragPx ? ' animate' : ''}`}
+              style={{ transform: `translate3d(${offset}%, 0, 0)` }}
+            >
+              {album.photos.map((p, k) => (
+                <div className="av-slide" key={p.src} aria-hidden={k !== i}>
+                  {Math.abs(k - i) <= PRELOAD && (
+                    <img src={p.src} alt={k === i ? p.alt : ''} width={p.width} height={p.height} draggable="false" />
+                  )}
+                </div>
+              ))}
+            </div>
             {total > 1 && (
               <>
                 <button type="button" className="av-nav prev" onClick={() => go(-1)} aria-label="이전 사진">‹</button>
@@ -56,7 +116,7 @@ function AlbumViewer({ album, startIndex = 0, onClose }) {
           </div>
           <div className="av-foot">
             <span className="num" aria-live="polite">{i + 1} / {total}</span>
-            <div className="av-thumbs">
+            <div className="av-thumbs" ref={thumbsRef}>
               {album.photos.map((p, k) => (
                 <button
                   key={p.thumb}
