@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
-import { RECORD_EVENTS, formatDate, formatGrip, formatTime, recordValue, sortPlayers } from '../lib/records.js';
+import { RECORD_EVENTS, SPRINT_COLUMNS, formatDate, formatGrip, formatTime, recordValue, sortPlayers } from '../lib/records.js';
 import { schoolRegionLabel } from '../lib/regions.js';
 import { GRIP_UNIT, RECORD_UNIT } from '../config.js';
 import BaseDiagram from '../components/BaseDiagram.jsx';
@@ -58,7 +58,7 @@ export default function PlayerDetail() {
         <UpdatedAt />
       </header>
 
-      <div className="event-grid" style={{ gridTemplateColumns: `repeat(${RECORD_EVENTS.length + (grip != null ? 1 : 0)}, 1fr)` }}>
+      <div className={`event-grid player-records${grip != null ? ' with-grip' : ''}`}>
         {RECORD_EVENTS.map((e) => (
           <section key={e.key} className="glass card" aria-labelledby={`h-${e.key}`}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
@@ -68,21 +68,20 @@ export default function PlayerDetail() {
               </div>
               <div className="diagram" style={{ width: 96, flex: '0 0 auto' }}><BaseDiagram event={e.key} /></div>
             </div>
-            {/* 종목별 1인 1회 측정 → 기록 1개 */}
-            <div className="trial-grid" style={{ gridTemplateColumns: '1fr' }}>
-              {(() => {
-                const v = recordValue(player, e.key);
+            {/* 1인 1회 측정 — 5M·27M 지점 통과 기록 + 55M 최종 기록 */}
+            <div className="trial-grid split-grid">
+              {SPRINT_COLUMNS.map((c) => {
+                const v = recordValue(player, c.key);
                 return (
-                  <div>
-                    <small>측정 기록</small>
+                  <div key={c.key} className={c.key === 'sprint' ? 'final' : undefined}>
+                    <small>{c.title}</small>
                     <div className={`v${v == null ? ' empty' : ''}`}>
                       {formatTime(v)}
                       {v != null && <span className="u">{RECORD_UNIT}</span>}
                     </div>
-                    {v == null && <small>측정 기록 없음</small>}
                   </div>
                 );
-              })()}
+              })}
             </div>
           </section>
         ))}

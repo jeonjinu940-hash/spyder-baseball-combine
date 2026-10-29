@@ -1053,6 +1053,193 @@ main:focus {
 .record-table tbody tr:hover td {
   background: rgba(255, 255, 255, 0.035);
 }
+/* ---------- 실시간 순위 ---------- */
+.rank-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  margin-bottom: 24px;
+}
+.podium {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.podium-card {
+  position: relative;
+  overflow: hidden;
+}
+.podium-card a {
+  display: grid;
+  gap: 4px;
+  padding: clamp(18px, 2.4vw, 26px);
+  text-decoration: none;
+  height: 100%;
+}
+.podium-card.rank-1 {
+  border-color: rgba(196, 30, 42, 0.75);
+  background: linear-gradient(150deg, rgba(142, 18, 25, 0.55), rgba(74, 8, 13, 0.35) 55%, rgba(255, 255, 255, 0.04));
+  box-shadow: 0 16px 40px rgba(142, 18, 25, 0.28);
+}
+.podium-card.rank-2,
+.podium-card.rank-3 {
+  background: linear-gradient(150deg, rgba(74, 8, 13, 0.4), rgba(255, 255, 255, 0.04) 60%);
+}
+.podium-card:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.podium-rank {
+  font-size: clamp(30px, 3.6vw, 44px);
+  font-weight: 800;
+  line-height: 1;
+  color: #ff6b74;
+}
+.podium-card.rank-1 .podium-rank {
+  color: #fff;
+}
+.podium-rank small {
+  font-size: 0.45em;
+  margin-left: 2px;
+}
+.podium-name {
+  margin-top: 10px;
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 800;
+}
+.podium-meta {
+  font-size: 13px;
+  color: var(--text-2);
+}
+.podium-value {
+  margin-top: 14px;
+  font-size: clamp(32px, 4vw, 46px);
+  font-weight: 800;
+  line-height: 1;
+}
+.podium-value small,
+.rank-val small {
+  font-size: 0.4em;
+  color: var(--text-2);
+  margin-left: 4px;
+  font-weight: 700;
+}
+.rank-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+}
+.rank-list li + li {
+  border-top: 1px solid var(--divider);
+}
+.rank-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  text-decoration: none;
+  transition: background 0.2s var(--ease);
+}
+.rank-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+.rank-no {
+  font-weight: 800;
+  color: #ff6b74;
+}
+.rank-who {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.rank-who b {
+  font-size: 16px;
+}
+.rank-who span {
+  font-size: 13px;
+  color: var(--text-2);
+}
+.rank-val {
+  font-size: 22px;
+  font-weight: 800;
+}
+@media (max-width: 760px) {
+  .podium {
+    grid-template-columns: 1fr;
+  }
+  .rank-row {
+    grid-template-columns: 48px 1fr auto;
+    padding: 12px 14px;
+  }
+}
+
+/* 선수 기록 상단: 공개 기준 안내 + 기록 업데이트 일자 */
+.records-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  margin-bottom: 32px;
+}
+.records-top .notice-strong {
+  flex: 1 1 420px;
+}
+
+/* 직선 스프린트 구간 기록: 5M·27M는 보조, 55M 최종 기록 강조 */
+.record-table td.t.split {
+  font-size: 17px;
+  color: var(--text-2);
+}
+.record-table th.t.final,
+.record-table td.t.final {
+  color: var(--text);
+}
+.record-card .ev .trial.final b {
+  color: #fff;
+}
+.record-card .ev .trial:not(.final) b {
+  color: var(--text-2);
+  font-size: 18px;
+}
+
+/* 선수 상세: 55M 카드 안 구간 기록 3칸 */
+.player-records {
+  grid-template-columns: 1fr;
+}
+.player-records.with-grip {
+  grid-template-columns: 2fr 1fr;
+}
+@media (max-width: 960px) {
+  .player-records.with-grip {
+    grid-template-columns: 1fr;
+  }
+}
+.trial-grid.split-grid {
+  grid-template-columns: 1fr 1fr 1.3fr;
+}
+.split-grid > div:not(.final) .v {
+  font-size: clamp(26px, 3.4vw, 36px);
+  color: var(--text-2);
+}
+@media (max-width: 520px) {
+  .trial-grid.split-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .trial-grid.split-grid > .final {
+    grid-column: 1 / -1;
+  }
+}
+
 /* 교내 순위 */
 .record-table th.rank,
 .record-table td.rank {

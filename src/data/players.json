@@ -68,6 +68,8 @@
       "measuredAt": "2026-10-06",
       "schoolRank": 1,
       "records": {
+        "split5": 0.887,
+        "split27": 3.578,
         "sprint": 6.598,
         "grip": null
       }
@@ -81,6 +83,8 @@
       "measuredAt": "2026-10-06",
       "schoolRank": 2,
       "records": {
+        "split5": 0.964,
+        "split27": 3.683,
         "sprint": 6.829,
         "grip": null
       }
@@ -94,6 +98,8 @@
       "measuredAt": "2026-10-06",
       "schoolRank": 3,
       "records": {
+        "split5": 0.955,
+        "split27": 3.739,
         "sprint": 6.885,
         "grip": null
       }
@@ -107,6 +113,8 @@
       "measuredAt": "2026-10-06",
       "schoolRank": 4,
       "records": {
+        "split5": 0.916,
+        "split27": 3.709,
         "sprint": 6.975,
         "grip": null
       }
@@ -120,6 +128,8 @@
       "measuredAt": "2026-10-06",
       "schoolRank": 5,
       "records": {
+        "split5": 0.97,
+        "split27": 3.801,
         "sprint": 7.121,
         "grip": null
       }
@@ -133,6 +143,8 @@
       "measuredAt": "2026-10-13",
       "schoolRank": 1,
       "records": {
+        "split5": 0.981,
+        "split27": 3.808,
         "sprint": 7.094,
         "grip": null
       }
@@ -146,6 +158,8 @@
       "measuredAt": "2026-10-13",
       "schoolRank": 2,
       "records": {
+        "split5": 0.951,
+        "split27": 3.766,
         "sprint": 7.097,
         "grip": null
       }
@@ -159,6 +173,8 @@
       "measuredAt": "2026-10-13",
       "schoolRank": 3,
       "records": {
+        "split5": 0.961,
+        "split27": 3.784,
         "sprint": 7.1,
         "grip": null
       }
@@ -172,6 +188,8 @@
       "measuredAt": "2026-10-13",
       "schoolRank": 4,
       "records": {
+        "split5": 0.976,
+        "split27": 3.851,
         "sprint": 7.175,
         "grip": null
       }
@@ -185,6 +203,8 @@
       "measuredAt": "2026-10-13",
       "schoolRank": 5,
       "records": {
+        "split5": 0.966,
+        "split27": 3.877,
         "sprint": 7.23,
         "grip": null
       }
@@ -198,6 +218,8 @@
       "measuredAt": "2026-10-14",
       "schoolRank": 1,
       "records": {
+        "split5": 0.928,
+        "split27": 3.613,
         "sprint": 6.738,
         "grip": null
       }
@@ -211,6 +233,8 @@
       "measuredAt": "2026-10-14",
       "schoolRank": 2,
       "records": {
+        "split5": 0.943,
+        "split27": 3.685,
         "sprint": 6.979,
         "grip": null
       }
@@ -224,6 +248,8 @@
       "measuredAt": "2026-10-14",
       "schoolRank": 3,
       "records": {
+        "split5": 1.176,
+        "split27": 3.912,
         "sprint": 7.005,
         "grip": null
       }
@@ -237,6 +263,8 @@
       "measuredAt": "2026-10-14",
       "schoolRank": 4,
       "records": {
+        "split5": 1.056,
+        "split27": 3.932,
         "sprint": 7.25,
         "grip": null
       }
@@ -250,6 +278,8 @@
       "measuredAt": "2026-10-14",
       "schoolRank": 5,
       "records": {
+        "split5": 0.971,
+        "split27": 3.855,
         "sprint": 7.256,
         "grip": null
       }
@@ -263,6 +293,8 @@
       "measuredAt": "2026-10-19",
       "schoolRank": 1,
       "records": {
+        "split5": 0.962,
+        "split27": 3.613,
         "sprint": 6.593,
         "grip": null
       }
@@ -276,6 +308,8 @@
       "measuredAt": "2026-10-19",
       "schoolRank": 2,
       "records": {
+        "split5": 1.035,
+        "split27": 3.712,
         "sprint": 6.811,
         "grip": null
       }
@@ -289,6 +323,8 @@
       "measuredAt": "2026-10-19",
       "schoolRank": 3,
       "records": {
+        "split5": 0.974,
+        "split27": 3.756,
         "sprint": 6.917,
         "grip": null
       }
@@ -302,6 +338,8 @@
       "measuredAt": "2026-10-19",
       "schoolRank": 4,
       "records": {
+        "split5": 1.013,
+        "split27": 3.797,
         "sprint": 6.983,
         "grip": null
       }
@@ -315,6 +353,8 @@
       "measuredAt": "2026-10-19",
       "schoolRank": 5,
       "records": {
+        "split5": 0.982,
+        "split27": 3.854,
         "sprint": 7.162,
         "grip": null
       }
@@ -328,6 +368,8 @@
       "measuredAt": "2026-10-21",
       "schoolRank": 1,
       "records": {
+        "split5": 0.945,
+        "split27": 3.58,
         "sprint": 6.67,
         "grip": null
       }
@@ -341,6 +383,8 @@
       "measuredAt": "2026-10-21",
       "schoolRank": 2,
       "records": {
+        "split5": 0.983,
+        "split27": 3.652,
         "sprint": 6.726,
         "grip": null
       }
@@ -354,6 +398,8 @@
       "measuredAt": "2026-10-21",
       "schoolRank": 3,
       "records": {
+        "split5": 1.068,
+        "split27": 3.73,
         "sprint": 6.832,
         "grip": null
       }
@@ -367,6 +413,8 @@
       "measuredAt": "2026-10-21",
       "schoolRank": 4,
       "records": {
+        "split5": 0.991,
+        "split27": 3.751,
         "sprint": 6.834,
         "grip": null
       }
@@ -380,6 +428,8 @@
       "measuredAt": "2026-10-21",
       "schoolRank": 5,
       "records": {
+        "split5": 0.972,
+        "split27": 3.697,
         "sprint": 6.835,
         "grip": null
       }
@@ -393,6 +443,8 @@
       "measuredAt": "2026-10-22",
       "schoolRank": 1,
       "records": {
+        "split5": 0.976,
+        "split27": 3.732,
         "sprint": 6.897,
         "grip": null
       }
@@ -406,6 +458,8 @@
       "measuredAt": "2026-10-22",
       "schoolRank": 2,
       "records": {
+        "split5": 0.938,
+        "split27": 3.708,
         "sprint": 6.912,
         "grip": null
       }
@@ -419,6 +473,8 @@
       "measuredAt": "2026-10-22",
       "schoolRank": 3,
       "records": {
+        "split5": 0.995,
+        "split27": 3.756,
         "sprint": 6.948,
         "grip": null
       }
@@ -432,6 +488,8 @@
       "measuredAt": "2026-10-22",
       "schoolRank": 4,
       "records": {
+        "split5": 1.038,
+        "split27": 3.784,
         "sprint": 6.963,
         "grip": null
       }
@@ -445,6 +503,8 @@
       "measuredAt": "2026-10-22",
       "schoolRank": 5,
       "records": {
+        "split5": 1.011,
+        "split27": 3.833,
         "sprint": 7.018,
         "grip": null
       }
@@ -458,6 +518,8 @@
       "measuredAt": "2026-10-23",
       "schoolRank": 1,
       "records": {
+        "split5": 0.984,
+        "split27": 3.681,
         "sprint": 6.734,
         "grip": null
       }
@@ -471,6 +533,8 @@
       "measuredAt": "2026-10-23",
       "schoolRank": 2,
       "records": {
+        "split5": 1.058,
+        "split27": 3.76,
         "sprint": 6.827,
         "grip": null
       }
@@ -484,6 +548,8 @@
       "measuredAt": "2026-10-23",
       "schoolRank": 3,
       "records": {
+        "split5": 0.994,
+        "split27": 3.862,
         "sprint": 7.091,
         "grip": null
       }
@@ -497,6 +563,8 @@
       "measuredAt": "2026-10-23",
       "schoolRank": 4,
       "records": {
+        "split5": 1.043,
+        "split27": 3.872,
         "sprint": 7.183,
         "grip": null
       }
@@ -510,6 +578,8 @@
       "measuredAt": "2026-10-23",
       "schoolRank": 5,
       "records": {
+        "split5": 1.115,
+        "split27": 3.961,
         "sprint": 7.213,
         "grip": null
       }
@@ -523,6 +593,8 @@
       "measuredAt": "2026-10-27",
       "schoolRank": 1,
       "records": {
+        "split5": 1.125,
+        "split27": 3.858,
         "sprint": 7.067,
         "grip": null
       }
@@ -536,6 +608,8 @@
       "measuredAt": "2026-10-27",
       "schoolRank": 2,
       "records": {
+        "split5": 0.983,
+        "split27": 3.821,
         "sprint": 7.188,
         "grip": null
       }
@@ -549,6 +623,8 @@
       "measuredAt": "2026-10-27",
       "schoolRank": 3,
       "records": {
+        "split5": 1.101,
+        "split27": 3.936,
         "sprint": 7.241,
         "grip": null
       }
@@ -562,6 +638,8 @@
       "measuredAt": "2026-10-27",
       "schoolRank": 4,
       "records": {
+        "split5": 1.045,
+        "split27": 3.937,
         "sprint": 7.295,
         "grip": null
       }
@@ -575,6 +653,8 @@
       "measuredAt": "2026-10-27",
       "schoolRank": 5,
       "records": {
+        "split5": 1.017,
+        "split27": 3.896,
         "sprint": 7.314,
         "grip": null
       }
@@ -588,6 +668,8 @@
       "measuredAt": "2026-10-28",
       "schoolRank": 1,
       "records": {
+        "split5": 0.922,
+        "split27": 3.616,
         "sprint": 6.716,
         "grip": 65.4
       }
@@ -601,6 +683,8 @@
       "measuredAt": "2026-10-28",
       "schoolRank": 2,
       "records": {
+        "split5": 0.975,
+        "split27": 3.657,
         "sprint": 6.735,
         "grip": 75.1
       }
@@ -614,6 +698,8 @@
       "measuredAt": "2026-10-28",
       "schoolRank": 3,
       "records": {
+        "split5": 0.977,
+        "split27": 3.614,
         "sprint": 6.793,
         "grip": 54.7
       }
@@ -627,6 +713,8 @@
       "measuredAt": "2026-10-28",
       "schoolRank": 4,
       "records": {
+        "split5": 0.95,
+        "split27": 3.686,
         "sprint": 6.817,
         "grip": 75.1
       }
@@ -640,6 +728,8 @@
       "measuredAt": "2026-10-28",
       "schoolRank": 5,
       "records": {
+        "split5": 1.031,
+        "split27": 3.742,
         "sprint": 6.908,
         "grip": 70
       }

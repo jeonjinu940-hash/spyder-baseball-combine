@@ -1,4 +1,5 @@
 import { RECORD_DECIMALS, GRIP_DECIMALS } from '../config.js';
+import { provinceLabel } from './regions.js';
 
 export const EVENTS = [
   {
@@ -34,6 +35,38 @@ export function formatGrip(v) {
 // 현재 목록에 악력 기록이 하나라도 있으면 악력 열을 보여준다
 export const hasGrip = (players) => players.some((p) => typeof p.records?.grip === 'number');
 
+// 선수 기록 표의 직선 스프린트 기록 열: 5m·27m 구간 기록 + 55m 최종 기록 (단위: 초)
+export const SPRINT_COLUMNS = [
+  { key: 'split5', label: '5M', title: '5M 구간' },
+  { key: 'split27', label: '27M', title: '27M 구간' },
+  { key: 'sprint', label: '55M', title: '55M 기록' },
+];
+
+// 실시간 순위 보드 — lower: 작을수록 좋음(시간), 클수록 좋음(악력)
+export const RANK_BOARDS = [
+  { key: 'sprint', label: '55M 직선 스프린트', short: '55M', unit: '초', lower: true },
+  { key: 'split27', label: '27M 구간', short: '27M', unit: '초', lower: true },
+  { key: 'split5', label: '5M 구간', short: '5M', unit: '초', lower: true },
+  { key: 'grip', label: '악력', short: '악력', unit: 'kg', lower: false },
+];
+
+// 동기록은 같은 순위 (1위, 1위, 3위 …)
+export function rankPlayers(players, board, limit = 15) {
+  const list = players
+    .filter((p) => recordValue(p, board.key) != null)
+    .sort((a, b) => (recordValue(a, board.key) - recordValue(b, board.key)) * (board.lower ? 1 : -1) || a.name.localeCompare(b.name, 'ko'));
+  let prev = null;
+  let rank = 0;
+  return list
+    .map((p, i) => {
+      const v = recordValue(p, board.key);
+      if (v !== prev) rank = i + 1;
+      prev = v;
+      return { player: p, rank, value: v };
+    })
+    .filter((r) => r.rank <= limit);
+}
+
 // 종목별 1인 1회 측정 → 종목당 기록 1개
 export function recordValue(player, eventKey) {
   const v = player.records?.[eventKey];
@@ -54,11 +87,20 @@ export function hasEvent(player, eventKey) {
   return recordValue(player, eventKey) != null;
 }
 
+// 검색어는 선수명·학교명·지역·포지션·학년(예: '1학년')에서 찾는다. 공백으로 나눈 여러 단어는 모두 포함해야 함 (예: '덕수고 투수')
+function matchesQuery(p, s, needle) {
+  const hay = [p.name, s.name, s.region, provinceLabel(s.province), s.city, p.position, p.grade ? `${p.grade}학년` : '']
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+  return needle.split(/\s+/).every((w) => hay.includes(w));
+}
+
 export function filterPlayers(players, { q, province, position, event, school }, schoolsById) {
   const needle = (q ?? '').trim().toLowerCase();
   return players.filter((p) => {
     const s = schoolsById[p.schoolId];
-    if (needle && !p.name.toLowerCase().includes(needle) && !s.name.toLowerCase().includes(needle)) return false;
+    if (needle && !matchesQuery(p, s, needle)) return false;
     if (province && s.province !== province) return false;
     if (school && p.schoolId !== school) return false;
     if (position && p.position !== position) return false;

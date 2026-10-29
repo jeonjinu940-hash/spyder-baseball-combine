@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
-import { RECORD_EVENTS, filterPlayers, formatDate, formatGrip, formatTime, sortPlayers, recordValue } from '../lib/records.js';
+import { RECORD_EVENTS, filterPlayers, sortPlayers } from '../lib/records.js';
 import { provinceLabel } from '../lib/regions.js';
 import { GRIP_UNIT, RECORD_UNIT } from '../config.js';
 import SearchBar from '../components/SearchBar.jsx';
@@ -15,66 +15,8 @@ const SORTS = [
   { key: 'fastest', label: '빠른 기록순' },
   { key: 'slowest', label: '느린 기록순' },
   { key: 'name', label: '이름순' },
-  { key: 'school', label: '학교순 (교내 순위)' },
+  { key: 'school', label: '학교순' },
 ];
-
-// 가장 최근에 측정한 학교의 상위 선수 (교내 순위순)
-function LatestRecords({ players, schoolsById }) {
-  const latestDate = players.reduce((max, p) => ((p.measuredAt ?? '') > max ? p.measuredAt : max), '');
-  const latest = players
-    .filter((p) => p.measuredAt === latestDate)
-    .sort((a, b) => a.schoolId.localeCompare(b.schoolId) || (a.schoolRank ?? 99) - (b.schoolRank ?? 99))
-    .slice(0, 6);
-  if (!latest.length) return null;
-  const latestSchools = [...new Set(latest.map((p) => schoolsById[p.schoolId].name))].join(' · ');
-  return (
-    <section className="container" aria-labelledby="latest-title" style={{ marginBottom: 48 }}>
-      <div className="section-head" style={{ marginBottom: 20 }}>
-        <div>
-          <p className="eyebrow">Latest Records</p>
-          <h2 id="latest-title" style={{ fontSize: 'clamp(28px, 4vw, 40px)' }}>최신 업데이트 기록</h2>
-          <p className="muted mt-16">
-            {latestSchools}
-            {latestDate ? ` · ${formatDate(latestDate)} 측정` : ''}
-          </p>
-        </div>
-        <UpdatedAt />
-      </div>
-      <div className="grid-3">
-        {latest.map((p) => {
-          const grip = recordValue(p, 'grip');
-          return (
-            <Link key={p.id} to={`/players/${encodeURIComponent(p.id)}`} className="feat-card glass">
-              <div className="nm">
-                {p.schoolRank && <span className="rank-badge num">{p.schoolRank}위</span>}
-                {p.name}
-              </div>
-              <div className="sc">
-                {schoolsById[p.schoolId].name}
-                {p.grade ? ` · ${p.grade}학년` : ''}
-                {p.position ? ` · ${p.position}` : ''}
-              </div>
-              <div className="vals">
-                {RECORD_EVENTS.map((e) => (
-                  <div key={e.key}>
-                    <small>{e.label} ({RECORD_UNIT})</small>
-                    <b>{formatTime(recordValue(p, e.key))}</b>
-                  </div>
-                ))}
-                {grip != null && (
-                  <div>
-                    <small>악력 ({GRIP_UNIT})</small>
-                    <b>{formatGrip(grip)}</b>
-                  </div>
-                )}
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
 
 function Chip({ pressed, onClick, children }) {
   return (
@@ -122,7 +64,7 @@ export default function Records() {
   return (
     <>
       <PageBanner title="선수 기록">55M 직선 스프린트 기록 | 이름 검색과 지역·학교·포지션 필터를 함께 사용할 수 있습니다.</PageBanner>
-      <section className="container" style={{ marginBottom: 40 }}>
+      <section className="container records-top">
         <div className="notice notice-strong" role="note">
           <span className="i" aria-hidden="true">!</span>
           <span>
@@ -130,12 +72,17 @@ export default function Records() {
             <span className="muted"> (55M 직선 스프린트 기록 기준)</span>
           </span>
         </div>
+        <UpdatedAt />
       </section>
 
-      <LatestRecords players={players} schoolsById={schoolsById} />
-
       <section className="container" aria-label="전체 선수 기록">
-        <SearchBar id="records-search" value={q} onChange={(v) => update('q', v)} />
+        <SearchBar
+          id="records-search"
+          value={q}
+          onChange={(v) => update('q', v)}
+          label="선수명·학교·지역·포지션·학년 검색"
+          placeholder="선수명, 학교, 포지션 등으로 검색 (예: 덕수고 투수)"
+        />
 
         <div className="filters glass mt-16" role="group" aria-label="기록 필터">
           <div className="filter-row">
@@ -184,7 +131,6 @@ export default function Records() {
             )}
           </div>
           <div className="sort">
-            <UpdatedAt />
             <label htmlFor="f-sort" className="sr-only">정렬</label>
             <select id="f-sort" className="select" value={sort} onChange={(e) => update('sort', e.target.value === 'fastest' ? '' : e.target.value)}>
               {SORTS.map((s) => (
@@ -197,9 +143,9 @@ export default function Records() {
         <div className="notice" style={{ marginBottom: 16 }}>
           <span className="i" aria-hidden="true">i</span>
           <span>
-            기록 단위: 55M {RECORD_UNIT}, 악력 {GRIP_UNIT}. 교내 순위는 각 학교 측정 선수 중 55M 직선 스프린트 기록 순서입니다.
+            기록 단위: 5M·27M·55M {RECORD_UNIT}, 악력 {GRIP_UNIT}. 5M·27M은 55M 직선 스프린트 중 해당 지점 통과 기록입니다.
             종목별 1인 1회 측정 기록이며, 악력은 덕수고 측정부터 실시해 해당 학교만 표시됩니다.
-            측정되지 않은 기록은 —로 표시합니다.
+            측정되지 않은 기록은 —로 표시합니다. <Link to="/rankings">실시간 순위 보기 →</Link>
           </span>
         </div>
 
@@ -221,7 +167,7 @@ export default function Records() {
           </EmptyState>
         ) : (
           <>
-            <RecordList players={results.slice(0, limit)} schoolsById={schoolsById} events={RECORD_EVENTS} />
+            <RecordList players={results.slice(0, limit)} schoolsById={schoolsById} />
             {results.length > limit && (
               <div className="load-more">
                 <button type="button" className="btn btn-ghost" onClick={() => setLimit((l) => l + PAGE)}>

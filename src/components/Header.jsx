@@ -8,6 +8,7 @@ const NAV = [
   { to: { pathname: '/', hash: '#gallery' }, label: '갤러리', home: true },
   { to: { pathname: '/schools' }, label: '참가 학교', match: '/schools' },
   { to: { pathname: '/records' }, label: '선수 기록', match: ['/records', '/players'] },
+  { to: { pathname: '/rankings' }, label: '실시간 순위', match: '/rankings' },
 ];
 
 function isActive(item, pathname) {

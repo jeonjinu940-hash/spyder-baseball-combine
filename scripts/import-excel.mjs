@@ -7,7 +7,7 @@
 // 읽는 범위 (그 외 시트·열은 읽지 않음 — 연락처 등 개인정보 보호)
 //   · '전체 측정표' 시트: No.·학교·이름·학년·포지션·5m·27m·55m(fin)·1루·2루(fin)·악력
 //   · 'SCHEDULE' 시트: 일정(날짜)·학교 열만 → 학교별 측정일
-// 공개 데이터에는 학교별 55M 상위 5명의 이름·학교·학년·포지션·55M 기록·악력·교내 순위만 저장한다.
+// 공개 데이터에는 학교별 55M 상위 5명의 이름·학교·학년·포지션·5m·27m·55m 기록·악력·교내 순위만 저장한다.
 // 검증 오류가 하나라도 있으면 전체 반영을 중단하고 기존 데이터를 그대로 둔다.
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { basename, extname, join } from 'node:path';
@@ -190,7 +190,8 @@ function main() {
         position: p.position,
         measuredAt: schedule[school.id] ?? null,
         schoolRank: i + 1,
-        records: { sprint: p.m55, grip: gripMeasured ? p.grip : null },
+        // 직선 스프린트 구간 기록(5m·27m)과 55m 최종 기록, 악력
+        records: { split5: p.m5, split27: p.m27, sprint: p.m55, grip: gripMeasured ? p.grip : null },
       }),
     );
   }
