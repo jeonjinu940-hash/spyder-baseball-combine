@@ -1,5 +1,4 @@
 import { RECORD_DECIMALS, GRIP_DECIMALS } from '../config.js';
-import { provinceLabel } from './regions.js';
 
 export const EVENTS = [
   {
@@ -87,20 +86,12 @@ export function hasEvent(player, eventKey) {
   return recordValue(player, eventKey) != null;
 }
 
-// 검색어는 선수명·학교명·지역·포지션·학년(예: '1학년')에서 찾는다. 공백으로 나눈 여러 단어는 모두 포함해야 함 (예: '덕수고 투수')
-function matchesQuery(p, s, needle) {
-  const hay = [p.name, s.name, s.region, provinceLabel(s.province), s.city, p.position, p.grade ? `${p.grade}학년` : '']
-    .filter(Boolean)
-    .join(' ')
-    .toLowerCase();
-  return needle.split(/\s+/).every((w) => hay.includes(w));
-}
-
+// 검색어는 선수명에서만 찾는다 (학교·지역·포지션은 필터로)
 export function filterPlayers(players, { q, province, position, event, school }, schoolsById) {
-  const needle = (q ?? '').trim().toLowerCase();
+  const needle = (q ?? '').replace(/\s+/g, '').toLowerCase();
   return players.filter((p) => {
     const s = schoolsById[p.schoolId];
-    if (needle && !matchesQuery(p, s, needle)) return false;
+    if (needle && !p.name.replace(/\s+/g, '').toLowerCase().includes(needle)) return false;
     if (province && s.province !== province) return false;
     if (school && p.schoolId !== school) return false;
     if (position && p.position !== position) return false;
@@ -133,6 +124,13 @@ export function sortPlayers(list, sort, eventKeys, schoolsById) {
     if (vb == null) return -1;
     return (va - vb) * dir || byName(a, b);
   });
+}
+
+// 측정일: SCHEDULE 시트 일정 그대로 날짜 + 요일 (예: 2026. 10. 28. (수)), 시간은 표시하지 않음
+export function formatMeasured(date, weekday) {
+  const d = formatDate(date);
+  if (!d) return null;
+  return weekday ? `${d} (${weekday})` : d;
 }
 
 export function formatDate(iso, withTime = false) {

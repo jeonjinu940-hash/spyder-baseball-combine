@@ -6,54 +6,63 @@
     {
       "schoolId": "convention",
       "measuredAt": "2026-10-06",
+      "measuredWeekday": "화",
       "measuredCount": 21,
       "gripMeasured": false
     },
     {
       "schoolId": "seongnam",
       "measuredAt": "2026-10-13",
+      "measuredWeekday": "화",
       "measuredCount": 21,
       "gripMeasured": false
     },
     {
       "schoolId": "kyunggi-commercial",
       "measuredAt": "2026-10-14",
+      "measuredWeekday": "수",
       "measuredCount": 18,
       "gripMeasured": false
     },
     {
       "schoolId": "yushin",
       "measuredAt": "2026-10-19",
+      "measuredWeekday": "월",
       "measuredCount": 17,
       "gripMeasured": false
     },
     {
       "schoolId": "incheon",
       "measuredAt": "2026-10-21",
+      "measuredWeekday": "수",
       "measuredCount": 18,
       "gripMeasured": false
     },
     {
       "schoolId": "seoul",
       "measuredAt": "2026-10-22",
+      "measuredWeekday": "목",
       "measuredCount": 24,
       "gripMeasured": false
     },
     {
       "schoolId": "whimoon",
       "measuredAt": "2026-10-23",
+      "measuredWeekday": "금",
       "measuredCount": 24,
       "gripMeasured": false
     },
     {
       "schoolId": "jeonju",
       "measuredAt": "2026-10-27",
+      "measuredWeekday": "화",
       "measuredCount": 18,
       "gripMeasured": false
     },
     {
       "schoolId": "deoksu",
       "measuredAt": "2026-10-28",
+      "measuredWeekday": "수",
       "measuredCount": 15,
       "gripMeasured": true
     }
@@ -66,6 +75,7 @@
       "grade": "2",
       "position": "외야수",
       "measuredAt": "2026-10-06",
+      "measuredWeekday": "화",
       "schoolRank": 1,
       "records": {
         "split5": 0.887,
@@ -81,6 +91,7 @@
       "grade": "2",
       "position": "투수",
       "measuredAt": "2026-10-06",
+      "measuredWeekday": "화",
       "schoolRank": 2,
       "records": {
         "split5": 0.964,
@@ -96,6 +107,7 @@
       "grade": "1",
       "position": "내야수",
       "measuredAt": "2026-10-06",
+      "measuredWeekday": "화",
       "schoolRank": 3,
       "records": {
         "split5": 0.955,
@@ -111,6 +123,7 @@
       "grade": "2",
       "position": "외야수",
       "measuredAt": "2026-10-06",
+      "measuredWeekday": "화",
       "schoolRank": 4,
       "records": {
         "split5": 0.916,
@@ -126,6 +139,7 @@
       "grade": "2",
       "position": "투수",
       "measuredAt": "2026-10-06",
+      "measuredWeekday": "화",
       "schoolRank": 5,
       "records": {
         "split5": 0.97,
@@ -141,6 +155,7 @@
       "grade": "1",
       "position": "투수",
       "measuredAt": "2026-10-13",
+      "measuredWeekday": "화",
       "schoolRank": 1,
       "records": {
         "split5": 0.981,
@@ -156,6 +171,7 @@
       "grade": "2",
       "position": "외야수",
       "measuredAt": "2026-10-13",
+      "measuredWeekday": "화",
       "schoolRank": 2,
       "records": {
         "split5": 0.951,
@@ -171,6 +187,7 @@
       "grade": "1",
       "position": "내야수",
       "measuredAt": "2026-10-13",
+      "measuredWeekday": "화",
       "schoolRank": 3,
       "records": {
         "split5": 0.961,
@@ -186,6 +203,7 @@
       "grade": "2",
       "position": "내야수",
       "measuredAt": "2026-10-13",
+      "measuredWeekday": "화",
       "schoolRank": 4,
       "records": {
         "split5": 0.976,
@@ -201,6 +219,7 @@
       "grade": "1",
       "position": "외야수",
       "measuredAt": "2026-10-13",
+      "measuredWeekday": "화",
       "schoolRank": 5,
       "records": {
         "split5": 0.966,
@@ -216,6 +235,7 @@
       "grade": "2",
       "position": "야수",
       "measuredAt": "2026-10-14",
+      "measuredWeekday": "수",
       "schoolRank": 1,
       "records": {
         "split5": 0.928,
@@ -231,6 +251,7 @@
       "grade": "1",
       "position": "야수",
       "measuredAt": "2026-10-14",
+      "measuredWeekday": "수",
       "schoolRank": 2,
       "records": {
         "split5": 0.943,
@@ -246,6 +267,7 @@
       "grade": "2",
       "position": "야수",
       "measuredAt": "2026-10-14",
+      "measuredWeekday": "수",
       "schoolRank": 3,
       "records": {
         "split5": 1.176,
@@ -261,6 +283,7 @@
       "grade": "1",
       "position": "야수",
       "measuredAt": "2026-10-14",
+      "measuredWeekday": "수",
       "schoolRank": 4,
       "records": {
         "split5": 1.056,
@@ -276,6 +299,7 @@
       "grade": "2",
       "position": "야수",
       "measuredAt": "2026-10-14",
+      "measuredWeekday": "수",
       "schoolRank": 5,
       "records": {
         "split5": 0.971,
@@ -291,6 +315,7 @@
       "grade": "2",
       "position": "내야수",
       "measuredAt": "2026-10-19",
+      "measuredWeekday": "월",
       "schoolRank": 1,
       "records": {
         "split5": 0.962,
@@ -306,6 +331,7 @@
       "grade": "1",
       "position": "내야수",
       "measuredAt": "2026-10-19",
+      "measuredWeekday": "월",
       "schoolRank": 2,
       "records": {
         "split5": 1.035,
@@ -321,6 +347,7 @@
       "grade": "1",
       "position": "내야수",
       "measuredAt": "2026-10-19",
+      "measuredWeekday": "월",
       "schoolRank": 3,
       "records": {
         "split5": 0.974,
@@ -336,6 +363,7 @@
       "grade": "2",
       "position": "외야수",
       "measuredAt": "2026-10-19",
+      "measuredWeekday": "월",
       "schoolRank": 4,
       "records": {
         "split5": 1.013,
@@ -351,6 +379,7 @@
       "grade": "2",
       "position": "투수",
       "measuredAt": "2026-10-19",
+      "measuredWeekday": "월",
       "schoolRank": 5,
       "records": {
         "split5": 0.982,
@@ -366,6 +395,7 @@
       "grade": "2",
       "position": "내야수",
       "measuredAt": "2026-10-21",
+      "measuredWeekday": "수",
       "schoolRank": 1,
       "records": {
         "split5": 0.945,
@@ -381,6 +411,7 @@
       "grade": "1",
       "position": "내야수",
       "measuredAt": "2026-10-21",
+      "measuredWeekday": "수",
       "schoolRank": 2,
       "records": {
         "split5": 0.983,
@@ -396,6 +427,7 @@
       "grade": "1",
       "position": "투수",
       "measuredAt": "2026-10-21",
+      "measuredWeekday": "수",
       "schoolRank": 3,
       "records": {
         "split5": 1.068,
@@ -411,6 +443,7 @@
       "grade": "1",
       "position": "외야수",
       "measuredAt": "2026-10-21",
+      "measuredWeekday": "수",
       "schoolRank": 4,
       "records": {
         "split5": 0.991,
@@ -426,6 +459,7 @@
       "grade": "1",
       "position": "외야수",
       "measuredAt": "2026-10-21",
+      "measuredWeekday": "수",
       "schoolRank": 5,
       "records": {
         "split5": 0.972,
@@ -441,6 +475,7 @@
       "grade": "2",
       "position": "투수",
       "measuredAt": "2026-10-22",
+      "measuredWeekday": "목",
       "schoolRank": 1,
       "records": {
         "split5": 0.976,
@@ -456,6 +491,7 @@
       "grade": "1",
       "position": "내야수",
       "measuredAt": "2026-10-22",
+      "measuredWeekday": "목",
       "schoolRank": 2,
       "records": {
         "split5": 0.938,
@@ -471,6 +507,7 @@
       "grade": "2",
       "position": "내야수",
       "measuredAt": "2026-10-22",
+      "measuredWeekday": "목",
       "schoolRank": 3,
       "records": {
         "split5": 0.995,
@@ -486,6 +523,7 @@
       "grade": "1",
       "position": "내야수",
       "measuredAt": "2026-10-22",
+      "measuredWeekday": "목",
       "schoolRank": 4,
       "records": {
         "split5": 1.038,
@@ -501,6 +539,7 @@
       "grade": "2",
       "position": "외야수",
       "measuredAt": "2026-10-22",
+      "measuredWeekday": "목",
       "schoolRank": 5,
       "records": {
         "split5": 1.011,
@@ -516,6 +555,7 @@
       "grade": "2",
       "position": "투수",
       "measuredAt": "2026-10-23",
+      "measuredWeekday": "금",
       "schoolRank": 1,
       "records": {
         "split5": 0.984,
@@ -531,6 +571,7 @@
       "grade": "2",
       "position": "외야수",
       "measuredAt": "2026-10-23",
+      "measuredWeekday": "금",
       "schoolRank": 2,
       "records": {
         "split5": 1.058,
@@ -546,6 +587,7 @@
       "grade": "2",
       "position": "내야수",
       "measuredAt": "2026-10-23",
+      "measuredWeekday": "금",
       "schoolRank": 3,
       "records": {
         "split5": 0.994,
@@ -561,6 +603,7 @@
       "grade": "2",
       "position": "투수",
       "measuredAt": "2026-10-23",
+      "measuredWeekday": "금",
       "schoolRank": 4,
       "records": {
         "split5": 1.043,
@@ -576,6 +619,7 @@
       "grade": "1",
       "position": "외야수",
       "measuredAt": "2026-10-23",
+      "measuredWeekday": "금",
       "schoolRank": 5,
       "records": {
         "split5": 1.115,
@@ -591,6 +635,7 @@
       "grade": "2",
       "position": "외야수",
       "measuredAt": "2026-10-27",
+      "measuredWeekday": "화",
       "schoolRank": 1,
       "records": {
         "split5": 1.125,
@@ -606,6 +651,7 @@
       "grade": "2",
       "position": "내야수",
       "measuredAt": "2026-10-27",
+      "measuredWeekday": "화",
       "schoolRank": 2,
       "records": {
         "split5": 0.983,
@@ -621,6 +667,7 @@
       "grade": "2",
       "position": "투수",
       "measuredAt": "2026-10-27",
+      "measuredWeekday": "화",
       "schoolRank": 3,
       "records": {
         "split5": 1.101,
@@ -636,6 +683,7 @@
       "grade": "1",
       "position": "투수",
       "measuredAt": "2026-10-27",
+      "measuredWeekday": "화",
       "schoolRank": 4,
       "records": {
         "split5": 1.045,
@@ -651,6 +699,7 @@
       "grade": "1",
       "position": "내야수",
       "measuredAt": "2026-10-27",
+      "measuredWeekday": "화",
       "schoolRank": 5,
       "records": {
         "split5": 1.017,
@@ -666,6 +715,7 @@
       "grade": "1",
       "position": "투수",
       "measuredAt": "2026-10-28",
+      "measuredWeekday": "수",
       "schoolRank": 1,
       "records": {
         "split5": 0.922,
@@ -681,6 +731,7 @@
       "grade": "2",
       "position": "내야수",
       "measuredAt": "2026-10-28",
+      "measuredWeekday": "수",
       "schoolRank": 2,
       "records": {
         "split5": 0.975,
@@ -696,6 +747,7 @@
       "grade": "1",
       "position": "외야수",
       "measuredAt": "2026-10-28",
+      "measuredWeekday": "수",
       "schoolRank": 3,
       "records": {
         "split5": 0.977,
@@ -711,6 +763,7 @@
       "grade": "2",
       "position": "외야수",
       "measuredAt": "2026-10-28",
+      "measuredWeekday": "수",
       "schoolRank": 4,
       "records": {
         "split5": 0.95,
@@ -726,6 +779,7 @@
       "grade": "2",
       "position": "투수",
       "measuredAt": "2026-10-28",
+      "measuredWeekday": "수",
       "schoolRank": 5,
       "records": {
         "split5": 1.031,

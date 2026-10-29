@@ -3,7 +3,6 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
 import { RECORD_EVENTS, filterPlayers, sortPlayers } from '../lib/records.js';
 import { provinceLabel } from '../lib/regions.js';
-import { GRIP_UNIT, RECORD_UNIT } from '../config.js';
 import SearchBar from '../components/SearchBar.jsx';
 import RecordList from '../components/RecordList.jsx';
 import EmptyState from '../components/EmptyState.jsx';
@@ -63,7 +62,7 @@ export default function Records() {
 
   return (
     <>
-      <PageBanner title="선수 기록">55M 직선 스프린트 기록 | 이름 검색과 지역·학교·포지션 필터를 함께 사용할 수 있습니다.</PageBanner>
+      <PageBanner title="선수 기록">55M 직선 스프린트 기록 | 측정 기록 확인하기</PageBanner>
       <section className="container records-top">
         <UpdatedAt />
       </section>
@@ -73,8 +72,8 @@ export default function Records() {
           id="records-search"
           value={q}
           onChange={(v) => update('q', v)}
-          label="선수명·학교·지역·포지션·학년 검색"
-          placeholder="선수명, 학교, 포지션 등으로 검색 (예: 덕수고 투수)"
+          label="선수명 검색"
+          placeholder="선수명으로 검색"
         />
 
         <div className="filters glass mt-16" role="group" aria-label="기록 필터">
@@ -142,13 +141,9 @@ export default function Records() {
           </span>
         </div>
 
-        <div className="notice" style={{ marginBottom: 16 }}>
+        <div className="notice notice-strong notice-compact" role="note" style={{ marginBottom: 16 }}>
           <span className="i" aria-hidden="true">i</span>
-          <span>
-            기록 단위: 5M·27M·55M {RECORD_UNIT}, 악력 {GRIP_UNIT}. 5M·27M은 55M 직선 스프린트 중 해당 지점 통과 기록입니다.
-            종목별 1인 1회 측정 기록이며, 악력은 덕수고 측정부터 실시해 해당 학교만 표시됩니다.
-            측정되지 않은 기록은 —로 표시합니다. <Link to="/rankings">실시간 순위 보기 →</Link>
-          </span>
+          <span>악력은 덕수고 측정부터 실시해 해당 학교만 표시됩니다. 측정되지 않은 기록은 —로 표시합니다.</span>
         </div>
 
         {!players.length ? (

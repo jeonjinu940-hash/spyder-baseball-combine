@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
-import { RECORD_EVENTS, SPRINT_COLUMNS, formatDate, formatGrip, formatTime, recordValue, sortPlayers } from '../lib/records.js';
+import { RECORD_EVENTS, SPRINT_COLUMNS, formatMeasured, formatGrip, formatTime, recordValue, sortPlayers } from '../lib/records.js';
 import { schoolRegionLabel } from '../lib/regions.js';
 import { GRIP_UNIT, RECORD_UNIT } from '../config.js';
 import BaseDiagram from '../components/BaseDiagram.jsx';
@@ -52,7 +52,9 @@ export default function PlayerDetail() {
             {player.uniformNumber != null && player.uniformNumber !== '' && (
               <span className="tag">배번<b className="num">{player.uniformNumber}</b></span>
             )}
-            {player.measuredAt && <span className="tag">측정일<b className="num">{formatDate(player.measuredAt)}</b></span>}
+            {player.measuredAt && (
+              <span className="tag">측정일<b className="num">{formatMeasured(player.measuredAt, player.measuredWeekday)}</b></span>
+            )}
         </div>
       </header>
       <div className="player-updated">

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
 import { countByProvince, provinceLabel, schoolRegionLabel } from '../lib/regions.js';
-import { formatDate } from '../lib/records.js';
+import { formatMeasured } from '../lib/records.js';
 import KoreaMap from '../components/KoreaMap.jsx';
 import PageBanner from '../components/PageBanner.jsx';
 
@@ -94,7 +94,7 @@ export default function Schools() {
                   <div className="pc">
                     {measuredById[s.id] ? (
                       <>
-                        <span className="num">{formatDate(measuredById[s.id].measuredAt) ?? ''} 측정 · {measuredById[s.id].measuredCount}명</span>
+                        <span className="num">{formatMeasured(measuredById[s.id].measuredAt, measuredById[s.id].measuredWeekday) ?? ''} 측정 · {measuredById[s.id].measuredCount}명</span>
                         <br />
                         상위 <b className="num">{playerCount[s.id] ?? 0}</b>명 기록 →
                       </>

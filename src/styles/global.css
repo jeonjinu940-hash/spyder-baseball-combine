@@ -437,6 +437,9 @@ main:focus {
 .glass-hover {
   position: relative;
   overflow: hidden;
+  /* 반사광·블러를 카드 안에서만 그려 옆 카드로 번지지 않게 */
+  isolation: isolate;
+  contain: paint;
   transition:
     transform 0.35s var(--ease),
     background 0.35s var(--ease),
@@ -455,7 +458,8 @@ main:focus {
   background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.16), transparent);
   transform: skewX(-18deg);
   opacity: 0;
-  transition: left 0.7s var(--ease), opacity 0.3s;
+  /* 커서가 떠나면 반사광을 즉시 원위치 (되감기며 지나가는 잔상 방지) */
+  transition: none;
 }
 .glass-hover:hover {
   transform: translateY(-6px);
@@ -463,11 +467,12 @@ main:focus {
   border-color: rgba(255, 255, 255, 0.32);
   backdrop-filter: blur(22px) saturate(150%);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 .glass-hover:hover::before {
   left: 120%;
   opacity: 1;
+  transition: left 0.7s var(--ease), opacity 0.2s;
 }
 
 .lead-nowrap {

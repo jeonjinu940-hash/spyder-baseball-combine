@@ -73,7 +73,8 @@ function dateFromFilename(file, season) {
   return m ? `${season}-${m[1].padStart(2, '0')}-${m[2].padStart(2, '0')}` : null;
 }
 
-// SCHEDULE: 한 행에서 '10/6 (화)' 같은 날짜 칸과 학교명 칸만 읽는다
+// SCHEDULE: 한 행에서 '10/6 (화)' 같은 날짜 칸과 학교명 칸만 읽는다 (시간·연락처 등은 읽지 않음)
+// → { 학교ID: { date: '2026-10-06', weekday: '화' } }
 function readSchedule(wb, schools, season) {
   const ws = wb.Sheets[SCHEDULE_SHEET];
   const out = {};
@@ -84,7 +85,8 @@ function readSchedule(wb, schools, season) {
     const school = schools.find((s) => cells.includes(s.name));
     if (!dateCell || !school) continue;
     const [, mo, d] = dateCell.match(/^(\d{1,2})\/(\d{1,2})/);
-    out[school.id] = `${season}-${mo.padStart(2, '0')}-${d.padStart(2, '0')}`;
+    const weekday = dateCell.match(/\(([월화수목금토일])\)/)?.[1] ?? null;
+    out[school.id] = { date: `${season}-${mo.padStart(2, '0')}-${d.padStart(2, '0')}`, weekday };
   }
   return out;
 }
@@ -187,7 +189,8 @@ function main() {
 
     measuredSchools.push({
       schoolId: school.id,
-      measuredAt: schedule[school.id] ?? null,
+      measuredAt: schedule[school.id]?.date ?? null,
+      measuredWeekday: schedule[school.id]?.weekday ?? null,
       measuredCount: list.length,
       gripMeasured,
     });
@@ -198,7 +201,8 @@ function main() {
         schoolId: school.id,
         grade: p.grade,
         position: p.position,
-        measuredAt: schedule[school.id] ?? null,
+        measuredAt: schedule[school.id]?.date ?? null,
+        measuredWeekday: schedule[school.id]?.weekday ?? null,
         schoolRank: i + 1,
         // 직선 스프린트 구간 기록(5m·27m)과 55m 최종 기록, 악력
         records: { split5: p.m5, split27: p.m27, sprint: p.m55, grip: gripMeasured ? p.grip : null },
