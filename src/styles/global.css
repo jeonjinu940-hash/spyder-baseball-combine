@@ -1999,6 +1999,14 @@ main:focus {
   text-align: right;
   white-space: nowrap;
 }
+.school-item .pc-link {
+  color: var(--text);
+  font-weight: 700;
+}
+.school-item:hover .pc-link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .school-item .pc b {
   font-family: var(--font-display);
   font-size: 22px;

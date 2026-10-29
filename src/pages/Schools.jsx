@@ -2,22 +2,15 @@ import { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
 import { countByProvince, provinceLabel, schoolRegionLabel } from '../lib/regions.js';
-import { formatMeasured } from '../lib/records.js';
 import KoreaMap from '../components/KoreaMap.jsx';
 import PageBanner from '../components/PageBanner.jsx';
 
 export default function Schools() {
-  const { schools, players, measuredSchools } = useData();
+  const { schools, measuredSchools } = useData();
   const measuredById = useMemo(() => Object.fromEntries(measuredSchools.map((m) => [m.schoolId, m])), [measuredSchools]);
   const [params, setParams] = useSearchParams();
   const counts = useMemo(() => countByProvince(schools), [schools]);
   const selected = counts[params.get('region')] ? params.get('region') : '';
-
-  const playerCount = useMemo(() => {
-    const out = {};
-    for (const p of players) out[p.schoolId] = (out[p.schoolId] ?? 0) + 1;
-    return out;
-  }, [players]);
 
   const regions = Object.entries(counts).sort((a, b) => b[1] - a[1] || provinceLabel(a[0]).localeCompare(provinceLabel(b[0]), 'ko'));
   const max = regions[0]?.[1] ?? 1;
@@ -92,15 +85,7 @@ export default function Schools() {
                     <div className="rg">{schoolRegionLabel(s)}</div>
                   </div>
                   <div className="pc">
-                    {measuredById[s.id] ? (
-                      <>
-                        <span className="num">{formatMeasured(measuredById[s.id].measuredAt, measuredById[s.id].measuredWeekday) ?? ''} 측정 · {measuredById[s.id].measuredCount}명</span>
-                        <br />
-                        상위 <b className="num">{playerCount[s.id] ?? 0}</b>명 기록 →
-                      </>
-                    ) : (
-                      <>측정 예정</>
-                    )}
+                    {measuredById[s.id] ? <span className="pc-link">측정 기록 확인하기 →</span> : <>측정 예정</>}
                   </div>
                 </Link>
               </li>

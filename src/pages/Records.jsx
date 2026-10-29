@@ -62,7 +62,7 @@ export default function Records() {
 
   return (
     <>
-      <PageBanner title="선수 기록">55M 직선 스프린트 기록 | 측정 기록 확인하기</PageBanner>
+      <PageBanner title="선수 기록">55M 직선 스프린트 기록 | 이름 검색과 지역·학교·포지션 필터를 함께 사용할 수 있습니다.</PageBanner>
       <section className="container records-top">
         <UpdatedAt />
       </section>
