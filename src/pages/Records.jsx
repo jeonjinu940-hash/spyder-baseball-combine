@@ -65,13 +65,6 @@ export default function Records() {
     <>
       <PageBanner title="선수 기록">55M 직선 스프린트 기록 | 이름 검색과 지역·학교·포지션 필터를 함께 사용할 수 있습니다.</PageBanner>
       <section className="container records-top">
-        <div className="notice notice-strong" role="note">
-          <span className="i" aria-hidden="true">!</span>
-          <span>
-            <strong>학교별 상위 5명의 기록만 공개됩니다.</strong>
-            <span className="muted"> (55M 직선 스프린트 기록 기준)</span>
-          </span>
-        </div>
         <UpdatedAt />
       </section>
 
@@ -138,6 +131,15 @@ export default function Records() {
               ))}
             </select>
           </div>
+        </div>
+
+        {/* 공개 기준 안내: 검색 결과 바로 아래 */}
+        <div className="notice notice-strong notice-compact" role="note">
+          <span className="i" aria-hidden="true">!</span>
+          <span>
+            <strong>학교별 상위 5명의 기록만 공개됩니다.</strong>
+            <span className="muted"> (55M 직선 스프린트 기록 기준)</span>
+          </span>
         </div>
 
         <div className="notice" style={{ marginBottom: 16 }}>

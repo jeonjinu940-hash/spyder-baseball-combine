@@ -734,5 +734,564 @@
         "grip": 70
       }
     }
-  ]
+  ],
+  "rankings": {
+    "sprint": [
+      {
+        "rank": 1,
+        "value": 6.593,
+        "name": "김준성",
+        "schoolId": "yushin",
+        "grade": "2",
+        "position": "내야수",
+        "playerId": "yushin-2"
+      },
+      {
+        "rank": 2,
+        "value": 6.598,
+        "name": "황효군",
+        "schoolId": "convention",
+        "grade": "2",
+        "position": "외야수",
+        "playerId": "convention-1"
+      },
+      {
+        "rank": 3,
+        "value": 6.67,
+        "name": "이유찬",
+        "schoolId": "incheon",
+        "grade": "2",
+        "position": "내야수",
+        "playerId": "incheon-4"
+      },
+      {
+        "rank": 4,
+        "value": 6.716,
+        "name": "김현재",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "투수",
+        "playerId": "deoksu-14"
+      },
+      {
+        "rank": 5,
+        "value": 6.726,
+        "name": "이도윤",
+        "schoolId": "incheon",
+        "grade": "1",
+        "position": "내야수",
+        "playerId": "incheon-6"
+      },
+      {
+        "rank": 6,
+        "value": 6.734,
+        "name": "민병준",
+        "schoolId": "whimoon",
+        "grade": "2",
+        "position": "투수",
+        "playerId": "whimoon-13"
+      },
+      {
+        "rank": 7,
+        "value": 6.735,
+        "name": "이홍석",
+        "schoolId": "deoksu",
+        "grade": "2",
+        "position": "내야수",
+        "playerId": "deoksu-4"
+      },
+      {
+        "rank": 8,
+        "value": 6.738,
+        "name": "조원빈",
+        "schoolId": "kyunggi-commercial",
+        "grade": "2",
+        "position": "야수",
+        "playerId": "kyunggi-commercial-5"
+      },
+      {
+        "rank": 9,
+        "value": 6.793,
+        "name": "이주혁",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "외야수",
+        "playerId": "deoksu-9"
+      },
+      {
+        "rank": 10,
+        "value": 6.811,
+        "name": "김수민",
+        "schoolId": "yushin",
+        "grade": "1",
+        "position": "내야수",
+        "playerId": "yushin-6"
+      },
+      {
+        "rank": 11,
+        "value": 6.817,
+        "name": "권혁준",
+        "schoolId": "deoksu",
+        "grade": "2",
+        "position": "외야수",
+        "playerId": "deoksu-2"
+      },
+      {
+        "rank": 12,
+        "value": 6.827,
+        "name": "허진호",
+        "schoolId": "whimoon",
+        "grade": "2",
+        "position": "외야수",
+        "playerId": "whimoon-4"
+      },
+      {
+        "rank": 13,
+        "value": 6.829,
+        "name": "권민재",
+        "schoolId": "convention",
+        "grade": "2",
+        "position": "투수",
+        "playerId": "convention-11"
+      },
+      {
+        "rank": 14,
+        "value": 6.832,
+        "name": "김예준",
+        "schoolId": "incheon",
+        "grade": "1",
+        "position": "투수",
+        "playerId": "incheon-16"
+      },
+      {
+        "rank": 15,
+        "value": 6.834,
+        "name": "김건희",
+        "schoolId": "incheon",
+        "grade": "1",
+        "position": "외야수",
+        "playerId": "incheon-9"
+      }
+    ],
+    "split27": [
+      {
+        "rank": 1,
+        "value": 3.578,
+        "name": "황효군",
+        "schoolId": "convention",
+        "grade": "2",
+        "position": "외야수",
+        "playerId": "convention-1"
+      },
+      {
+        "rank": 2,
+        "value": 3.58,
+        "name": "이유찬",
+        "schoolId": "incheon",
+        "grade": "2",
+        "position": "내야수",
+        "playerId": "incheon-4"
+      },
+      {
+        "rank": 3,
+        "value": 3.613,
+        "name": "김준성",
+        "schoolId": "yushin",
+        "grade": "2",
+        "position": "내야수",
+        "playerId": "yushin-2"
+      },
+      {
+        "rank": 3,
+        "value": 3.613,
+        "name": "조원빈",
+        "schoolId": "kyunggi-commercial",
+        "grade": "2",
+        "position": "야수",
+        "playerId": "kyunggi-commercial-5"
+      },
+      {
+        "rank": 5,
+        "value": 3.614,
+        "name": "이주혁",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "외야수",
+        "playerId": "deoksu-9"
+      },
+      {
+        "rank": 6,
+        "value": 3.616,
+        "name": "김현재",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "투수",
+        "playerId": "deoksu-14"
+      },
+      {
+        "rank": 7,
+        "value": 3.652,
+        "name": "이도윤",
+        "schoolId": "incheon",
+        "grade": "1",
+        "position": "내야수",
+        "playerId": "incheon-6"
+      },
+      {
+        "rank": 8,
+        "value": 3.657,
+        "name": "이홍석",
+        "schoolId": "deoksu",
+        "grade": "2",
+        "position": "내야수",
+        "playerId": "deoksu-4"
+      },
+      {
+        "rank": 9,
+        "value": 3.681,
+        "name": "민병준",
+        "schoolId": "whimoon",
+        "grade": "2",
+        "position": "투수",
+        "playerId": "whimoon-13"
+      },
+      {
+        "rank": 10,
+        "value": 3.683,
+        "name": "권민재",
+        "schoolId": "convention",
+        "grade": "2",
+        "position": "투수",
+        "playerId": "convention-11"
+      },
+      {
+        "rank": 11,
+        "value": 3.685,
+        "name": "주하율",
+        "schoolId": "kyunggi-commercial",
+        "grade": "1",
+        "position": "야수",
+        "playerId": "kyunggi-commercial-6"
+      },
+      {
+        "rank": 12,
+        "value": 3.686,
+        "name": "권혁준",
+        "schoolId": "deoksu",
+        "grade": "2",
+        "position": "외야수",
+        "playerId": "deoksu-2"
+      },
+      {
+        "rank": 13,
+        "value": 3.697,
+        "name": "유지호",
+        "schoolId": "incheon",
+        "grade": "1",
+        "position": "외야수",
+        "playerId": "incheon-8"
+      },
+      {
+        "rank": 14,
+        "value": 3.708,
+        "name": "정우진",
+        "schoolId": "seoul",
+        "grade": "1",
+        "position": "내야수",
+        "playerId": "seoul-8"
+      },
+      {
+        "rank": 15,
+        "value": 3.709,
+        "name": "김하준",
+        "schoolId": "convention",
+        "grade": "2",
+        "position": "외야수",
+        "playerId": "convention-2"
+      }
+    ],
+    "split5": [
+      {
+        "rank": 1,
+        "value": 0.887,
+        "name": "황효군",
+        "schoolId": "convention",
+        "grade": "2",
+        "position": "외야수",
+        "playerId": "convention-1"
+      },
+      {
+        "rank": 2,
+        "value": 0.916,
+        "name": "김하준",
+        "schoolId": "convention",
+        "grade": "2",
+        "position": "외야수",
+        "playerId": "convention-2"
+      },
+      {
+        "rank": 3,
+        "value": 0.922,
+        "name": "김현재",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "투수",
+        "playerId": "deoksu-14"
+      },
+      {
+        "rank": 4,
+        "value": 0.928,
+        "name": "조원빈",
+        "schoolId": "kyunggi-commercial",
+        "grade": "2",
+        "position": "야수",
+        "playerId": "kyunggi-commercial-5"
+      },
+      {
+        "rank": 5,
+        "value": 0.933,
+        "name": "김세훈",
+        "schoolId": "convention",
+        "grade": "2",
+        "position": "내야수",
+        "playerId": null
+      },
+      {
+        "rank": 6,
+        "value": 0.938,
+        "name": "정우진",
+        "schoolId": "seoul",
+        "grade": "1",
+        "position": "내야수",
+        "playerId": "seoul-8"
+      },
+      {
+        "rank": 7,
+        "value": 0.943,
+        "name": "주하율",
+        "schoolId": "kyunggi-commercial",
+        "grade": "1",
+        "position": "야수",
+        "playerId": "kyunggi-commercial-6"
+      },
+      {
+        "rank": 7,
+        "value": 0.943,
+        "name": "최시혁",
+        "schoolId": "convention",
+        "grade": "1",
+        "position": "외야수",
+        "playerId": null
+      },
+      {
+        "rank": 9,
+        "value": 0.945,
+        "name": "이유찬",
+        "schoolId": "incheon",
+        "grade": "2",
+        "position": "내야수",
+        "playerId": "incheon-4"
+      },
+      {
+        "rank": 10,
+        "value": 0.947,
+        "name": "진준혁",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "외야수",
+        "playerId": null
+      },
+      {
+        "rank": 11,
+        "value": 0.95,
+        "name": "권혁준",
+        "schoolId": "deoksu",
+        "grade": "2",
+        "position": "외야수",
+        "playerId": "deoksu-2"
+      },
+      {
+        "rank": 12,
+        "value": 0.951,
+        "name": "서찬빈",
+        "schoolId": "seongnam",
+        "grade": "2",
+        "position": "외야수",
+        "playerId": "seongnam-2"
+      },
+      {
+        "rank": 13,
+        "value": 0.954,
+        "name": "성민제",
+        "schoolId": "seongnam",
+        "grade": "1",
+        "position": "외야수",
+        "playerId": null
+      },
+      {
+        "rank": 14,
+        "value": 0.955,
+        "name": "박재현",
+        "schoolId": "convention",
+        "grade": "1",
+        "position": "내야수",
+        "playerId": "convention-19"
+      },
+      {
+        "rank": 15,
+        "value": 0.961,
+        "name": "강규명",
+        "schoolId": "seongnam",
+        "grade": "1",
+        "position": "내야수",
+        "playerId": "seongnam-12"
+      },
+      {
+        "rank": 15,
+        "value": 0.961,
+        "name": "박승현",
+        "schoolId": "convention",
+        "grade": "1",
+        "position": "내야수",
+        "playerId": null
+      }
+    ],
+    "grip": [
+      {
+        "rank": 1,
+        "value": 75.8,
+        "name": "진준혁",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "외야수",
+        "playerId": null
+      },
+      {
+        "rank": 1,
+        "value": 75.8,
+        "name": "한태원",
+        "schoolId": "deoksu",
+        "grade": "2",
+        "position": "외야수",
+        "playerId": null
+      },
+      {
+        "rank": 3,
+        "value": 75.1,
+        "name": "권혁준",
+        "schoolId": "deoksu",
+        "grade": "2",
+        "position": "외야수",
+        "playerId": "deoksu-2"
+      },
+      {
+        "rank": 3,
+        "value": 75.1,
+        "name": "이홍석",
+        "schoolId": "deoksu",
+        "grade": "2",
+        "position": "내야수",
+        "playerId": "deoksu-4"
+      },
+      {
+        "rank": 5,
+        "value": 71,
+        "name": "김윤오",
+        "schoolId": "deoksu",
+        "grade": "2",
+        "position": "투수",
+        "playerId": null
+      },
+      {
+        "rank": 6,
+        "value": 70,
+        "name": "김주원",
+        "schoolId": "deoksu",
+        "grade": "2",
+        "position": "투수",
+        "playerId": "deoksu-11"
+      },
+      {
+        "rank": 7,
+        "value": 68.7,
+        "name": "윤정찬",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "포수",
+        "playerId": null
+      },
+      {
+        "rank": 8,
+        "value": 66.3,
+        "name": "장민재",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "내야수",
+        "playerId": null
+      },
+      {
+        "rank": 9,
+        "value": 65.4,
+        "name": "김현재",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "투수",
+        "playerId": "deoksu-14"
+      },
+      {
+        "rank": 10,
+        "value": 64.3,
+        "name": "심건우",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "내야수",
+        "playerId": null
+      },
+      {
+        "rank": 11,
+        "value": 64.1,
+        "name": "양영우",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "외야수",
+        "playerId": null
+      },
+      {
+        "rank": 12,
+        "value": 63.1,
+        "name": "윤민혁",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "투수",
+        "playerId": null
+      },
+      {
+        "rank": 13,
+        "value": 58.7,
+        "name": "이서준",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "투수",
+        "playerId": null
+      },
+      {
+        "rank": 14,
+        "value": 54.9,
+        "name": "이윤재",
+        "schoolId": "deoksu",
+        "grade": "2",
+        "position": "내야수",
+        "playerId": null
+      },
+      {
+        "rank": 15,
+        "value": 54.7,
+        "name": "이주혁",
+        "schoolId": "deoksu",
+        "grade": "1",
+        "position": "외야수",
+        "playerId": "deoksu-9"
+      }
+    ]
+  }
 }

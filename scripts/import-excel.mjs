@@ -7,7 +7,8 @@
 // 읽는 범위 (그 외 시트·열은 읽지 않음 — 연락처 등 개인정보 보호)
 //   · '전체 측정표' 시트: No.·학교·이름·학년·포지션·5m·27m·55m(fin)·1루·2루(fin)·악력
 //   · 'SCHEDULE' 시트: 일정(날짜)·학교 열만 → 학교별 측정일
-// 공개 데이터에는 학교별 55M 상위 5명의 이름·학교·학년·포지션·5m·27m·55m 기록·악력·교내 순위만 저장한다.
+// 공개 데이터에는 학교별 55M 상위 5명의 이름·학교·학년·포지션·5m·27m·55m 기록·악력·교내 순위를 저장하고,
+// 실시간 순위용으로 전체 측정 선수 중 종목별 TOP 15(이름·학교·학년·포지션·해당 기록)만 추가 저장한다.
 // 검증 오류가 하나라도 있으면 전체 반영을 중단하고 기존 데이터를 그대로 둔다.
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { basename, extname, join } from 'node:path';
@@ -21,7 +22,16 @@ const HISTORY = join(ROOT, 'src', 'data', 'import-history.json');
 
 const RECORD_SHEET = '전체 측정표';
 const SCHEDULE_SHEET = 'SCHEDULE';
-const TOP_N = 5; // 학교별 공개 인원
+const TOP_N = 5; // 학교별 공개 인원 (선수 기록 탭·상세)
+const RANK_LIMIT = 15; // 실시간 순위 보드별 인원
+
+// 실시간 순위: 전체 측정 선수 기준. 상위 5명 밖 선수는 순위에만 노출되고 상세 페이지 링크(playerId)는 없음
+const RANK_BOARDS = [
+  { key: 'sprint', field: 'm55', lower: true },
+  { key: 'split27', field: 'm27', lower: true },
+  { key: 'split5', field: 'm5', lower: true },
+  { key: 'grip', field: 'grip', lower: false },
+];
 
 // 헤더 이름 → 키 (공백 무시)
 const COLUMNS = {
@@ -196,6 +206,35 @@ function main() {
     );
   }
 
+  // 실시간 순위 (전체 측정 선수 기준, 동기록 = 같은 순위)
+  const publishedIds = new Set(players.map((p) => p.id));
+  const rankings = {};
+  for (const b of RANK_BOARDS) {
+    const list = measured
+      .filter((p) => p[b.field] != null)
+      .sort((a, c) => (a[b.field] - c[b.field]) * (b.lower ? 1 : -1) || a.name.localeCompare(c.name, 'ko'));
+    let prevValue = null;
+    let rank = 0;
+    rankings[b.key] = list
+      .map((p, i) => {
+        if (p[b.field] !== prevValue) rank = i + 1;
+        prevValue = p[b.field];
+        const id = `${p.schoolId}-${p.seq}`;
+        return {
+          rank,
+          value: p[b.field],
+          name: p.name,
+          schoolId: p.schoolId,
+          grade: p.grade,
+          position: p.position,
+          playerId: publishedIds.has(id) ? id : null,
+        };
+      })
+      .filter((r) => r.rank <= RANK_LIMIT);
+  }
+  const rankOnly = new Set(Object.values(rankings).flat().filter((r) => !r.playerId).map((r) => `${r.schoolId}:${r.name}`));
+  console.log(`  실시간 순위: 보드 ${RANK_BOARDS.length}개 × TOP ${RANK_LIMIT} (상위 5명 밖 선수 ${rankOnly.size}명은 순위에만 표시)`);
+
   warnings.forEach((w) => console.log(`  ⚠ ${w}`));
   console.log(`\n✔ 검증 통과 — 공개 대상: ${measuredSchools.length}개 학교 × 상위 ${TOP_N}명 = ${players.length}명`);
   console.table(
@@ -222,7 +261,7 @@ function main() {
   const updatedAt = dateFromFilename(file, season) ?? new Date().toISOString();
   writeFileSync(
     PLAYERS,
-    JSON.stringify({ updatedAt, source: basename(file), topN: TOP_N, measuredSchools, players }, null, 2) + '\n',
+    JSON.stringify({ updatedAt, source: basename(file), topN: TOP_N, measuredSchools, players, rankings }, null, 2) + '\n',
   );
   const history = existsSync(HISTORY) ? readJson(HISTORY) : [];
   history.unshift({

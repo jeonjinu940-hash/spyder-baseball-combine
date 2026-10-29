@@ -20,7 +20,7 @@ export default function RecordList({ players, schoolsById }) {
               <th colSpan={SPRINT_COLUMNS.length} scope="colgroup" className="ev-start">
                 55M 직선 스프린트 ({RECORD_UNIT})
               </th>
-              {showGrip && <th aria-hidden="true" />}
+              {showGrip && <th scope="col" className="ev-start">악력</th>}
               <th aria-hidden="true" />
             </tr>
             <tr className="sub">
@@ -34,7 +34,7 @@ export default function RecordList({ players, schoolsById }) {
                   {c.label}
                 </th>
               ))}
-              {showGrip && <th scope="col" className="t ev-start">악력 ({GRIP_UNIT})</th>}
+              {showGrip && <th scope="col" className="t ev-start">{GRIP_UNIT}</th>}
               <th scope="col"><span className="sr-only">상세</span></th>
             </tr>
           </thead>

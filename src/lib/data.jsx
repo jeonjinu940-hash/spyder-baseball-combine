@@ -59,6 +59,8 @@ export function DataProvider({ children }) {
       // 학교별 측정일·측정 인원·악력 측정 여부 (공개 인원은 topN명)
       measuredSchools: source.measuredSchools ?? [],
       topN: source.topN ?? null,
+      // 실시간 순위 (전체 측정 선수 기준 TOP 15, import 시 생성). 없으면(DEMO 등) 공개 기록으로 계산
+      rankings: source.rankings ?? null,
       // 학교별 현장 사진 앨범 (scripts/build-gallery.mjs가 생성)
       galleryAlbums: galleryData.albums ?? [],
     };

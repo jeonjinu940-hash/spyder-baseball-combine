@@ -1074,7 +1074,7 @@ main:focus {
   position: relative;
   overflow: hidden;
 }
-.podium-card a {
+.podium-card .podium-inner {
   display: grid;
   gap: 4px;
   padding: clamp(18px, 2.4vw, 26px);
@@ -1152,6 +1152,13 @@ main:focus {
 .rank-row:hover {
   background: rgba(255, 255, 255, 0.04);
 }
+/* 학교별 상위 5명 밖 선수: 상세 페이지 없음 */
+.rank-row.no-link:hover {
+  background: none;
+}
+.no-link {
+  cursor: default;
+}
 .rank-no {
   font-weight: 800;
   color: #ff6b74;
@@ -1182,17 +1189,75 @@ main:focus {
   }
 }
 
-/* 선수 기록 상단: 공개 기준 안내 + 기록 업데이트 일자 */
+/* 선수 기록 상단: 기록 업데이트 일자 */
 .records-top {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px 20px;
-  margin-bottom: 32px;
+  justify-content: flex-end;
+  margin-bottom: 20px;
 }
-.records-top .notice-strong {
-  flex: 1 1 420px;
+/* 검색 결과 아래 공개 기준 안내 (작은 글씨) */
+.notice-compact {
+  max-width: none;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+.notice-compact .i {
+  width: 18px;
+  height: 18px;
+  font-size: 11px;
+}
+
+/* 선수 상세 상단 배너: 이름·태그 가운데 정렬 */
+.player-banner {
+  margin-top: 16px;
+  gap: 12px;
+  padding: clamp(28px, 4vw, 44px) 20px;
+}
+.player-banner .eyebrow {
+  position: relative;
+}
+.player-banner h1 {
+  font-size: clamp(36px, 6vw, 60px);
+  line-height: 1.05;
+}
+.player-banner .player-tags {
+  position: relative;
+  justify-content: center;
+  margin-top: 6px;
+}
+.player-banner .tag {
+  background: rgba(8, 8, 8, 0.35);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: var(--text-2);
+}
+.player-updated {
+  display: flex;
+  justify-content: flex-end;
+  margin: 14px 0 20px;
+}
+
+/* 선수 상세 기록 카드: 숫자+단위를 칸 아래쪽 같은 줄에 정렬 */
+.record-card-detail {
+  display: flex;
+  flex-direction: column;
+}
+.record-card-detail > .trial-grid {
+  margin-top: auto;
+}
+.record-card-detail .trial-grid > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+.record-card-detail .trial-grid .v {
+  display: flex;
+  align-items: baseline;
+  line-height: 1;
+}
+.trial-grid.grip-grid {
+  grid-template-columns: 1fr;
 }
 
 /* 직선 스프린트 구간 기록: 5M·27M는 보조, 55M 최종 기록 강조 */

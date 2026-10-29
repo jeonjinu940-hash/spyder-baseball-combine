@@ -34,11 +34,11 @@ export default function PlayerDetail() {
         <Link to="/records">선수 기록</Link> / <Link to={`/records?school=${school.id}`}>{school.name}</Link> / <span aria-current="page">{player.name}</span>
       </nav>
 
-      <header className="player-head">
-        <div>
-          <p className="eyebrow">Player Profile{demo && <span className="demo-tag">DEMO</span>}</p>
-          <h1>{player.name}</h1>
-          <div className="player-tags">
+      {/* 상단: 참가 학교·선수 기록 탭과 같은 레드 그라데이션 배너, 가운데 정렬 */}
+      <header className="page-banner player-banner">
+        <p className="eyebrow">Player Profile{demo && <span className="demo-tag">DEMO</span>}</p>
+        <h1>{player.name}</h1>
+        <div className="player-tags">
             <span className="tag">학교<b>{school.name}</b></span>
             <span className="tag">지역<b>{schoolRegionLabel(school)}</b></span>
             {player.grade && <span className="tag">학년<b>{player.grade}학년</b></span>}
@@ -53,14 +53,15 @@ export default function PlayerDetail() {
               <span className="tag">배번<b className="num">{player.uniformNumber}</b></span>
             )}
             {player.measuredAt && <span className="tag">측정일<b className="num">{formatDate(player.measuredAt)}</b></span>}
-          </div>
         </div>
-        <UpdatedAt />
       </header>
+      <div className="player-updated">
+        <UpdatedAt />
+      </div>
 
       <div className={`event-grid player-records${grip != null ? ' with-grip' : ''}`}>
         {RECORD_EVENTS.map((e) => (
-          <section key={e.key} className="glass card" aria-labelledby={`h-${e.key}`}>
+          <section key={e.key} className="glass card glass-hover record-card-detail" aria-labelledby={`h-${e.key}`}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
               <div>
                 <p className="eyebrow">{e.routeKo}</p>
@@ -87,10 +88,10 @@ export default function PlayerDetail() {
         ))}
         {/* 악력: 측정한 학교(덕수고~)만 표시 */}
         {grip != null && (
-          <section className="glass card" aria-labelledby="h-grip">
+          <section className="glass card glass-hover record-card-detail" aria-labelledby="h-grip">
             <p className="eyebrow">Grip Strength</p>
             <h2 id="h-grip" style={{ fontSize: 24, marginTop: 8 }}>악력</h2>
-            <div className="trial-grid" style={{ gridTemplateColumns: '1fr' }}>
+            <div className="trial-grid grip-grid">
               <div>
                 <small>측정 기록</small>
                 <div className="v">
