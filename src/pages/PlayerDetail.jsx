@@ -1,15 +1,15 @@
 import { Link, useParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
-import { RECORD_EVENTS, formatDate, formatTime, recordValue } from '../lib/records.js';
+import { RECORD_EVENTS, formatDate, formatGrip, formatTime, recordValue, sortPlayers } from '../lib/records.js';
 import { schoolRegionLabel } from '../lib/regions.js';
-import { RECORD_UNIT } from '../config.js';
+import { GRIP_UNIT, RECORD_UNIT } from '../config.js';
 import BaseDiagram from '../components/BaseDiagram.jsx';
 import UpdatedAt from '../components/UpdatedAt.jsx';
 import NotFound from './NotFound.jsx';
 
 export default function PlayerDetail() {
   const { id } = useParams();
-  const { players, playersById, schoolsById, galleryAlbums, demo } = useData();
+  const { players, playersById, schoolsById, galleryAlbums, measuredSchools, demo } = useData();
   const player = playersById[id];
 
   // 비공개 선수는 목록에서 이미 제외되어 있으므로 404
@@ -18,9 +18,10 @@ export default function PlayerDetail() {
   }
 
   const school = schoolsById[player.schoolId];
-  const ordered = [...players].sort(
-    (a, b) => schoolsById[a.schoolId].name.localeCompare(schoolsById[b.schoolId].name, 'ko') || a.name.localeCompare(b.name, 'ko'),
-  );
+  const schoolInfo = measuredSchools.find((m) => m.schoolId === player.schoolId);
+  const grip = recordValue(player, 'grip');
+  // 이전/다음 선수: 학교순 → 교내 순위순
+  const ordered = sortPlayers(players, 'school', [], schoolsById);
   const idx = ordered.findIndex((p) => p.id === player.id);
   const prev = ordered[idx - 1];
   const next = ordered[idx + 1];
@@ -40,7 +41,14 @@ export default function PlayerDetail() {
           <div className="player-tags">
             <span className="tag">학교<b>{school.name}</b></span>
             <span className="tag">지역<b>{schoolRegionLabel(school)}</b></span>
+            {player.grade && <span className="tag">학년<b>{player.grade}학년</b></span>}
             <span className="tag">포지션<b>{player.position || '—'}</b></span>
+            {player.schoolRank && (
+              <span className="tag tag-rank">
+                교내 순위<b className="num">{player.schoolRank}위</b>
+                {schoolInfo?.measuredCount ? <span className="muted"> / {schoolInfo.measuredCount}명 측정</span> : null}
+              </span>
+            )}
             {player.uniformNumber != null && player.uniformNumber !== '' && (
               <span className="tag">배번<b className="num">{player.uniformNumber}</b></span>
             )}
@@ -50,7 +58,7 @@ export default function PlayerDetail() {
         <UpdatedAt />
       </header>
 
-      <div className="event-grid" style={{ gridTemplateColumns: `repeat(${RECORD_EVENTS.length}, 1fr)` }}>
+      <div className="event-grid" style={{ gridTemplateColumns: `repeat(${RECORD_EVENTS.length + (grip != null ? 1 : 0)}, 1fr)` }}>
         {RECORD_EVENTS.map((e) => (
           <section key={e.key} className="glass card" aria-labelledby={`h-${e.key}`}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
@@ -78,11 +86,30 @@ export default function PlayerDetail() {
             </div>
           </section>
         ))}
+        {/* 악력: 측정한 학교(덕수고~)만 표시 */}
+        {grip != null && (
+          <section className="glass card" aria-labelledby="h-grip">
+            <p className="eyebrow">Grip Strength</p>
+            <h2 id="h-grip" style={{ fontSize: 24, marginTop: 8 }}>악력</h2>
+            <div className="trial-grid" style={{ gridTemplateColumns: '1fr' }}>
+              <div>
+                <small>측정 기록</small>
+                <div className="v">
+                  {formatGrip(grip)}
+                  <span className="u">{GRIP_UNIT}</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
       </div>
 
       <div className="notice mt-24">
         <span className="i" aria-hidden="true">i</span>
-        <span>종목별 1인 1회 측정 기록입니다. 순위는 공식 산정 기준이 확정된 후 표시됩니다. 기록 정정이 필요한 경우 운영팀에 문의해 주세요.</span>
+        <span>
+          종목별 1인 1회 측정 기록입니다. 교내 순위는 55M 직선 스프린트 기록 기준이며, 학교별 상위 5명만 공개됩니다.
+          기록 정정이 필요한 경우 운영팀에 문의해 주세요.
+        </span>
       </div>
 
       {photos.length > 0 && (

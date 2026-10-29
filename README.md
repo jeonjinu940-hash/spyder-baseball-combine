@@ -18,49 +18,33 @@ npm run preview   # 빌드 결과 확인
 UI 확인용 가상 데이터는 주소 뒤에 `?demo=1`을 붙이면 **DEMO** 배너와 함께 표시되고, `?demo=0`으로 해제합니다.
 DEMO 데이터는 `src/data/demo-players.json`에 분리되어 있으며 실제 기록과 섞이지 않습니다.
 
-## 기록 업데이트 (엑셀 → 웹사이트)
+## 기록 업데이트 (운영 기록 엑셀 → 웹사이트)
 
-1. 템플릿 다운로드: `public/templates/combine_template.xlsx` (배포 사이트의 `/templates/combine_template.xlsx`)
-   - `columns` 시트: 컬럼 설명 / `schools` 시트: 학교 ID 목록
-2. 기록 입력 후 저장 → `imports/` 폴더에 복사 (이 폴더는 git에 올라가지 않음)
-3. 미리보기·검증
+운영팀의 일자별 기록 파일(예: `(SPYDER) 베이스볼컴바인 기록 (10.28).xlsx`)을 그대로 사용합니다.
+**학교별 55M 직선 스프린트 상위 5명만** 공개 데이터로 저장되고, 나머지 선수 기록은 저장·공개하지 않습니다.
+
+1. 기록 파일을 프로젝트 폴더(또는 `imports/`)에 넣습니다. 엑셀 파일은 git에 올라가지 않습니다 (연락처 등 포함).
+2. 미리보기·검증
    ```bash
-   npm run import -- imports/기록.xlsx
+   npm run import -- "(SPYDER) 베이스볼컴바인 기록 (10.28).xlsx"
    ```
-   필수 컬럼, 숫자 형식, 음수·0, 중복 `player_id`, 미등록 `school_id`, 학교명 불일치, 날짜, 공개 상태를 검증합니다.
-   **오류가 하나라도 있으면 전체 반영을 중단하고 기존 데이터는 그대로 유지**합니다.
-4. 결과(신규·변경·삭제 건수, 미리보기)를 확인한 뒤 반영
+   - 읽는 범위: `전체 측정표` 시트(No.·학교·이름·학년·포지션·5m·27m·55m(fin)·1루·2루(fin)·악력)와 `SCHEDULE` 시트의 날짜·학교 칸만. 연락처 등 다른 칸은 읽지 않습니다.
+   - 검증: 참가 학교 목록에 없는 학교, 이름 누락, 숫자가 아닌 기록, 0 이하 값. `-`는 미측정으로 처리합니다.
+   - 학교별로 55m 기록이 빠른 순서대로 상위 5명을 고르고(동기록이면 27m → 5m 순), 교내 순위 1~5위를 매깁니다.
+   - 악력은 해당 학교에 악력 기록이 있을 때만 표시합니다 (덕수고 측정부터).
+   - **오류가 하나라도 있으면 전체 반영을 중단하고 기존 데이터는 그대로 유지**합니다.
+3. 반영
    ```bash
-   npm run import -- imports/기록.xlsx --confirm
+   npm run import -- "(SPYDER) 베이스볼컴바인 기록 (10.28).xlsx" --confirm
    ```
-   `src/data/players.json`이 갱신되고 `updatedAt`(마지막 업데이트 시각)과 `src/data/import-history.json`(업로드 이력)이 기록됩니다.
-   `publish_status = 비공개` 행은 공개 데이터에 저장되지 않습니다.
-5. GitHub에 반영 → Render 자동 배포(수 분 소요)
+   `src/data/players.json`(공개 데이터)과 `src/data/import-history.json`(반영 이력)이 갱신됩니다.
+   파일 이름의 `(10.28)`이 사이트의 "기록 업데이트" 날짜가 됩니다.
+4. GitHub에 반영 → Render 배포
    ```bash
    git add -A
-   git commit -m "기록 업데이트"
+   git commit -m "기록 업데이트 (10.28)"
    git push
    ```
-
-### 엑셀 컬럼 (PRD 5장)
-
-| Column | Required | 설명 |
-|---|---|---|
-| player_id | Yes | 고유 식별자 |
-| player_name | Yes | 공개 표시 선수명 |
-| school_id | Yes | 학교 ID (`src/data/schools.json`) |
-| school_name | Yes | 학교명 (school_id와 일치해야 함) |
-| region | Yes | 지역 |
-| position | Recommended | 포지션 |
-| uniform_number | Optional | 배번 (공개 승인된 경우만) |
-| sprint_55m | Yes, 빈칸 허용 | 55M 직선 스프린트 기록 (종목별 1인 1회 측정) |
-| baserun_55m | Yes, 빈칸 허용 | 55M 베이스러닝 기록 (종목별 1인 1회 측정) |
-| measured_at | Recommended | 측정 일자 YYYY-MM-DD |
-| publish_status | Recommended | 공개 / 비공개 (빈칸 = 공개) |
-| photo_id | Optional | 사진 연결 ID |
-
-미측정 기록은 **빈칸**으로 입력합니다 (0은 오류). 화면에는 `—`로 표시됩니다.
-
 ## 현장 갤러리 사진 추가
 
 1. `현장 갤러리/` 아래에 **`월.일 학교명`** 형식으로 폴더를 만들고 사진을 넣습니다. 예: `현장 갤러리/10.28 전주고/`

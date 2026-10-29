@@ -56,6 +56,9 @@ export function DataProvider({ children }) {
       players,
       playersById: Object.fromEntries(players.map((p) => [p.id, p])),
       updatedAt: source.updatedAt,
+      // 학교별 측정일·측정 인원·악력 측정 여부 (공개 인원은 topN명)
+      measuredSchools: source.measuredSchools ?? [],
+      topN: source.topN ?? null,
       // 학교별 현장 사진 앨범 (scripts/build-gallery.mjs가 생성)
       galleryAlbums: galleryData.albums ?? [],
     };

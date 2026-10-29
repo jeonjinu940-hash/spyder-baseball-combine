@@ -1,5 +1,648 @@
 {
-  "updatedAt": null,
-  "source": null,
-  "players": []
+  "updatedAt": "2026-10-28",
+  "source": "(SPYDER) 베이스볼컴바인 기록 (10.28).xlsx",
+  "topN": 5,
+  "measuredSchools": [
+    {
+      "schoolId": "convention",
+      "measuredAt": "2026-10-06",
+      "measuredCount": 21,
+      "gripMeasured": false
+    },
+    {
+      "schoolId": "seongnam",
+      "measuredAt": "2026-10-13",
+      "measuredCount": 21,
+      "gripMeasured": false
+    },
+    {
+      "schoolId": "kyunggi-commercial",
+      "measuredAt": "2026-10-14",
+      "measuredCount": 18,
+      "gripMeasured": false
+    },
+    {
+      "schoolId": "yushin",
+      "measuredAt": "2026-10-19",
+      "measuredCount": 17,
+      "gripMeasured": false
+    },
+    {
+      "schoolId": "incheon",
+      "measuredAt": "2026-10-21",
+      "measuredCount": 18,
+      "gripMeasured": false
+    },
+    {
+      "schoolId": "seoul",
+      "measuredAt": "2026-10-22",
+      "measuredCount": 24,
+      "gripMeasured": false
+    },
+    {
+      "schoolId": "whimoon",
+      "measuredAt": "2026-10-23",
+      "measuredCount": 24,
+      "gripMeasured": false
+    },
+    {
+      "schoolId": "jeonju",
+      "measuredAt": "2026-10-27",
+      "measuredCount": 18,
+      "gripMeasured": false
+    },
+    {
+      "schoolId": "deoksu",
+      "measuredAt": "2026-10-28",
+      "measuredCount": 15,
+      "gripMeasured": true
+    }
+  ],
+  "players": [
+    {
+      "id": "convention-1",
+      "name": "황효군",
+      "schoolId": "convention",
+      "grade": "2",
+      "position": "외야수",
+      "measuredAt": "2026-10-06",
+      "schoolRank": 1,
+      "records": {
+        "sprint": 6.598,
+        "grip": null
+      }
+    },
+    {
+      "id": "convention-11",
+      "name": "권민재",
+      "schoolId": "convention",
+      "grade": "2",
+      "position": "투수",
+      "measuredAt": "2026-10-06",
+      "schoolRank": 2,
+      "records": {
+        "sprint": 6.829,
+        "grip": null
+      }
+    },
+    {
+      "id": "convention-19",
+      "name": "박재현",
+      "schoolId": "convention",
+      "grade": "1",
+      "position": "내야수",
+      "measuredAt": "2026-10-06",
+      "schoolRank": 3,
+      "records": {
+        "sprint": 6.885,
+        "grip": null
+      }
+    },
+    {
+      "id": "convention-2",
+      "name": "김하준",
+      "schoolId": "convention",
+      "grade": "2",
+      "position": "외야수",
+      "measuredAt": "2026-10-06",
+      "schoolRank": 4,
+      "records": {
+        "sprint": 6.975,
+        "grip": null
+      }
+    },
+    {
+      "id": "convention-10",
+      "name": "류지헌",
+      "schoolId": "convention",
+      "grade": "2",
+      "position": "투수",
+      "measuredAt": "2026-10-06",
+      "schoolRank": 5,
+      "records": {
+        "sprint": 7.121,
+        "grip": null
+      }
+    },
+    {
+      "id": "seongnam-20",
+      "name": "이승준",
+      "schoolId": "seongnam",
+      "grade": "1",
+      "position": "투수",
+      "measuredAt": "2026-10-13",
+      "schoolRank": 1,
+      "records": {
+        "sprint": 7.094,
+        "grip": null
+      }
+    },
+    {
+      "id": "seongnam-2",
+      "name": "서찬빈",
+      "schoolId": "seongnam",
+      "grade": "2",
+      "position": "외야수",
+      "measuredAt": "2026-10-13",
+      "schoolRank": 2,
+      "records": {
+        "sprint": 7.097,
+        "grip": null
+      }
+    },
+    {
+      "id": "seongnam-12",
+      "name": "강규명",
+      "schoolId": "seongnam",
+      "grade": "1",
+      "position": "내야수",
+      "measuredAt": "2026-10-13",
+      "schoolRank": 3,
+      "records": {
+        "sprint": 7.1,
+        "grip": null
+      }
+    },
+    {
+      "id": "seongnam-3",
+      "name": "최서준",
+      "schoolId": "seongnam",
+      "grade": "2",
+      "position": "내야수",
+      "measuredAt": "2026-10-13",
+      "schoolRank": 4,
+      "records": {
+        "sprint": 7.175,
+        "grip": null
+      }
+    },
+    {
+      "id": "seongnam-13",
+      "name": "박찬서",
+      "schoolId": "seongnam",
+      "grade": "1",
+      "position": "외야수",
+      "measuredAt": "2026-10-13",
+      "schoolRank": 5,
+      "records": {
+        "sprint": 7.23,
+        "grip": null
+      }
+    },
+    {
+      "id": "kyunggi-commercial-5",
+      "name": "조원빈",
+      "schoolId": "kyunggi-commercial",
+      "grade": "2",
+      "position": "야수",
+      "measuredAt": "2026-10-14",
+      "schoolRank": 1,
+      "records": {
+        "sprint": 6.738,
+        "grip": null
+      }
+    },
+    {
+      "id": "kyunggi-commercial-6",
+      "name": "주하율",
+      "schoolId": "kyunggi-commercial",
+      "grade": "1",
+      "position": "야수",
+      "measuredAt": "2026-10-14",
+      "schoolRank": 2,
+      "records": {
+        "sprint": 6.979,
+        "grip": null
+      }
+    },
+    {
+      "id": "kyunggi-commercial-1",
+      "name": "이준우",
+      "schoolId": "kyunggi-commercial",
+      "grade": "2",
+      "position": "야수",
+      "measuredAt": "2026-10-14",
+      "schoolRank": 3,
+      "records": {
+        "sprint": 7.005,
+        "grip": null
+      }
+    },
+    {
+      "id": "kyunggi-commercial-8",
+      "name": "정이준",
+      "schoolId": "kyunggi-commercial",
+      "grade": "1",
+      "position": "야수",
+      "measuredAt": "2026-10-14",
+      "schoolRank": 4,
+      "records": {
+        "sprint": 7.25,
+        "grip": null
+      }
+    },
+    {
+      "id": "kyunggi-commercial-3",
+      "name": "신승원",
+      "schoolId": "kyunggi-commercial",
+      "grade": "2",
+      "position": "야수",
+      "measuredAt": "2026-10-14",
+      "schoolRank": 5,
+      "records": {
+        "sprint": 7.256,
+        "grip": null
+      }
+    },
+    {
+      "id": "yushin-2",
+      "name": "김준성",
+      "schoolId": "yushin",
+      "grade": "2",
+      "position": "내야수",
+      "measuredAt": "2026-10-19",
+      "schoolRank": 1,
+      "records": {
+        "sprint": 6.593,
+        "grip": null
+      }
+    },
+    {
+      "id": "yushin-6",
+      "name": "김수민",
+      "schoolId": "yushin",
+      "grade": "1",
+      "position": "내야수",
+      "measuredAt": "2026-10-19",
+      "schoolRank": 2,
+      "records": {
+        "sprint": 6.811,
+        "grip": null
+      }
+    },
+    {
+      "id": "yushin-5",
+      "name": "강동욱",
+      "schoolId": "yushin",
+      "grade": "1",
+      "position": "내야수",
+      "measuredAt": "2026-10-19",
+      "schoolRank": 3,
+      "records": {
+        "sprint": 6.917,
+        "grip": null
+      }
+    },
+    {
+      "id": "yushin-1",
+      "name": "김하진",
+      "schoolId": "yushin",
+      "grade": "2",
+      "position": "외야수",
+      "measuredAt": "2026-10-19",
+      "schoolRank": 4,
+      "records": {
+        "sprint": 6.983,
+        "grip": null
+      }
+    },
+    {
+      "id": "yushin-9",
+      "name": "이시율",
+      "schoolId": "yushin",
+      "grade": "2",
+      "position": "투수",
+      "measuredAt": "2026-10-19",
+      "schoolRank": 5,
+      "records": {
+        "sprint": 7.162,
+        "grip": null
+      }
+    },
+    {
+      "id": "incheon-4",
+      "name": "이유찬",
+      "schoolId": "incheon",
+      "grade": "2",
+      "position": "내야수",
+      "measuredAt": "2026-10-21",
+      "schoolRank": 1,
+      "records": {
+        "sprint": 6.67,
+        "grip": null
+      }
+    },
+    {
+      "id": "incheon-6",
+      "name": "이도윤",
+      "schoolId": "incheon",
+      "grade": "1",
+      "position": "내야수",
+      "measuredAt": "2026-10-21",
+      "schoolRank": 2,
+      "records": {
+        "sprint": 6.726,
+        "grip": null
+      }
+    },
+    {
+      "id": "incheon-16",
+      "name": "김예준",
+      "schoolId": "incheon",
+      "grade": "1",
+      "position": "투수",
+      "measuredAt": "2026-10-21",
+      "schoolRank": 3,
+      "records": {
+        "sprint": 6.832,
+        "grip": null
+      }
+    },
+    {
+      "id": "incheon-9",
+      "name": "김건희",
+      "schoolId": "incheon",
+      "grade": "1",
+      "position": "외야수",
+      "measuredAt": "2026-10-21",
+      "schoolRank": 4,
+      "records": {
+        "sprint": 6.834,
+        "grip": null
+      }
+    },
+    {
+      "id": "incheon-8",
+      "name": "유지호",
+      "schoolId": "incheon",
+      "grade": "1",
+      "position": "외야수",
+      "measuredAt": "2026-10-21",
+      "schoolRank": 5,
+      "records": {
+        "sprint": 6.835,
+        "grip": null
+      }
+    },
+    {
+      "id": "seoul-13",
+      "name": "이현우",
+      "schoolId": "seoul",
+      "grade": "2",
+      "position": "투수",
+      "measuredAt": "2026-10-22",
+      "schoolRank": 1,
+      "records": {
+        "sprint": 6.897,
+        "grip": null
+      }
+    },
+    {
+      "id": "seoul-8",
+      "name": "정우진",
+      "schoolId": "seoul",
+      "grade": "1",
+      "position": "내야수",
+      "measuredAt": "2026-10-22",
+      "schoolRank": 2,
+      "records": {
+        "sprint": 6.912,
+        "grip": null
+      }
+    },
+    {
+      "id": "seoul-5",
+      "name": "정시우",
+      "schoolId": "seoul",
+      "grade": "2",
+      "position": "내야수",
+      "measuredAt": "2026-10-22",
+      "schoolRank": 3,
+      "records": {
+        "sprint": 6.948,
+        "grip": null
+      }
+    },
+    {
+      "id": "seoul-7",
+      "name": "차승원",
+      "schoolId": "seoul",
+      "grade": "1",
+      "position": "내야수",
+      "measuredAt": "2026-10-22",
+      "schoolRank": 4,
+      "records": {
+        "sprint": 6.963,
+        "grip": null
+      }
+    },
+    {
+      "id": "seoul-2",
+      "name": "이준",
+      "schoolId": "seoul",
+      "grade": "2",
+      "position": "외야수",
+      "measuredAt": "2026-10-22",
+      "schoolRank": 5,
+      "records": {
+        "sprint": 7.018,
+        "grip": null
+      }
+    },
+    {
+      "id": "whimoon-13",
+      "name": "민병준",
+      "schoolId": "whimoon",
+      "grade": "2",
+      "position": "투수",
+      "measuredAt": "2026-10-23",
+      "schoolRank": 1,
+      "records": {
+        "sprint": 6.734,
+        "grip": null
+      }
+    },
+    {
+      "id": "whimoon-4",
+      "name": "허진호",
+      "schoolId": "whimoon",
+      "grade": "2",
+      "position": "외야수",
+      "measuredAt": "2026-10-23",
+      "schoolRank": 2,
+      "records": {
+        "sprint": 6.827,
+        "grip": null
+      }
+    },
+    {
+      "id": "whimoon-6",
+      "name": "백영율",
+      "schoolId": "whimoon",
+      "grade": "2",
+      "position": "내야수",
+      "measuredAt": "2026-10-23",
+      "schoolRank": 3,
+      "records": {
+        "sprint": 7.091,
+        "grip": null
+      }
+    },
+    {
+      "id": "whimoon-15",
+      "name": "전승재",
+      "schoolId": "whimoon",
+      "grade": "2",
+      "position": "투수",
+      "measuredAt": "2026-10-23",
+      "schoolRank": 4,
+      "records": {
+        "sprint": 7.183,
+        "grip": null
+      }
+    },
+    {
+      "id": "whimoon-7",
+      "name": "이승현",
+      "schoolId": "whimoon",
+      "grade": "1",
+      "position": "외야수",
+      "measuredAt": "2026-10-23",
+      "schoolRank": 5,
+      "records": {
+        "sprint": 7.213,
+        "grip": null
+      }
+    },
+    {
+      "id": "jeonju-3",
+      "name": "안예찬",
+      "schoolId": "jeonju",
+      "grade": "2",
+      "position": "외야수",
+      "measuredAt": "2026-10-27",
+      "schoolRank": 1,
+      "records": {
+        "sprint": 7.067,
+        "grip": null
+      }
+    },
+    {
+      "id": "jeonju-2",
+      "name": "손민성",
+      "schoolId": "jeonju",
+      "grade": "2",
+      "position": "내야수",
+      "measuredAt": "2026-10-27",
+      "schoolRank": 2,
+      "records": {
+        "sprint": 7.188,
+        "grip": null
+      }
+    },
+    {
+      "id": "jeonju-12",
+      "name": "배은찬",
+      "schoolId": "jeonju",
+      "grade": "2",
+      "position": "투수",
+      "measuredAt": "2026-10-27",
+      "schoolRank": 3,
+      "records": {
+        "sprint": 7.241,
+        "grip": null
+      }
+    },
+    {
+      "id": "jeonju-15",
+      "name": "강성훈",
+      "schoolId": "jeonju",
+      "grade": "1",
+      "position": "투수",
+      "measuredAt": "2026-10-27",
+      "schoolRank": 4,
+      "records": {
+        "sprint": 7.295,
+        "grip": null
+      }
+    },
+    {
+      "id": "jeonju-5",
+      "name": "김찬우",
+      "schoolId": "jeonju",
+      "grade": "1",
+      "position": "내야수",
+      "measuredAt": "2026-10-27",
+      "schoolRank": 5,
+      "records": {
+        "sprint": 7.314,
+        "grip": null
+      }
+    },
+    {
+      "id": "deoksu-14",
+      "name": "김현재",
+      "schoolId": "deoksu",
+      "grade": "1",
+      "position": "투수",
+      "measuredAt": "2026-10-28",
+      "schoolRank": 1,
+      "records": {
+        "sprint": 6.716,
+        "grip": 65.4
+      }
+    },
+    {
+      "id": "deoksu-4",
+      "name": "이홍석",
+      "schoolId": "deoksu",
+      "grade": "2",
+      "position": "내야수",
+      "measuredAt": "2026-10-28",
+      "schoolRank": 2,
+      "records": {
+        "sprint": 6.735,
+        "grip": 75.1
+      }
+    },
+    {
+      "id": "deoksu-9",
+      "name": "이주혁",
+      "schoolId": "deoksu",
+      "grade": "1",
+      "position": "외야수",
+      "measuredAt": "2026-10-28",
+      "schoolRank": 3,
+      "records": {
+        "sprint": 6.793,
+        "grip": 54.7
+      }
+    },
+    {
+      "id": "deoksu-2",
+      "name": "권혁준",
+      "schoolId": "deoksu",
+      "grade": "2",
+      "position": "외야수",
+      "measuredAt": "2026-10-28",
+      "schoolRank": 4,
+      "records": {
+        "sprint": 6.817,
+        "grip": 75.1
+      }
+    },
+    {
+      "id": "deoksu-11",
+      "name": "김주원",
+      "schoolId": "deoksu",
+      "grade": "2",
+      "position": "투수",
+      "measuredAt": "2026-10-28",
+      "schoolRank": 5,
+      "records": {
+        "sprint": 6.908,
+        "grip": 70
+      }
+    }
+  ]
 }

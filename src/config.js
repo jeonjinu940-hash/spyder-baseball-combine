@@ -1,7 +1,12 @@
 // 운영팀 확정 전 임시 설정값.
 // 기록 단위·소수점 자릿수·대표 기록·순위 정책은 PRD 13장 확정 후 변경한다.
 export const RECORD_UNIT = '초';
-export const RECORD_DECIMALS = 2;
+// 측정 장비 기록이 1/1000초 단위 — 2자리로 줄이면 다른 기록이 같아 보이므로 3자리 표기
+export const RECORD_DECIMALS = 3;
+
+// 악력 (덕수고 측정부터 실시)
+export const GRIP_UNIT = 'kg';
+export const GRIP_DECIMALS = 1;
 
 // 공식 순위·대표 기록 산정 기준이 확정되면 true로 변경하고 계산 로직을 추가한다.
 export const OFFICIAL_RANKING_ENABLED = false;

@@ -11,5 +11,10 @@ dist/
 /현장 갤러리/
 # 갤러리 순서 번호 ↔ 원본 파일명 기록 (로컬 전용)
 /scripts/gallery-sources.json
+# 운영 기록 엑셀(전체 선수 기록·연락처 포함)은 절대 올리지 않음 — 공개 데이터는 import 결과(players.json)만
+/*.xlsx
+/*.xls
+/*.csv
+~$*
 # 원본 업로드 엑셀은 개인정보가 포함될 수 있어 저장소에 올리지 않음
 imports/

@@ -2,11 +2,13 @@ import { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
 import { countByProvince, provinceLabel, schoolRegionLabel } from '../lib/regions.js';
+import { formatDate } from '../lib/records.js';
 import KoreaMap from '../components/KoreaMap.jsx';
 import PageBanner from '../components/PageBanner.jsx';
 
 export default function Schools() {
-  const { schools, players } = useData();
+  const { schools, players, measuredSchools } = useData();
+  const measuredById = useMemo(() => Object.fromEntries(measuredSchools.map((m) => [m.schoolId, m])), [measuredSchools]);
   const [params, setParams] = useSearchParams();
   const counts = useMemo(() => countByProvince(schools), [schools]);
   const selected = counts[params.get('region')] ? params.get('region') : '';
@@ -90,10 +92,14 @@ export default function Schools() {
                     <div className="rg">{schoolRegionLabel(s)}</div>
                   </div>
                   <div className="pc">
-                    {playerCount[s.id] ? (
-                      <><b className="num">{playerCount[s.id]}</b> 명 기록 →</>
+                    {measuredById[s.id] ? (
+                      <>
+                        <span className="num">{formatDate(measuredById[s.id].measuredAt) ?? ''} 측정 · {measuredById[s.id].measuredCount}명</span>
+                        <br />
+                        상위 <b className="num">{playerCount[s.id] ?? 0}</b>명 기록 →
+                      </>
                     ) : (
-                      <>기록 집계 전</>
+                      <>측정 예정</>
                     )}
                   </div>
                 </Link>

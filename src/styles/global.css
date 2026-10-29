@@ -998,7 +998,7 @@ main:focus {
   border-collapse: separate;
   border-spacing: 0;
   font-size: 15px;
-  min-width: 640px;
+  min-width: 860px;
 }
 .record-table th,
 .record-table td {
@@ -1052,6 +1052,35 @@ main:focus {
 }
 .record-table tbody tr:hover td {
   background: rgba(255, 255, 255, 0.035);
+}
+/* 교내 순위 */
+.record-table th.rank,
+.record-table td.rank {
+  width: 1%;
+  text-align: center;
+}
+.record-table td.rank {
+  font-weight: 800;
+  color: #ff6b74;
+}
+.record-table td.t.grip {
+  font-size: 18px;
+  color: var(--text-2);
+}
+.rank-badge {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #4a080d, #8e1219);
+  border: 1px solid rgba(196, 30, 42, 0.6);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  vertical-align: 2px;
+}
+.tag-rank {
+  border-color: rgba(196, 30, 42, 0.7);
 }
 .record-table td.name a {
   font-weight: 700;

@@ -1,9 +1,9 @@
 import { useMemo, useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useData } from '../lib/data.jsx';
-import { RECORD_EVENTS, filterPlayers, formatDate, formatTime, sortPlayers, recordValue } from '../lib/records.js';
+import { RECORD_EVENTS, filterPlayers, formatDate, formatGrip, formatTime, sortPlayers, recordValue } from '../lib/records.js';
 import { provinceLabel } from '../lib/regions.js';
-import { RECORD_UNIT } from '../config.js';
+import { GRIP_UNIT, RECORD_UNIT } from '../config.js';
 import SearchBar from '../components/SearchBar.jsx';
 import RecordList from '../components/RecordList.jsx';
 import EmptyState from '../components/EmptyState.jsx';
@@ -15,42 +15,62 @@ const SORTS = [
   { key: 'fastest', label: '빠른 기록순' },
   { key: 'slowest', label: '느린 기록순' },
   { key: 'name', label: '이름순' },
-  { key: 'school', label: '학교순' },
+  { key: 'school', label: '학교순 (교내 순위)' },
 ];
 
+// 가장 최근에 측정한 학교의 상위 선수 (교내 순위순)
 function LatestRecords({ players, schoolsById }) {
-  const latest = [...players]
-    .sort((a, b) => (b.measuredAt ?? '').localeCompare(a.measuredAt ?? '') || a.name.localeCompare(b.name, 'ko'))
+  const latestDate = players.reduce((max, p) => ((p.measuredAt ?? '') > max ? p.measuredAt : max), '');
+  const latest = players
+    .filter((p) => p.measuredAt === latestDate)
+    .sort((a, b) => a.schoolId.localeCompare(b.schoolId) || (a.schoolRank ?? 99) - (b.schoolRank ?? 99))
     .slice(0, 6);
   if (!latest.length) return null;
+  const latestSchools = [...new Set(latest.map((p) => schoolsById[p.schoolId].name))].join(' · ');
   return (
     <section className="container" aria-labelledby="latest-title" style={{ marginBottom: 48 }}>
       <div className="section-head" style={{ marginBottom: 20 }}>
         <div>
           <p className="eyebrow">Latest Records</p>
           <h2 id="latest-title" style={{ fontSize: 'clamp(28px, 4vw, 40px)' }}>최신 업데이트 기록</h2>
+          <p className="muted mt-16">
+            {latestSchools}
+            {latestDate ? ` · ${formatDate(latestDate)} 측정` : ''}
+          </p>
         </div>
         <UpdatedAt />
       </div>
       <div className="grid-3">
-        {latest.map((p) => (
-          <Link key={p.id} to={`/players/${encodeURIComponent(p.id)}`} className="feat-card glass">
-            <div className="nm">{p.name}</div>
-            <div className="sc">
-              {schoolsById[p.schoolId].name}
-              {p.position ? ` · ${p.position}` : ''}
-              {p.measuredAt ? ` · ${formatDate(p.measuredAt)}` : ''}
-            </div>
-            <div className="vals">
-              {RECORD_EVENTS.map((e) => (
-                <div key={e.key}>
-                  <small>{e.label}</small>
-                  <b>{formatTime(recordValue(p, e.key))}</b>
-                </div>
-              ))}
-            </div>
-          </Link>
-        ))}
+        {latest.map((p) => {
+          const grip = recordValue(p, 'grip');
+          return (
+            <Link key={p.id} to={`/players/${encodeURIComponent(p.id)}`} className="feat-card glass">
+              <div className="nm">
+                {p.schoolRank && <span className="rank-badge num">{p.schoolRank}위</span>}
+                {p.name}
+              </div>
+              <div className="sc">
+                {schoolsById[p.schoolId].name}
+                {p.grade ? ` · ${p.grade}학년` : ''}
+                {p.position ? ` · ${p.position}` : ''}
+              </div>
+              <div className="vals">
+                {RECORD_EVENTS.map((e) => (
+                  <div key={e.key}>
+                    <small>{e.label} ({RECORD_UNIT})</small>
+                    <b>{formatTime(recordValue(p, e.key))}</b>
+                  </div>
+                ))}
+                {grip != null && (
+                  <div>
+                    <small>악력 ({GRIP_UNIT})</small>
+                    <b>{formatGrip(grip)}</b>
+                  </div>
+                )}
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </section>
   );
@@ -105,7 +125,10 @@ export default function Records() {
       <section className="container" style={{ marginBottom: 40 }}>
         <div className="notice notice-strong" role="note">
           <span className="i" aria-hidden="true">!</span>
-          <span><strong>학교별 상위 5명의 기록만 공개됩니다.</strong></span>
+          <span>
+            <strong>학교별 상위 5명의 기록만 공개됩니다.</strong>
+            <span className="muted"> (55M 직선 스프린트 기록 기준)</span>
+          </span>
         </div>
       </section>
 
@@ -174,8 +197,8 @@ export default function Records() {
         <div className="notice" style={{ marginBottom: 16 }}>
           <span className="i" aria-hidden="true">i</span>
           <span>
-            기록 단위: {RECORD_UNIT}. 공식 순위는 <strong>산정 기준 확정 후 공개</strong>됩니다.
-            종목별 1인 1회 측정 기록이며, 기록순 정렬은 55M 직선 스프린트 기록 기준의 단순 정렬로 공식 순위가 아닙니다.
+            기록 단위: 55M {RECORD_UNIT}, 악력 {GRIP_UNIT}. 교내 순위는 각 학교 측정 선수 중 55M 직선 스프린트 기록 순서입니다.
+            종목별 1인 1회 측정 기록이며, 악력은 덕수고 측정부터 실시해 해당 학교만 표시됩니다.
             측정되지 않은 기록은 —로 표시합니다.
           </span>
         </div>

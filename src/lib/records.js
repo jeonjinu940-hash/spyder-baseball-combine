@@ -1,4 +1,4 @@
-import { RECORD_DECIMALS } from '../config.js';
+import { RECORD_DECIMALS, GRIP_DECIMALS } from '../config.js';
 
 export const EVENTS = [
   {
@@ -26,6 +26,13 @@ export const RECORD_EVENTS = EVENTS.filter((e) => e.key === 'sprint');
 export function formatTime(v) {
   return typeof v === 'number' && Number.isFinite(v) ? v.toFixed(RECORD_DECIMALS) : '—';
 }
+
+export function formatGrip(v) {
+  return typeof v === 'number' && Number.isFinite(v) ? v.toFixed(GRIP_DECIMALS) : '—';
+}
+
+// 현재 목록에 악력 기록이 하나라도 있으면 악력 열을 보여준다
+export const hasGrip = (players) => players.some((p) => typeof p.records?.grip === 'number');
 
 // 종목별 1인 1회 측정 → 종목당 기록 1개
 export function recordValue(player, eventKey) {
@@ -66,7 +73,13 @@ export function sortPlayers(list, sort, eventKeys, schoolsById) {
   const out = [...list];
   if (sort === 'name') return out.sort(byName);
   if (sort === 'school') {
-    return out.sort((a, b) => schoolsById[a.schoolId].name.localeCompare(schoolsById[b.schoolId].name, 'ko') || byName(a, b));
+    // 학교 이름순, 같은 학교 안에서는 교내 순위(55M 기준)순
+    return out.sort(
+      (a, b) =>
+        schoolsById[a.schoolId].name.localeCompare(schoolsById[b.schoolId].name, 'ko') ||
+        (a.schoolRank ?? 99) - (b.schoolRank ?? 99) ||
+        byName(a, b),
+    );
   }
   const dir = sort === 'slowest' ? -1 : 1;
   return out.sort((a, b) => {

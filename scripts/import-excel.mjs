@@ -1,244 +1,239 @@
-// 엑셀(.xlsx / .csv) 기록 → src/data/players.json 반영
+// 운영 기록 엑셀 → src/data/players.json (학교별 55M 상위 5명만 공개)
 //
-//   미리보기·검증만:  npm run import -- imports/기록.xlsx
-//   검증 후 반영:     npm run import -- imports/기록.xlsx --confirm
-//   템플릿 생성:      npm run import -- --template
+//   미리보기·검증:  npm run import -- "(SPYDER) 베이스볼컴바인 기록 (10.28).xlsx"
+//   검증 후 반영:   npm run import -- "(SPYDER) 베이스볼컴바인 기록 (10.28).xlsx" --confirm
+//   파일을 생략하면 프로젝트 폴더에서 '기록'이 들어간 가장 최근 .xlsx를 사용
 //
-// 검증 실패 시 기존 공개 데이터는 변경하지 않는다 (전체 반영 중단).
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
-import { basename, extname } from 'node:path';
+// 읽는 범위 (그 외 시트·열은 읽지 않음 — 연락처 등 개인정보 보호)
+//   · '전체 측정표' 시트: No.·학교·이름·학년·포지션·5m·27m·55m(fin)·1루·2루(fin)·악력
+//   · 'SCHEDULE' 시트: 일정(날짜)·학교 열만 → 학교별 측정일
+// 공개 데이터에는 학교별 55M 상위 5명의 이름·학교·학년·포지션·55M 기록·악력·교내 순위만 저장한다.
+// 검증 오류가 하나라도 있으면 전체 반영을 중단하고 기존 데이터를 그대로 둔다.
+import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
+import { basename, extname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import * as XLSX from 'xlsx';
 
-const ROOT = new URL('../', import.meta.url);
-const SCHOOLS = new URL('src/data/schools.json', ROOT);
-const PLAYERS = new URL('src/data/players.json', ROOT);
-const HISTORY = new URL('src/data/import-history.json', ROOT);
-const TEMPLATE_DIR = new URL('public/templates/', ROOT);
+const ROOT = fileURLToPath(new URL('../', import.meta.url));
+const SCHOOLS = join(ROOT, 'src', 'data', 'schools.json');
+const PLAYERS = join(ROOT, 'src', 'data', 'players.json');
+const HISTORY = join(ROOT, 'src', 'data', 'import-history.json');
 
-const COLUMNS = [
-  { key: 'player_id', required: true, desc: '고유 식별자 (이름만으로 식별하지 않음)' },
-  { key: 'player_name', required: true, desc: '공개 표시 선수명' },
-  { key: 'school_id', required: true, desc: '학교 고유 식별자 (아래 학교 ID 표 참고)' },
-  { key: 'school_name', required: true, desc: '학교명' },
-  { key: 'region', required: true, desc: '지역' },
-  { key: 'position', required: false, desc: '포지션' },
-  { key: 'uniform_number', required: false, desc: '배번 (공개 승인된 경우만 입력)' },
-  // 종목별 1인 1회 측정 → 종목당 기록 1개
-  { key: 'sprint_55m', required: true, blankOk: true, desc: '55M 직선 스프린트 기록' },
-  { key: 'baserun_55m', required: true, blankOk: true, desc: '55M 베이스러닝 기록' },
-  { key: 'measured_at', required: false, desc: '측정 일자 (YYYY-MM-DD)' },
-  { key: 'publish_status', required: false, desc: '공개 / 비공개' },
-  { key: 'photo_id', required: false, desc: '관련 사진 연결용 식별자' },
-];
+const RECORD_SHEET = '전체 측정표';
+const SCHEDULE_SHEET = 'SCHEDULE';
+const TOP_N = 5; // 학교별 공개 인원
 
-const TIME_COLS = [
-  ['sprint', 'sprint_55m'],
-  ['baserun', 'baserun_55m'],
-];
+// 헤더 이름 → 키 (공백 무시)
+const COLUMNS = {
+  학교: 'school',
+  이름: 'name',
+  학년: 'grade',
+  포지션: 'position',
+  '5m': 'm5',
+  '27m': 'm27',
+  '55m(fin)': 'm55',
+  악력: 'grip',
+};
+const REQUIRED = ['school', 'name', 'm55'];
 
-const readJson = (url) => JSON.parse(readFileSync(url, 'utf8'));
-const isBlank = (v) => v == null || String(v).trim() === '';
+const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
+const clean = (v) => (v == null ? '' : String(v).replace(/\s+/g, ' ').trim());
+const isBlank = (v) => ['', '-', '–', '—'].includes(clean(v));
 
-function writeTemplate() {
-  const { schools } = readJson(SCHOOLS);
-  const header = COLUMNS.map((c) => c.key);
-  const example = ['P2026-0001', '홍길동', schools[0].id, schools[0].name, schools[0].region, '내야수', '', '', '', '2026-05-01', '비공개', ''];
-
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([header, example]), 'records');
-  XLSX.utils.book_append_sheet(
-    wb,
-    XLSX.utils.aoa_to_sheet([['column', 'required', 'description'], ...COLUMNS.map((c) => [c.key, c.required ? (c.blankOk ? 'Yes/blank allowed' : 'Yes') : 'Optional', c.desc])]),
-    'columns',
-  );
-  XLSX.utils.book_append_sheet(
-    wb,
-    XLSX.utils.aoa_to_sheet([['school_id', 'school_name', 'region'], ...schools.map((s) => [s.id, s.name, s.region])]),
-    'schools',
-  );
-  if (!existsSync(TEMPLATE_DIR)) mkdirSync(TEMPLATE_DIR, { recursive: true });
-  writeFileSync(new URL('combine_template.xlsx', TEMPLATE_DIR), XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }));
-  // Excel에서 한글이 깨지지 않도록 BOM 포함 CSV
-  writeFileSync(new URL('combine_template.csv', TEMPLATE_DIR), '﻿' + header.join(',') + '\n');
-  console.log('템플릿 생성: public/templates/combine_template.xlsx, combine_template.csv');
+function pickFile(arg) {
+  if (arg) return arg;
+  const candidates = [ROOT, join(ROOT, 'imports')]
+    .filter(existsSync)
+    .flatMap((d) => readdirSync(d).filter((f) => /\.xlsx$/i.test(f) && !f.startsWith('~$') && f.includes('기록')).map((f) => join(d, f)));
+  candidates.sort((a, b) => statSync(b).mtimeMs - statSync(a).mtimeMs);
+  return candidates[0];
 }
 
-function parseTime(v) {
-  if (isBlank(v)) return { value: null };
-  const n = typeof v === 'number' ? v : Number(String(v).trim());
-  if (!Number.isFinite(n)) return { error: `숫자가 아닌 기록 "${v}"` };
-  if (n < 0) return { error: `음수 기록 ${n}` };
-  if (n === 0) return { error: '0은 유효한 기록이 아님 (미측정은 빈칸으로 입력)' };
-  return { value: Math.round(n * 1000) / 1000 };
+function parseNumber(v, label, err) {
+  if (isBlank(v)) return null;
+  const n = Number(clean(v));
+  if (!Number.isFinite(n)) return err(`${label}: 숫자가 아님 "${clean(v)}"`), null;
+  if (n <= 0) return err(`${label}: 0 이하 값 ${n}`), null;
+  return Math.round(n * 1000) / 1000;
 }
 
-function parseDate(v) {
-  if (isBlank(v)) return { value: null };
-  if (typeof v === 'number') {
-    const d = XLSX.SSF.parse_date_code(v);
-    if (!d) return { error: `잘못된 날짜 ${v}` };
-    return { value: `${d.y}-${String(d.m).padStart(2, '0')}-${String(d.d).padStart(2, '0')}` };
+// 파일 이름의 (10.28) → 2026-10-28 (시즌 연도 기준)
+function dateFromFilename(file, season) {
+  const m = basename(file).match(/\((\d{1,2})\.(\d{1,2})\)/);
+  return m ? `${season}-${m[1].padStart(2, '0')}-${m[2].padStart(2, '0')}` : null;
+}
+
+// SCHEDULE: 한 행에서 '10/6 (화)' 같은 날짜 칸과 학교명 칸만 읽는다
+function readSchedule(wb, schools, season) {
+  const ws = wb.Sheets[SCHEDULE_SHEET];
+  const out = {};
+  if (!ws) return out;
+  for (const row of XLSX.utils.sheet_to_json(ws, { header: 1, defval: null, raw: false })) {
+    const cells = row.map(clean);
+    const dateCell = cells.find((c) => /^\d{1,2}\/\d{1,2}/.test(c));
+    const school = schools.find((s) => cells.includes(s.name));
+    if (!dateCell || !school) continue;
+    const [, mo, d] = dateCell.match(/^(\d{1,2})\/(\d{1,2})/);
+    out[school.id] = `${season}-${mo.padStart(2, '0')}-${d.padStart(2, '0')}`;
   }
-  const s = String(v).trim().replace(/[./]/g, '-');
-  if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(s) || Number.isNaN(new Date(s).getTime())) return { error: `잘못된 날짜 "${v}" (YYYY-MM-DD)` };
-  const [y, m, d] = s.split('-');
-  return { value: `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}` };
-}
-
-function parsePublish(v) {
-  if (isBlank(v)) return { value: true, defaulted: true };
-  const s = String(v).trim().toLowerCase();
-  if (['공개', 'public', 'y', 'yes', 'true', '1'].includes(s)) return { value: true };
-  if (['비공개', 'private', 'n', 'no', 'false', '0'].includes(s)) return { value: false };
-  return { error: `publish_status 값 "${v}" (공개/비공개)` };
+  return out;
 }
 
 function main() {
   const args = process.argv.slice(2);
-  if (args.includes('--template')) return writeTemplate();
-
-  const file = args.find((a) => !a.startsWith('--'));
   const confirm = args.includes('--confirm');
-  if (!file) {
-    console.error('사용법: npm run import -- <파일.xlsx|csv> [--confirm]');
+  const file = pickFile(args.find((a) => !a.startsWith('--')));
+  if (!file || !existsSync(file)) {
+    console.error('기록 엑셀 파일을 찾을 수 없습니다. 사용법: npm run import -- "<파일.xlsx>" [--confirm]');
     process.exit(1);
   }
-  if (!existsSync(file)) {
-    console.error(`파일을 찾을 수 없습니다: ${file}`);
-    process.exit(1);
-  }
-  if (!['.xlsx', '.xls', '.csv'].includes(extname(file).toLowerCase())) {
-    console.error('지원 형식: .xlsx / .xls / .csv');
+  if (extname(file).toLowerCase() !== '.xlsx') {
+    console.error('지원 형식: .xlsx');
     process.exit(1);
   }
 
-  const { schools } = readJson(SCHOOLS);
-  const schoolsById = Object.fromEntries(schools.map((s) => [s.id, s]));
+  const { season, schools } = readJson(SCHOOLS);
+  const byName = Object.fromEntries(schools.map((s) => [s.name, s]));
+  const wb = XLSX.read(readFileSync(file), { type: 'buffer' });
+  const ws = wb.Sheets[RECORD_SHEET];
+  if (!ws) {
+    console.error(`✖ '${RECORD_SHEET}' 시트가 없습니다. 시트 목록: ${wb.SheetNames.join(', ')}`);
+    process.exit(1);
+  }
 
-  // CSV는 UTF-8(BOM 제거) 문자열로 읽어 한글 깨짐 방지
-  const wb = extname(file).toLowerCase() === '.csv'
-    ? XLSX.read(readFileSync(file, 'utf8').replace(/^﻿/, ''), { type: 'string', raw: true })
-    : XLSX.read(readFileSync(file), { type: 'buffer' });
-  const sheet = wb.Sheets[wb.SheetNames[0]];
-  const rows = XLSX.utils.sheet_to_json(sheet, { defval: null, raw: true });
-  const header = (XLSX.utils.sheet_to_json(sheet, { header: 1 })[0] ?? []).map((h) => String(h ?? '').trim());
+  const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: null, raw: false });
+  // 헤더 행: '학교'와 '이름'이 모두 있는 첫 행. 같은 이름의 열이 여러 개면(오른쪽 TOP 15 표) 가장 왼쪽 것만 사용
+  const headerIdx = rows.findIndex((r) => r.map(clean).includes('학교') && r.map(clean).includes('이름'));
+  if (headerIdx < 0) {
+    console.error(`✖ '${RECORD_SHEET}'에서 헤더(학교·이름) 행을 찾을 수 없습니다.`);
+    process.exit(1);
+  }
+  const col = {};
+  rows[headerIdx].forEach((h, i) => {
+    const key = COLUMNS[clean(h)];
+    if (key && col[key] == null) col[key] = i;
+  });
+  const missing = REQUIRED.filter((k) => col[k] == null);
+  if (missing.length) {
+    const names = Object.entries(COLUMNS).filter(([, k]) => missing.includes(k)).map(([h]) => h);
+    console.error(`✖ 필수 열 누락: ${names.join(', ')}`);
+    process.exit(1);
+  }
 
   const errors = [];
-  const warnings = [];
+  const seq = {}; // 학교별 측정 순번
+  const measured = []; // 전체 측정 선수 (메모리에서만 사용, 저장하지 않음)
 
-  // 1) 컬럼 검증
-  const missing = COLUMNS.filter((c) => c.required && !header.includes(c.key)).map((c) => c.key);
-  if (missing.length) {
-    console.error(`\n✖ 필수 컬럼 누락: ${missing.join(', ')}`);
-    console.error('  템플릿: public/templates/combine_template.xlsx');
-    process.exit(1);
-  }
-  const unknown = header.filter((h) => h && !COLUMNS.some((c) => c.key === h));
-  if (unknown.length) warnings.push(`알 수 없는 컬럼은 무시됨: ${unknown.join(', ')}`);
+  rows.slice(headerIdx + 1).forEach((r, k) => {
+    const line = headerIdx + k + 2; // 엑셀 행 번호
+    const schoolName = clean(r[col.school]);
+    const name = clean(r[col.name]);
+    if (!schoolName && !name) return; // 빈 행
+    const err = (msg) => errors.push(`${line}행 (${schoolName || '?'} ${name || '?'}): ${msg}`);
+    if (!schoolName) return err('학교 누락');
+    if (!name) return err('이름 누락');
+    const school = byName[schoolName];
+    if (!school) return err(`참가 학교 목록에 없는 학교 "${schoolName}"`);
 
-  // 2) 행 검증
-  const seen = new Map();
-  const players = [];
-  let rowCount = 0;
-  let hidden = 0;
-  let defaultedPublish = 0;
-
-  rows.forEach((raw, i) => {
-    const line = i + 2; // 엑셀 행 번호 (헤더 = 1행)
-    const r = Object.fromEntries(Object.entries(raw).map(([k, v]) => [String(k).trim(), typeof v === 'string' ? v.trim() : v]));
-    if (COLUMNS.every((c) => isBlank(r[c.key]))) return; // 빈 행
-    rowCount++;
-    const err = (msg) => errors.push(`${line}행: ${msg}`);
-
-    for (const c of COLUMNS.filter((col) => col.required && !col.blankOk)) {
-      if (isBlank(r[c.key])) err(`${c.key} 누락`);
-    }
-    const id = String(r.player_id ?? '').trim();
-    if (id) {
-      if (seen.has(id)) err(`중복 player_id "${id}" (${seen.get(id)}행과 중복)`);
-      else seen.set(id, line);
-    }
-    const school = schoolsById[String(r.school_id ?? '').trim()];
-    if (!isBlank(r.school_id) && !school) err(`미등록 school_id "${r.school_id}"`);
-    if (school && !isBlank(r.school_name) && String(r.school_name).trim() !== school.name) {
-      err(`school_name "${r.school_name}"이(가) school_id "${school.id}"의 학교명 "${school.name}"과 다름`);
-    }
-
-    const records = { sprint: null, baserun: null };
-    for (const [ev, col] of TIME_COLS) {
-      const t = parseTime(r[col]);
-      if (t.error) err(`${col}: ${t.error}`);
-      else records[ev] = t.value;
-    }
-    const date = parseDate(r.measured_at);
-    if (date.error) err(`measured_at: ${date.error}`);
-    const pub = parsePublish(r.publish_status);
-    if (pub.error) err(pub.error);
-    if (pub.defaulted) defaultedPublish++;
-
-    if (pub.value === false) {
-      hidden++;
-      return; // 비공개 행은 공개 데이터에 저장하지 않음
-    }
-    players.push({
-      id,
-      name: String(r.player_name ?? '').trim(),
-      schoolId: school?.id ?? null,
-      position: isBlank(r.position) ? null : String(r.position).trim(),
-      uniformNumber: isBlank(r.uniform_number) ? null : String(r.uniform_number).trim(),
-      measuredAt: date.value ?? null,
-      photoId: isBlank(r.photo_id) ? null : String(r.photo_id).trim(),
-      records,
+    seq[school.id] = (seq[school.id] ?? 0) + 1;
+    measured.push({
+      line,
+      seq: seq[school.id],
+      schoolId: school.id,
+      name,
+      grade: clean(r[col.grade]) || null,
+      position: clean(r[col.position]) || null,
+      m5: col.m5 != null ? parseNumber(r[col.m5], '5m', err) : null,
+      m27: col.m27 != null ? parseNumber(r[col.m27], '27m', err) : null,
+      m55: parseNumber(r[col.m55], '55m', err),
+      grip: col.grip != null ? parseNumber(r[col.grip], '악력', err) : null,
     });
   });
 
-  if (defaultedPublish) warnings.push(`publish_status가 비어 있는 ${defaultedPublish}행은 "공개"로 처리됨`);
-
-  // 3) 결과 출력
-  console.log(`\n파일: ${basename(file)}  ·  데이터 행 ${rowCount}개`);
-  warnings.forEach((w) => console.log(`  ⚠ ${w}`));
+  console.log(`\n파일: ${basename(file)}  ·  측정 선수 ${measured.length}명 · 학교 ${Object.keys(seq).length}곳`);
 
   if (errors.length) {
     console.error(`\n✖ 검증 실패: 오류 ${errors.length}건 — 기존 공개 데이터는 변경되지 않았습니다.\n`);
     errors.slice(0, 200).forEach((e) => console.error(`  - ${e}`));
-    if (errors.length > 200) console.error(`  ... 외 ${errors.length - 200}건`);
     process.exit(1);
   }
 
-  // 4) 기존 데이터와 비교
-  const prev = readJson(PLAYERS);
-  const prevById = new Map(prev.players.map((p) => [p.id, p]));
-  const nextIds = new Set(players.map((p) => p.id));
-  const added = players.filter((p) => !prevById.has(p.id));
-  const changed = players.filter((p) => prevById.has(p.id) && JSON.stringify(prevById.get(p.id)) !== JSON.stringify(p));
-  const removed = prev.players.filter((p) => !nextIds.has(p.id));
+  // 학교별 55M 상위 5명 (동기록 시 27m → 5m → 측정 순번 순)
+  const schedule = readSchedule(wb, schools, season);
+  const warnings = [];
+  const players = [];
+  const measuredSchools = [];
+  for (const school of schools.filter((s) => seq[s.id])) {
+    const list = measured.filter((p) => p.schoolId === school.id);
+    const ranked = list
+      .filter((p) => p.m55 != null)
+      .sort((a, b) => a.m55 - b.m55 || (a.m27 ?? 99) - (b.m27 ?? 99) || (a.m5 ?? 99) - (b.m5 ?? 99) || a.seq - b.seq);
+    const top = ranked.slice(0, TOP_N);
+    const cut = ranked[TOP_N - 1];
+    const next = ranked[TOP_N];
+    if (cut && next && cut.m55 === next.m55) warnings.push(`${school.name}: 5위와 6위 55m 동기록(${cut.m55}) — 27m 기록으로 구분`);
+    if (!schedule[school.id]) warnings.push(`${school.name}: SCHEDULE 시트에서 측정일을 찾지 못함`);
+    const gripMeasured = list.some((p) => p.grip != null);
 
-  console.log('\n✔ 검증 통과');
-  console.log(`  공개 반영 대상 ${players.length}명 (비공개 제외 ${hidden}명)`);
-  console.log(`  기존 대비: 신규 ${added.length} · 변경 ${changed.length} · 삭제/비공개 전환 ${removed.length}`);
-  console.log('\n  미리보기 (최대 10행)');
+    measuredSchools.push({
+      schoolId: school.id,
+      measuredAt: schedule[school.id] ?? null,
+      measuredCount: list.length,
+      gripMeasured,
+    });
+    top.forEach((p, i) =>
+      players.push({
+        id: `${school.id}-${p.seq}`,
+        name: p.name,
+        schoolId: school.id,
+        grade: p.grade,
+        position: p.position,
+        measuredAt: schedule[school.id] ?? null,
+        schoolRank: i + 1,
+        records: { sprint: p.m55, grip: gripMeasured ? p.grip : null },
+      }),
+    );
+  }
+
+  warnings.forEach((w) => console.log(`  ⚠ ${w}`));
+  console.log(`\n✔ 검증 통과 — 공개 대상: ${measuredSchools.length}개 학교 × 상위 ${TOP_N}명 = ${players.length}명`);
   console.table(
-    players.slice(0, 10).map((p) => ({
-      id: p.id,
-      name: p.name,
-      school: schoolsById[p.schoolId].name,
-      '직선 스프린트': p.records.sprint ?? '—',
-      '베이스러닝': p.records.baserun ?? '—',
+    measuredSchools.map((m) => ({
+      학교: schools.find((s) => s.id === m.schoolId).name,
+      측정일: m.measuredAt ?? '—',
+      측정인원: m.measuredCount,
+      악력: m.gripMeasured ? 'O' : '',
+      공개: players.filter((p) => p.schoolId === m.schoolId).map((p) => `${p.schoolRank}.${p.name}(${p.records.sprint})`).join(' '),
     })),
   );
+
+  const prev = readJson(PLAYERS);
+  const prevIds = new Set(prev.players.map((p) => p.id));
+  const added = players.filter((p) => !prevIds.has(p.id)).length;
+  const removed = prev.players.filter((p) => !players.some((q) => q.id === p.id)).length;
+  console.log(`  기존 대비: 신규 ${added} · 제외 ${removed}`);
 
   if (!confirm) {
     console.log('\n미리보기만 실행했습니다. 반영하려면 --confirm 을 붙여 다시 실행하세요.');
     return;
   }
 
-  const now = new Date().toISOString();
-  writeFileSync(PLAYERS, JSON.stringify({ updatedAt: now, source: basename(file), players }, null, 2) + '\n');
+  const updatedAt = dateFromFilename(file, season) ?? new Date().toISOString();
+  writeFileSync(
+    PLAYERS,
+    JSON.stringify({ updatedAt, source: basename(file), topN: TOP_N, measuredSchools, players }, null, 2) + '\n',
+  );
   const history = existsSync(HISTORY) ? readJson(HISTORY) : [];
-  history.unshift({ at: now, file: basename(file), published: players.length, hidden, added: added.length, changed: changed.length, removed: removed.length });
+  history.unshift({
+    at: new Date().toISOString(),
+    file: basename(file),
+    updatedAt,
+    schools: measuredSchools.length,
+    measured: measured.length,
+    published: players.length,
+  });
   writeFileSync(HISTORY, JSON.stringify(history, null, 2) + '\n');
-  console.log(`\n✔ 반영 완료: src/data/players.json (${players.length}명) · 업데이트 ${now}`);
-  console.log('  다음 단계: git add -A && git commit -m "기록 업데이트" && git push  → Render 자동 배포');
+  console.log(`\n✔ 반영 완료: src/data/players.json (${players.length}명) · 기록 기준일 ${updatedAt}`);
 }
 
 main();
