@@ -6,6 +6,14 @@
 - 스택: Vite + React + React Router (정적 사이트)
 - 배포: Render Static Site — `main` 브랜치에 push하면 자동 재배포 (`render.yaml`)
 
+## 새 PC(개인 노트북)에서 작업 시작하기
+
+1. 이 파일을 내려받습니다: https://github.com/jeonjinu940-hash/spyder-baseball-combine/raw/main/scripts/setup-windows.ps1
+2. PowerShell에서 실행: `powershell -ExecutionPolicy Bypass -File "$HOME\Downloads\setup-windows.ps1"`
+   → Git·Node.js·GitHub CLI 설치, GitHub 로그인, `바탕화면\컴바인`에 저장소 받기까지 자동으로 진행
+3. Antigravity → File > Open Folder → `바탕화면\컴바인`. 에이전트 작업 규칙은 [AGENTS.md](AGENTS.md)에 있습니다.
+4. 운영 기록 엑셀과 `현장 갤러리/` 원본은 저장소에 없으므로 USB·드라이브로 같은 폴더에 복사합니다.
+
 ## 로컬 실행
 
 ```bash
