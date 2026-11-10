@@ -12,10 +12,9 @@
 // 검증 오류가 하나라도 있으면 전체 반영을 중단하고 기존 데이터를 그대로 둔다.
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { basename, extname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import * as XLSX from 'xlsx';
 
-const ROOT = fileURLToPath(new URL('../', import.meta.url));
+import { ROOT, DATA_DIR } from './paths.mjs';
 const SCHOOLS = join(ROOT, 'src', 'data', 'schools.json');
 const PLAYERS = join(ROOT, 'src', 'data', 'players.json');
 const HISTORY = join(ROOT, 'src', 'data', 'import-history.json');
@@ -51,8 +50,8 @@ const clean = (v) => (v == null ? '' : String(v).replace(/\s+/g, ' ').trim());
 const isBlank = (v) => ['', '-', '–', '—'].includes(clean(v));
 
 function pickFile(arg) {
-  if (arg) return arg;
-  const candidates = [ROOT, join(ROOT, 'imports')]
+  if (arg) return existsSync(arg) ? arg : join(DATA_DIR, arg);
+  const candidates = [...new Set([ROOT, join(ROOT, 'imports'), DATA_DIR])]
     .filter(existsSync)
     .flatMap((d) => readdirSync(d).filter((f) => /\.xlsx$/i.test(f) && !f.startsWith('~$') && f.includes('기록')).map((f) => join(d, f)));
   candidates.sort((a, b) => statSync(b).mtimeMs - statSync(a).mtimeMs);

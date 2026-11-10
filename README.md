@@ -6,13 +6,17 @@
 - 스택: Vite + React + React Router (정적 사이트)
 - 배포: Render Static Site — `main` 브랜치에 push하면 자동 재배포 (`render.yaml`)
 
-## 새 PC(개인 노트북)에서 작업 시작하기
+## 새 PC에서 작업 시작하기 (Antigravity)
 
-1. 이 파일을 내려받습니다: https://github.com/jeonjinu940-hash/spyder-baseball-combine/raw/main/scripts/setup-windows.ps1
-2. PowerShell에서 실행: `powershell -ExecutionPolicy Bypass -File "$HOME\Downloads\setup-windows.ps1"`
-   → Git·Node.js·GitHub CLI 설치, GitHub 로그인, `바탕화면\컴바인`에 저장소 받기까지 자동으로 진행
-3. Antigravity → File > Open Folder → `바탕화면\컴바인`. 에이전트 작업 규칙은 [AGENTS.md](AGENTS.md)에 있습니다.
-4. 운영 기록 엑셀과 `현장 갤러리/` 원본은 저장소에 없으므로 USB·드라이브로 같은 폴더에 복사합니다.
+에이전트 작업 규칙: [AGENTS.md](AGENTS.md) (Antigravity 워크스페이스 규칙 `.agent/rules/combine.md`가 이 파일을 가리킴)
+
+1. 구글 드라이브 데스크톱 앱 설치·로그인 → `내 드라이브\컴바인 자료` 폴더에 운영 기록 엑셀과 `현장 갤러리` 폴더를 둡니다 (PC 간 자동 동기화).
+2. Antigravity 채팅에 아래를 붙여넣어 세팅을 맡깁니다 (Git·Node·GitHub CLI 설치, GitHub 로그인, `바탕화면\컴바인`에 저장소 받기, 드라이브 자료 폴더 연결):
+   ```
+   PowerShell에서 실행해줘: Invoke-WebRequest https://github.com/jeonjinu940-hash/spyder-baseball-combine/raw/main/scripts/setup-windows.ps1 -OutFile $env:TEMP\combine-setup.ps1; powershell -ExecutionPolicy Bypass -File $env:TEMP\combine-setup.ps1
+   ```
+   GitHub 로그인 코드가 나오면 브라우저에서 한 번 승인합니다 (PC당 1회).
+3. Antigravity → File > Open Folder → `바탕화면\컴바인`. 이후로는 채팅으로 요청만 하면 됩니다.
 
 ## 로컬 실행
 

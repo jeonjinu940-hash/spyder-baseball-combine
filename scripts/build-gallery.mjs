@@ -3,17 +3,17 @@
 //   폴더 규칙:  현장 갤러리/<월.일 학교명>/사진들   예) 현장 갤러리/10.28 전주고/
 //              (연도를 붙여도 됨: 2026.10.28 전주고)
 //   대표 이미지: 파일명이 'cover' 또는 '대표'로 시작하면 그 사진, 없으면 파일명 순 첫 번째 사진
-//   사용:       npm run gallery
+//   사용:       npm run gallery              (원본 위치: scripts/paths.mjs의 자료 폴더)
+//              npm run gallery -- --remove 20261028-jeonju   (앨범 내리기)
 //
 // 사진은 EXIF 방향대로 회전한 뒤 메타데이터(촬영 위치·기기 정보 등)를 제거하고 웹 크기로 줄인다.
 import { readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync, statSync, rmSync } from 'node:fs';
 import { join, extname, basename } from 'node:path';
 import { createHash } from 'node:crypto';
-import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import { ROOT, DATA_DIR } from './paths.mjs';
 
-const ROOT = fileURLToPath(new URL('../', import.meta.url));
-const SRC = join(ROOT, '현장 갤러리');
+const SRC = join(DATA_DIR, '현장 갤러리');
 const OUT = join(ROOT, 'public', 'gallery');
 const DATA = join(ROOT, 'src', 'data', 'gallery.json');
 const MANIFEST = join(ROOT, 'scripts', 'gallery-sources.json'); // 앨범별 순서 번호 ↔ 원본 파일명
@@ -41,10 +41,25 @@ function parseFolder(name) {
 }
 
 async function main() {
-  if (!existsSync(SRC)) {
-    console.log('현장 갤러리 폴더가 없습니다.');
+  const removeIdx = process.argv.indexOf('--remove');
+  if (removeIdx > -1) {
+    const id = process.argv[removeIdx + 1];
+    const data = JSON.parse(readFileSync(DATA, 'utf8'));
+    if (!id || !data.albums.some((a) => a.id === id)) {
+      console.error(`앨범 ID를 찾을 수 없습니다: ${id ?? '(없음)'} — 현재: ${data.albums.map((a) => a.id).join(', ')}`);
+      process.exit(1);
+    }
+    data.albums = data.albums.filter((a) => a.id !== id);
+    writeFileSync(DATA, JSON.stringify(data, null, 2) + '\n');
+    rmSync(join(OUT, id), { recursive: true, force: true });
+    console.log(`✔ 앨범 삭제: ${id}`);
     return;
   }
+  if (!existsSync(SRC)) {
+    console.log(`현장 갤러리 폴더가 없습니다: ${SRC}`);
+    return;
+  }
+  console.log(`원본 폴더: ${SRC}`);
   const albums = [];
   const keep = new Set();
   const manifest = existsSync(MANIFEST) ? JSON.parse(readFileSync(MANIFEST, 'utf8')) : {};
@@ -127,10 +142,14 @@ async function main() {
     console.log(`✔ ${dir.name} → ${dateLabel} ${schoolName} (${photos.length}장)`);
   }
 
-  // 원본 폴더가 사라진 앨범의 웹용 이미지는 정리
-  if (existsSync(OUT)) {
-    for (const e of readdirSync(OUT, { withFileTypes: true })) {
-      if (e.isDirectory() && !keep.has(e.name)) rmSync(join(OUT, e.name), { recursive: true, force: true });
+  // 이 PC에 원본 폴더가 없는 기존 앨범은 그대로 유지 (다른 PC에서 올린 앨범이 지워지지 않도록).
+  // 앨범을 사이트에서 내리려면 `npm run gallery -- --remove <앨범ID>`
+  const prev = existsSync(DATA) ? JSON.parse(readFileSync(DATA, 'utf8')).albums ?? [] : [];
+  for (const a of prev) {
+    if (!keep.has(a.id) && existsSync(join(OUT, a.id))) {
+      albums.push(a);
+      if (manifest[a.id]) nextManifest[a.id] = manifest[a.id];
+      console.log(`· 유지: ${a.dateLabel} ${a.schoolName} (이 PC에 원본 없음)`);
     }
   }
 

@@ -55,5 +55,16 @@ git config core.quotepath false
 npm install --no-fund --no-audit
 npm run build
 
+# 구글 드라이브 '컴바인 자료' 폴더(기록 엑셀·현장 갤러리 원본)를 찾아 이 PC의 자료 폴더로 지정
+$drive = Get-PSDrive -PSProvider FileSystem | ForEach-Object {
+  foreach ($d in '내 드라이브', 'My Drive') { Join-Path $_.Root "$d\컴바인 자료" }
+} | Where-Object { Test-Path $_ } | Select-Object -First 1
+if ($drive) {
+  @{ dataDir = $drive } | ConvertTo-Json | Set-Content -Encoding utf8 (Join-Path $Target 'local.config.json')
+  Write-Host "  자료 폴더 연결: $drive" -ForegroundColor Green
+} else {
+  Write-Host '  구글 드라이브 "컴바인 자료" 폴더를 찾지 못했습니다. 구글 드라이브 데스크톱 앱 설치·로그인 후 다시 실행하면 자동 연결됩니다.' -ForegroundColor Yellow
+}
+
 Write-Host "`n완료! Antigravity에서 [File > Open Folder] → $Target 를 여세요." -ForegroundColor Green
 Write-Host '운영 엑셀과 현장 갤러리 원본 폴더는 저장소에 없으니 USB/드라이브로 이 폴더에 복사하세요.'

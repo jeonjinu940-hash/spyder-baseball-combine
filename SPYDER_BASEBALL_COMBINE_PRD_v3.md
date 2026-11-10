@@ -619,6 +619,7 @@ portal\
 
 | 날짜 | 구분 | 내용 | 관련 섹션 |
 |---|---|---|---|
+| 2026-11-10 | 운영 환경 | 여러 PC에서 Antigravity로 동일하게 작업: Antigravity 워크스페이스 규칙(`.agent/rules/combine.md` → AGENTS.md), 작업 전 `git pull`·후 push 규칙, 운영 자료는 구글 드라이브 `컴바인 자료` 폴더 공유(`local.config.json`/`scripts/paths.mjs`), 새 PC 세팅을 에이전트가 실행. 갤러리 스크립트가 다른 PC 앨범을 지우지 않도록 수정(`--remove`로만 삭제). | 8 |
 | 2026-11-10 | 운영 환경 | GitHub Secret `RENDER_DEPLOY_HOOK_URL` 등록 완료 → `main` push 시 Render 자동 배포 (어느 PC에서 push해도 반영). | 8 |
 | 2026-10-30 | 운영 환경 | 개인 노트북(Antigravity)에서도 작업할 수 있도록 `AGENTS.md`(에이전트 작업 규칙: PRD 동기화·기록/갤러리 반영·개인정보 규칙)와 `scripts/setup-windows.ps1`(도구 설치·GitHub 로그인·저장소 받기) 추가. | 8 |
 | 2026-10-29 | 수정 요청 · 참가 학교 | 학교 카드 우측 문구를 `측정 기록 확인하기 →`로 축약. (직전 반영에서 선수 기록 배너 설명을 잘못 줄였던 것은 원래 문구로 복구) | 4.3, 4.4 |
