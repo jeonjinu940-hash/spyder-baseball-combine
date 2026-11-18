@@ -1,24 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SPRINT_COLUMNS, formatGrip, formatMeasured, formatTime, formatDate } from '../lib/records.js';
-import { fetchMyIndex, lookupMyRecord } from '../lib/myRecords.js';
+import { lookupMyRecord } from '../lib/myRecords.js';
 import { GRIP_UNIT, RECORD_UNIT } from '../config.js';
 import PageBanner from '../components/PageBanner.jsx';
 
 // 나의 기록 보기: 이름 + 스파이더 온라인몰 아이디가 일치하는 본인 기록만 표시 (전체 측정 선수 대상)
 export default function MyRecords() {
-  const [index, setIndex] = useState(undefined); // undefined: 불러오는 중, null: 준비 전
   const [name, setName] = useState('');
   const [id, setId] = useState('');
   const [status, setStatus] = useState('idle'); // idle | loading | notfound | error
   const [record, setRecord] = useState(null);
 
-  useEffect(() => {
-    fetchMyIndex()
-      .then(setIndex)
-      .catch(() => setIndex(null));
-  }, []);
-
-  const submit = async (e) => {
+const submit = async (e) => {
     e.preventDefault();
     if (!name.trim() || !id.trim()) return;
     setStatus('loading');
@@ -40,8 +33,6 @@ export default function MyRecords() {
     setStatus('idle');
   };
 
-  const ready = index && index.count > 0;
-
   return (
     <>
       <PageBanner title="나의 기록 보기">이름과 스파이더 온라인몰 아이디로 본인의 측정 기록을 확인할 수 있습니다.</PageBanner>
@@ -61,10 +52,7 @@ export default function MyRecords() {
               <p className="my-error" role="alert">일치하는 기록이 없습니다. 이름과 아이디를 다시 확인해 주세요.</p>
             )}
             {status === 'error' && <p className="my-error" role="alert">조회 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.</p>}
-            {index === null || (index && !index.count) ? (
-              <p className="my-error" role="status">기록 조회를 준비 중입니다.</p>
-            ) : null}
-            <button type="submit" className="btn btn-primary" disabled={!ready || status === 'loading'}>
+            <button type="submit" className="btn btn-primary" disabled={status === 'loading'}>
               {status === 'loading' ? '확인 중…' : '내 기록 보기'}
             </button>
           </form>
