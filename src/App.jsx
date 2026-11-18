@@ -8,6 +8,7 @@ import Records from './pages/Records.jsx';
 import PlayerDetail from './pages/PlayerDetail.jsx';
 import Schools from './pages/Schools.jsx';
 import Rankings from './pages/Rankings.jsx';
+import MyRecords from './pages/MyRecords.jsx';
 import NotFound from './pages/NotFound.jsx';
 
 // 경로가 바뀌면 맨 위로, #앵커가 있으면 해당 섹션으로 이동
@@ -62,6 +63,7 @@ export default function App() {
             <Route path="/records" element={<Records />} />
             <Route path="/players/:id" element={<PlayerDetail />} />
             <Route path="/rankings" element={<Rankings />} />
+            <Route path="/my" element={<MyRecords />} />
             {/* 기존 주소 호환: 소개·갤러리는 홈으로 통합 */}
             <Route path="/about" element={<Navigate to={{ pathname: '/', hash: '#about' }} replace />} />
             <Route path="/gallery" element={<Navigate to={{ pathname: '/', hash: '#gallery' }} replace />} />

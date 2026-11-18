@@ -15,6 +15,7 @@ import { basename, extname, join } from 'node:path';
 import * as XLSX from 'xlsx';
 
 import { ROOT, DATA_DIR } from './paths.mjs';
+import { buildMyRecords, findIdsFile } from './my-records.mjs';
 const SCHOOLS = join(ROOT, 'src', 'data', 'schools.json');
 const PLAYERS = join(ROOT, 'src', 'data', 'players.json');
 const HISTORY = join(ROOT, 'src', 'data', 'import-history.json');
@@ -53,7 +54,7 @@ function pickFile(arg) {
   if (arg) return existsSync(arg) ? arg : join(DATA_DIR, arg);
   const candidates = [...new Set([ROOT, join(ROOT, 'imports'), DATA_DIR])]
     .filter(existsSync)
-    .flatMap((d) => readdirSync(d).filter((f) => /\.xlsx$/i.test(f) && !f.startsWith('~$') && f.includes('기록')).map((f) => join(d, f)));
+    .flatMap((d) => readdirSync(d).filter((f) => /\.xlsx$/i.test(f) && !f.startsWith('~$') && f.includes('기록') && !/아이디/.test(f)).map((f) => join(d, f)));
   candidates.sort((a, b) => statSync(b).mtimeMs - statSync(a).mtimeMs);
   return candidates[0];
 }
@@ -256,12 +257,24 @@ function main() {
   const removed = prev.players.filter((p) => !players.some((q) => q.id === p.id)).length;
   console.log(`  기존 대비: 신규 ${added} · 제외 ${removed}`);
 
+  // 나의 기록 보기: 아이디 파일이 있으면 전체 측정 선수 개인 기록을 암호화해 생성
+  const updatedAt = dateFromFilename(file, season) ?? new Date().toISOString();
+  const idsArg = args.includes('--ids') ? args[args.indexOf('--ids') + 1] : null;
+  const idsFile = findIdsFile(idsArg);
+  if (idsFile && existsSync(idsFile)) {
+    const my = buildMyRecords({ measured, schools, schedule, measuredSchools, updatedAt, idsFile, confirm });
+    console.log(`\n나의 기록 보기: 아이디 파일 ${my.idsFile} · ${my.idsCount}건 중 ${my.matchedCount}명 연결 (아이디 없는 측정 선수 ${my.noIdCount}명)`);
+    my.warnings.slice(0, 50).forEach((w) => console.log(`  ⚠ ${w}`));
+    if (my.warnings.length > 50) console.log(`  ... 외 ${my.warnings.length - 50}건`);
+  } else {
+    console.log('\n나의 기록 보기: 아이디 파일 없음 — 기존 개인 기록 파일을 그대로 둡니다.');
+  }
+
   if (!confirm) {
     console.log('\n미리보기만 실행했습니다. 반영하려면 --confirm 을 붙여 다시 실행하세요.');
     return;
   }
 
-  const updatedAt = dateFromFilename(file, season) ?? new Date().toISOString();
   writeFileSync(
     PLAYERS,
     JSON.stringify({ updatedAt, source: basename(file), topN: TOP_N, measuredSchools, players, rankings }, null, 2) + '\n',

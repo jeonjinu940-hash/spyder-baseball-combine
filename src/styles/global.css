@@ -1058,6 +1058,43 @@ main:focus {
 .record-table tbody tr:hover td {
   background: rgba(255, 255, 255, 0.035);
 }
+/* ---------- 나의 기록 보기 ---------- */
+.my-login {
+  max-width: 480px;
+  margin: 8px auto 0;
+  display: grid;
+  gap: 10px;
+}
+.my-login h2 {
+  font-size: 22px;
+}
+.my-login label {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-2);
+}
+.my-input {
+  min-height: 50px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid var(--divider-strong);
+  background: var(--surface);
+  font-size: 16px;
+}
+.my-input:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.my-login .btn {
+  margin-top: 12px;
+  width: 100%;
+}
+.my-error {
+  color: #ff8a92;
+  font-size: 14px;
+}
+
 /* ---------- 실시간 순위 ---------- */
 .rank-toolbar {
   display: flex;

@@ -13,6 +13,10 @@ services:
       - path: /assets/*
         name: Cache-Control
         value: public, max-age=31536000, immutable
+      # 나의 기록 보기 파일은 업데이트 즉시 반영되도록 캐시하지 않음
+      - path: /my/*
+        name: Cache-Control
+        value: no-cache
       - path: /*
         name: X-Content-Type-Options
         value: nosniff
