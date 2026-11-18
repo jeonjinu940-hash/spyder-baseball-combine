@@ -19,6 +19,7 @@ export default function Footer() {
               <li><Link to="/schools">참가 학교</Link></li>
               <li><Link to="/records">선수 기록</Link></li>
               <li><Link to="/rankings">실시간 순위</Link></li>
+              <li><Link to="/my">나의 기록 보기</Link></li>
             </ul>
           </div>
           <div>

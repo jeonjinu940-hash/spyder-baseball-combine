@@ -11,7 +11,7 @@ export default function MyRecords() {
   const [status, setStatus] = useState('idle'); // idle | loading | notfound | error
   const [record, setRecord] = useState(null);
 
-const submit = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     if (!name.trim() || !id.trim()) return;
     setStatus('loading');

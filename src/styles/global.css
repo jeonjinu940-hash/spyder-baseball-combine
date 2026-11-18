@@ -580,7 +580,11 @@ main:focus {
   transform: translateY(-6px) rotate(-45deg);
 }
 
-@media (max-width: 860px) {
+/* 탭 7개가 한 줄에 들어가지 않는 폭부터는 메뉴 버튼으로 전환 (탭 이름 줄바꿈 방지) */
+.nav a {
+  white-space: nowrap;
+}
+@media (max-width: 1100px) {
   .menu-toggle {
     display: inline-flex;
   }
@@ -1286,6 +1290,10 @@ main:focus {
 }
 .record-card-detail > .trial-grid {
   margin-top: auto;
+}
+/* 기록 박스 바로 위 요소(제목·다이어그램)와 최소 간격 보장 — 카드 높이에 여유가 없을 때 맞닿는 것 방지 */
+.record-card-detail > :nth-last-child(2) {
+  margin-bottom: 24px;
 }
 .record-card-detail .trial-grid > div {
   display: flex;
