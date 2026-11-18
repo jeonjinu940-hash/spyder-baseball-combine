@@ -1292,7 +1292,8 @@ main:focus {
   margin-top: auto;
 }
 /* 기록 박스 바로 위 요소(제목·다이어그램)와 최소 간격 보장 — 카드 높이에 여유가 없을 때 맞닿는 것 방지 */
-.record-card-detail > :nth-last-child(2) {
+.record-card-detail > :nth-last-child(2),
+.record-card-detail .card-title {
   margin-bottom: 24px;
 }
 .record-card-detail .trial-grid > div {

@@ -114,7 +114,7 @@ export default function Records() {
         <div className="toolbar">
           <div>
             <span className="result-count" aria-live="polite">
-              {players.length ? `검색 결과 ${results.length}명` : '공개 기록 없음'}
+              {!players.length ? '공개 기록 없음' : activeFilters ? `검색 결과 ${results.length}명` : '검색 전'}
             </span>
             {activeFilters && (
               <button type="button" className="btn btn-ghost btn-sm" style={{ marginLeft: 12 }} onClick={() => setParams({}, { replace: true })}>
@@ -153,6 +153,11 @@ export default function Records() {
             actions={<Link className="btn btn-ghost btn-sm" to="/schools">참가 학교 보기</Link>}
           >
             측정이 완료되고 운영팀 검수를 거친 기록이 순차적으로 공개됩니다.
+          </EmptyState>
+        ) : !activeFilters ? (
+          // 검색 전에는 목록을 보여주지 않음 — 선수명 검색 또는 지역·학교·포지션 선택 시 표시
+          <EmptyState title="선수명을 검색해 주세요" icon="⌕">
+            선수명을 입력하거나 지역·학교·포지션을 선택하면 기록이 표시됩니다.
           </EmptyState>
         ) : !results.length ? (
           <EmptyState

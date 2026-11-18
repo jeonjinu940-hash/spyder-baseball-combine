@@ -66,6 +66,13 @@ function MyRecordCard({ r, onReset }) {
   const grip = typeof r.records.grip === 'number' ? r.records.grip : null;
   return (
     <>
+      {/* 기록 업데이트: 실시간 순위 탭처럼 우측 상단 */}
+      <div className="player-updated">
+        <span className="updated">
+          <span className="dot" aria-hidden="true" />
+          기록 업데이트 {formatDate(r.updatedAt)}
+        </span>
+      </div>
       <header className="page-banner player-banner">
         <p className="eyebrow">My Record</p>
         <h1>{r.name}</h1>
@@ -92,7 +99,7 @@ function MyRecordCard({ r, onReset }) {
       <div className={`event-grid player-records mt-24${grip != null ? ' with-grip' : ''}`}>
         <section className="glass card glass-hover record-card-detail">
           <p className="eyebrow">홈 → 1루 → 외야 (직선 거리 55M)</p>
-          <h2 style={{ fontSize: 24, marginTop: 8 }}>55M 직선 스프린트</h2>
+          <h2 className="card-title" style={{ fontSize: 24, marginTop: 8 }}>55M 직선 스프린트</h2>
           <div className="trial-grid split-grid">
             {SPRINT_COLUMNS.map((c) => {
               const v = r.records[c.key];
@@ -111,7 +118,7 @@ function MyRecordCard({ r, onReset }) {
         {grip != null && (
           <section className="glass card glass-hover record-card-detail">
             <p className="eyebrow">Grip Strength</p>
-            <h2 style={{ fontSize: 24, marginTop: 8 }}>악력</h2>
+            <h2 className="card-title" style={{ fontSize: 24, marginTop: 8 }}>악력</h2>
             <div className="trial-grid grip-grid">
               <div>
                 <small>측정 기록</small>
@@ -128,7 +135,7 @@ function MyRecordCard({ r, onReset }) {
       <div className="notice notice-compact mt-24">
         <span className="i" aria-hidden="true">i</span>
         <span>
-          교내·전체 순위는 55M 직선 스프린트 기준입니다. 기록 업데이트 {formatDate(r.updatedAt)} 기준. 기록 정정이 필요한 경우 운영팀에 문의해 주세요.
+          교내·전체 순위는 55M 직선 스프린트 기준입니다.
         </span>
       </div>
       <div className="pager" style={{ justifyContent: 'center' }}>

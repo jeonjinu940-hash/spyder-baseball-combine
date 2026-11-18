@@ -92,7 +92,7 @@ export default function PlayerDetail() {
         {grip != null && (
           <section className="glass card glass-hover record-card-detail" aria-labelledby="h-grip">
             <p className="eyebrow">Grip Strength</p>
-            <h2 id="h-grip" style={{ fontSize: 24, marginTop: 8 }}>악력</h2>
+            <h2 id="h-grip" className="card-title" style={{ fontSize: 24, marginTop: 8 }}>악력</h2>
             <div className="trial-grid grip-grid">
               <div>
                 <small>측정 기록</small>
