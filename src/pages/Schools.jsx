@@ -31,6 +31,10 @@ export default function Schools() {
         2026 시범 운영 참가 {schools.length}개교 | 지역을 선택하면 학교 목록을, 학교를 선택하면 선수 기록을 볼 수 있습니다.
       </PageBanner>
 
+      {/* 모바일 전용 요약 (PC에서는 숨김) */}
+      <p className="container schools-summary">
+        참가 학교 <b className="num">{schools.length}</b>개교 · <b className="num">{regions.length}</b>개 지역
+      </p>
       <section className="container map-layout">
         <div className="map-panel glass">
           <KoreaMap counts={counts} selected={selected} onSelect={select} />
@@ -42,8 +46,8 @@ export default function Schools() {
         </div>
 
         <div>
-          <h2 className="eyebrow" style={{ marginBottom: 14 }}>지역별 참가 학교 수</h2>
-          <ul className="region-list">
+          <h2 className="eyebrow region-list-title" style={{ marginBottom: 14 }}>지역별 참가 학교 수</h2>
+          <ul className="region-list" aria-label="지역 선택">
             <li>
               <button type="button" className="region-btn" aria-pressed={!selected} onClick={() => select('')}>
                 <span>전체{!selected && <span className="sel">선택됨</span>}</span>

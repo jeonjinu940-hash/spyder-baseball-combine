@@ -66,8 +66,17 @@ function AlbumViewer({ album, startIndex = 0, onClose }) {
     if (Math.abs(dx) > SWIPE_PX) go(dx < 0 ? 1 : -1);
   };
 
-  const width = stageRef.current?.clientWidth || 1;
-  const offset = -i * 100 + (dragPx / width) * 100;
+  // 무대 폭(px) 기준으로 이동 — % 이동은 소수점 반올림 때문에 옆 사진이 가장자리에 비칠 수 있음
+  const [stageW, setStageW] = useState(0);
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return undefined;
+    const ro = new ResizeObserver(() => setStageW(Math.round(el.getBoundingClientRect().width)));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [album]);
+  // 측정 전(0)에는 %로, 측정 후에는 정수 px로 이동
+  const offset = stageW ? `${-i * stageW + dragPx}px` : `${-i * 100}%`;
 
   return (
     <dialog
@@ -97,7 +106,7 @@ function AlbumViewer({ album, startIndex = 0, onClose }) {
           >
             <div
               className={`av-track${animate && !dragPx ? ' animate' : ''}`}
-              style={{ transform: `translate3d(${offset}%, 0, 0)` }}
+              style={{ transform: `translate3d(${offset}, 0, 0)` }}
             >
               {album.photos.map((p, k) => (
                 <div className="av-slide" key={p.src} aria-hidden={k !== i}>
@@ -170,7 +179,7 @@ export default function GalleryContent() {
           ))}
           {Array.from({ length: placeholders }, (_, k) => (
             <li key={`ph-${k}`} aria-hidden="true">
-              <div className="gallery-placeholder">COMING SOON</div>
+              <div className="gallery-placeholder album-placeholder">COMING SOON</div>
             </li>
           ))}
         </ul>

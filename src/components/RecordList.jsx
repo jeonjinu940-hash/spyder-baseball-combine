@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { SPRINT_COLUMNS, formatGrip, formatTime, hasGrip, recordValue } from '../lib/records.js';
+import { SPRINT_COLUMNS, formatGrip, formatMeasured, formatTime, hasGrip, recordValue } from '../lib/records.js';
 import { schoolRegionLabel } from '../lib/regions.js';
 import { GRIP_UNIT, RECORD_UNIT } from '../config.js';
 
@@ -84,30 +84,30 @@ export default function RecordList({ players, schoolsById }) {
                   <div>
                     <div className="name">{p.name}</div>
                     <div className="meta">
-                      {s.name} · {schoolRegionLabel(s)}
+                      {s.name}
                       {p.grade ? ` · ${gradeLabel(p.grade)}` : ''}
                       {p.position ? ` · ${p.position}` : ''}
                     </div>
+                    {p.measuredAt && <div className="meta num">측정일 {formatMeasured(p.measuredAt, p.measuredWeekday)}</div>}
                   </div>
                   <span className="go" aria-hidden="true">상세 →</span>
                 </div>
-                <div className="ev">
-                  <div className="ev-name">55M 직선 스프린트 ({RECORD_UNIT})</div>
-                  <div className="trials">
-                    {SPRINT_COLUMNS.map((c) => (
-                      <div className={`trial${c.key === 'sprint' ? ' final' : ''}`} key={c.key}>
-                        <small>{c.label}</small>
-                        <b>{formatTime(recordValue(p, c.key))}</b>
-                      </div>
-                    ))}
-                    {grip != null && (
-                      <div className="trial">
-                        <small>악력 ({GRIP_UNIT})</small>
-                        <b>{formatGrip(grip)}</b>
-                      </div>
-                    )}
-                  </div>
+                {/* 5M / 27M / 55M 3칸, 55M 강조. 악력은 측정 학교만 아래 줄 */}
+                <div className="rc-grid">
+                  {SPRINT_COLUMNS.map((c) => (
+                    <div className={`rc-cell${c.key === 'sprint' ? ' final' : ''}`} key={c.key}>
+                      <small>{c.label}</small>
+                      <b>{formatTime(recordValue(p, c.key))}</b>
+                    </div>
+                  ))}
                 </div>
+                {grip != null && (
+                  <div className="rc-grip">
+                    <small>악력</small>
+                    <b className="num">{formatGrip(grip)}<span>{GRIP_UNIT}</span></b>
+                  </div>
+                )}
+                <div className="rc-unit">단위: 초{grip != null ? ` · 악력 ${GRIP_UNIT}` : ''}</div>
               </Link>
             </li>
           );

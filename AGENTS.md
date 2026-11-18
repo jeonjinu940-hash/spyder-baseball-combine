@@ -55,6 +55,11 @@
 - Render Deploy Hook URL은 파일·커밋에 적지 않는다 (GitHub Secret `RENDER_DEPLOY_HOOK_URL`에만 보관).
 - 미성년 선수 사진은 공개 동의가 확인된 것만 게시.
 
+## 모바일 (SPYDER_BASEBALL_COMBINE_MOBILE_PRD.md)
+- PC와 같은 코드·같은 URL. 모바일 전용 스타일은 `global.css` 끝의 `@media (max-width: 768px)` 블록에만 추가하고 PC 규칙은 건드리지 않는다.
+- 화면을 바꾸는 수정은 PC(1400px)와 모바일(360·390·430px) 모두 확인한 뒤 배포한다.
+- 모바일 관련 변경은 모바일 PRD의 Change Log에도 기록한다.
+
 ## 디자인 규칙 (요약)
 - 다크(#080808) + 어두운 레드 그라데이션(`--red-deep: #140507`), 서체는 전부 Pretendard.
 - 탭: 홈 · 측정 종목 · 갤러리 · 참가 학교 · 선수 기록 · 실시간 순위 · 나의 기록 보기 (한글, 밑줄 없음).

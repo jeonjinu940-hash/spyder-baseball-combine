@@ -23,6 +23,12 @@ export default function Header() {
 
   useEffect(() => setOpen(false), [pathname, hash]);
 
+  // 메뉴가 열린 동안 배경 페이지 스크롤 잠금
+  useEffect(() => {
+    document.body.classList.toggle('menu-open', open);
+    return () => document.body.classList.remove('menu-open');
+  }, [open]);
+
   useEffect(() => {
     if (!open) return undefined;
     const onKey = (e) => e.key === 'Escape' && setOpen(false);

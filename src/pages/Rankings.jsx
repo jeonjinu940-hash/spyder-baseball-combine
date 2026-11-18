@@ -54,7 +54,7 @@ export default function Rankings() {
 
       <section className="container">
         <div className="rank-toolbar">
-          <div className="chips" role="group" aria-label="순위 종목">
+          <div className="chips rank-chips" role="group" aria-label="순위 종목">
             {RANK_BOARDS.map((b) => (
               <button
                 key={b.key}
