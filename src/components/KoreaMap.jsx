@@ -30,6 +30,16 @@ export default function KoreaMap({ counts, selected, onSelect, compact = false }
           <line x1="0" y1="0" x2="0" y2="8" stroke="#e5e5e5" strokeWidth="3" />
         </pattern>
       </defs>
+      {map.inset && (
+        <rect
+          className="inset-frame"
+          x={map.inset.x}
+          y={map.inset.y}
+          width={map.inset.w}
+          height={map.inset.h}
+          rx="8"
+        />
+      )}
       {map.regions.map((r) => {
         const n = counts[r.key] ?? 0;
         const isSel = selected === r.key;
@@ -58,6 +68,12 @@ export default function KoreaMap({ counts, selected, onSelect, compact = false }
       {/* 선택 지역을 맨 위에 다시 그려 외곽선이 가려지지 않게 */}
       {selected && map.regions.filter((r) => r.key === selected).map((r) => (
         <path key="sel-outline" d={r.d} fill="none" stroke="#fff" strokeWidth="2.4" pointerEvents="none" />
+      ))}
+      {map.inset?.islands.map((s) => (
+        <g key={s.name} className="island-label" aria-hidden="true">
+          {s.dot && <circle cx={s.at[0]} cy={s.at[1]} r="2.2" />}
+          <text x={s.at[0]} y={s.at[1] + 15}>{s.name}</text>
+        </g>
       ))}
       {map.regions
         .filter((r) => counts[r.key])
